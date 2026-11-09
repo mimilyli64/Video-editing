@@ -16,8 +16,9 @@ window.SPEC = {
     mg: { src: 'assets/mg.mov', width: 1080, alpha: true },
   },
   cam: { crop: [0, 0, 1080, 1920], eyes: [540, 495] },   // assets/source.mp4 = the take with zoom transitions on its own jump cuts (alternating 1 / 1.12 framing: ease-in push-in through the cut toward a tight shot, zoom-out settle after the cut toward a wide shot, 0.5 %/s drift, NO blur)
-  cut: [],
-  hold: [[0, 31.93]],   // no silence cut at all: the creator wants her natural flow (2026-11-09: « beaucoup de coupures, pas naturel »)
+  // the dead air between sentences (where the take switches takes) cut to a short breath; commas keep their pause
+  cut: [[0, 0.58], [3.45, 4.08], [7.11, 7.9], [10.89, 11.38], [13.9, 14.51], [20.73, 21.49], [24.7, 25.22], [28.24, 28.81], [31.5, 99]],
+  tighten: { gap: 99 },   // no automatic micro-cut (rejected: « pas naturel »)
 
   layout: { keys: [[0, 0]] },
   zoom: { keys: [[0, 1]] },
@@ -30,9 +31,9 @@ window.SPEC = {
   music: { breaks: [] },
   sfx: {
     swish: 0, accents: 0,
-    extra: [[1.05, 'pop', .1], [2.93, 'thud', .5], [10.25, 'thud', .5], [14.12, 'bell', .12], [16.62, 'pop', .1], [30.15, 'tap', .12]],
+    extra: [[1.05, 'pop', .1], [2.93, 'thud', .5], [10.25, 'thud', .5], [14.52, 'bell', .12], [16.62, 'pop', .1], [30.15, 'tap', .12]],
     files: [
-      { at: 3.55, src: 'assets/sfx/zhhh.mp3', peak: true, gain: -10 },
+      { at: 4.08, src: 'assets/sfx/zhhh.mp3', peak: true, gain: -10 },
       { at: 17.55, src: 'assets/sfx/pop-back.mp3', gain: -14 },
     ],
   },
