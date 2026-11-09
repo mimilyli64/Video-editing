@@ -17,6 +17,7 @@ window.SPEC = {
   },
   cam: { crop: [0, 0, 720, 1280], eyes: [360, 330] },
   cut: [],
+  hold: [[0, 31.93]],   // no silence cut at all: the creator wants her natural flow (2026-11-09: « beaucoup de coupures, pas naturel »)
 
   layout: { keys: [[0, 0]] },
   zoom: { keys: [[0, 1]] },

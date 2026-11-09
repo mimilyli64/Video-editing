@@ -48,3 +48,6 @@ Voix en darija marocaine, sous-titres traduits en français.
 - Garder le logo Lougha Online, le site Loughaonline.com et la traduction darija → français.
 - Ne PAS garder les couleurs de la référence : reprendre celles de sa propre vidéo.
 - Même style, mais plus riche : beaucoup d'illustrations et de motion graphics animés.
+
+## Rejeté
+- 9 novembre 2026 : les micro-coupes de silence (24 coupes en 30 s) : « pas smooth, pas naturel ». Désormais la prise reste entière, sans aucune coupe.
