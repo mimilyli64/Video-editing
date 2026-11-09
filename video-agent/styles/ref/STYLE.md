@@ -43,3 +43,8 @@ Voix en darija marocaine, sous-titres traduits en français.
 - layout.keys : [[0, 0]] (plein écran tout le long).
 - Chaque élément = un composant HTML (overlay alpha) posé sur le mot qui le nomme, hors du visage.
 - Sons : zhhh.mp3 sur la coupe de l'accroche, pop sur le logo, pop-back.mp3 sur l'arrivée des pilules.
+
+## Demandes de la créatrice (9 novembre 2026)
+- Garder le logo Lougha Online, le site Loughaonline.com et la traduction darija → français.
+- Ne PAS garder les couleurs de la référence : reprendre celles de sa propre vidéo.
+- Même style, mais plus riche : beaucoup d'illustrations et de motion graphics animés.
