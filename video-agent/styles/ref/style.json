@@ -69,6 +69,6 @@
     "CTA final : pilule turquoise avec l'URL en bas du cadre + curseur qui clique.",
     "Pas de musique. Sons seulement : tension tonale sur l'accroche coupée net sur le changement de plan, un ding à l'arrivée du logo, un whoosh court quand les pilules glissent. 3 à 4 sons max.",
     "AUCUNE coupe de silence : garder la prise entière avec ses pauses naturelles (spec.hold sur toute la prise). La créatrice a rejeté les micro-coupes : « beaucoup de coupures, pas smooth, pas naturel ».",
-    "Prises assemblées avec des jump cuts : à chaque coupe de la prise, alterner le cadrage (1 / 1,15 ancré sur le visage) avec un zoom de transition de ~0,35 s et un léger flou de mouvement (ffmpeg scale eval=frame + tmix), pour que la coupe disparaisse dans le mouvement."
+    "Prises assemblées avec des jump cuts : alterner le cadrage (1 / 1,12 ancré sur le visage). Vers un plan serré : zoom avant en accélération sur les 0,22 s avant la coupe, la prise suivante démarre à ce cadrage. Vers un plan large : la prise suivante démarre plus serrée et dézoome en douceur (0,45 s). Léger push 0,5 %/s entre les coupes. JAMAIS de flou de mouvement (rejeté : « vraiment nul »)."
   ]
 }

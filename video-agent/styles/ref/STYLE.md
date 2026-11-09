@@ -51,3 +51,4 @@ Voix en darija marocaine, sous-titres traduits en français.
 
 ## Rejeté
 - 9 novembre 2026 : les micro-coupes de silence (24 coupes en 30 s) : « pas smooth, pas naturel ». Désormais la prise reste entière, sans aucune coupe.
+- 9 novembre 2026 : le flou de mouvement sur les transitions (« vraiment nul »). Remplacé par des zooms nets : zoom avant à travers la coupe, dézoom après la coupe.
