@@ -1,2 +1,8 @@
 video-agent/.tmp/
 video-agent/edits/*/assets/
+video-agent/takes/
+*.mp4
+*.mov
+video-agent/edits/*/frames/
+video-agent/edits/*/stills/
+video-agent/edits/*/files/

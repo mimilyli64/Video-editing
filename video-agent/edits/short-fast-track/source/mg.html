@@ -1,0 +1,315 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:M;src:url(fonts/montserrat-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-900-normal.woff2);font-weight:900}
+@font-face{font-family:Serif;src:url(fonts/InstrumentSerif-Regular.ttf)}
+@font-face{font-family:Serif;src:url(fonts/InstrumentSerif-Italic.ttf);font-style:italic}
+:root{--cream:#FBF4EC;--esp:#3B2620;--terra:#B4532F;--cara:#8A5A44;--gold:#F2B661;--gold2:#D98E3A}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:M,sans-serif;position:relative}
+.a{position:absolute;opacity:0;transform-origin:50% 50%;will-change:transform,opacity}
+.sh{text-shadow:0 4px 22px rgba(30,12,4,.55),0 2px 4px rgba(30,12,4,.35)}
+.ds{filter:drop-shadow(0 14px 26px rgba(40,18,8,.38))}
+.serif{font-family:Serif;color:#fff;white-space:nowrap}
+.pill{background:var(--cream);color:var(--esp);border-radius:999px;display:flex;align-items:center;gap:18px;box-shadow:0 16px 40px rgba(40,18,8,.35)}
+.tile{background:var(--terra);border-radius:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#fff;font-weight:800;box-shadow:0 18px 40px rgba(40,18,8,.38);border:4px solid rgba(255,240,225,.55)}
+.chip{background:var(--cream);color:var(--esp);border-radius:28px;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:800;font-size:38px;box-shadow:0 14px 32px rgba(40,18,8,.32)}
+.w{display:inline-block;opacity:0}
+.bub{border-radius:44px;padding:26px 38px;font-weight:700;font-size:42px;box-shadow:0 14px 34px rgba(40,18,8,.32);white-space:nowrap}
+</style></head><body>
+
+<div id="cap" style="position:absolute;left:40px;width:1000px;top:1350px;text-align:center"></div>
+<style>#cap .l1{font:700 60px M;color:#fff;line-height:1.15}#cap .l2{font:900 84px M;color:var(--gold);line-height:1.1;margin-top:4px}
+#cap .cw{display:inline-block;text-shadow:0 4px 18px rgba(20,8,2,.65),0 2px 3px rgba(20,8,2,.5)}#cap .ce{color:var(--gold);font-weight:900}</style>
+<!-- ===== A. HOOK 0 - 3.55 ===== -->
+<div id="h1" class="a serif sh" style="left:0;width:1080px;top:140px;text-align:center;font-size:92px"><span class="w">Vous</span> <span class="w">comprenez</span></div>
+<div id="h2" class="a serif sh" style="left:0;width:1080px;top:236px;text-align:center;font-size:150px;padding-right:120px;box-sizing:border-box;font-style:italic;color:var(--gold)"><span class="w">le</span> <span class="w">français</span></div>
+<div id="flag" class="a ds" style="left:850px;top:246px;width:150px;height:150px">
+  <svg viewBox="0 0 100 100" width="150" height="150"><defs><clipPath id="c"><circle cx="50" cy="50" r="44"/></clipPath></defs>
+  <g clip-path="url(#c)"><rect x="0" y="0" width="34" height="100" fill="#1F3FA0"/><rect x="34" width="32" height="100" fill="#fff"/><rect x="66" width="34" height="100" fill="#D8302C"/></g>
+  <circle cx="50" cy="50" r="44" fill="none" stroke="#fff" stroke-width="6"/></svg></div>
+<div id="hchk" class="a" style="left:920px;top:340px;width:84px;height:84px">
+  <svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="38" fill="#3E9B5A" stroke="#fff" stroke-width="5"/><path id="hchkp" d="M24 43 L37 56 L61 30" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="60" stroke-dashoffset="60"/></svg></div>
+<div id="hq" class="a" style="left:920px;top:340px;width:84px;height:84px;border-radius:50%;background:var(--terra);border:5px solid #fff;box-sizing:border-box;color:#fff;font:900 54px M;display:flex;align-items:center;justify-content:center">?</div>
+<div id="h3" class="a serif sh" style="left:0;width:1080px;top:432px;text-align:center;font-size:92px"><span class="w">mais</span> <span class="w" style="font-style:italic;color:var(--gold)">à l'oral...</span></div>
+<div id="hbub" class="a" style="left:742px;top:600px">
+  <div class="bub" style="background:var(--cream);color:var(--esp);font-size:50px;border-bottom-left-radius:10px">euh<span id="dots">...</span></div></div>
+<div id="hbig" class="a" style="left:58px;top:560px;font:900 250px M;color:var(--gold);text-shadow:0 10px 0 var(--gold2),0 24px 40px rgba(30,12,4,.5)">?</div>
+
+<!-- ===== B. chercher ses mots 3.66 - 7.42 ===== -->
+<div id="wt0" class="a chip" style="left:80px;top:170px;width:170px;height:92px">je</div>
+<div id="wt1" class="a chip" style="left:330px;top:120px;width:200px;height:92px">suis</div>
+<div id="wt2" class="a chip" style="left:620px;top:160px;width:180px;height:92px">allé</div>
+<div id="wt3" class="a chip" style="left:860px;top:250px;width:150px;height:92px;background:var(--terra);color:#fff">?</div>
+<div id="wt4" class="a chip" style="left:140px;top:360px;width:230px;height:92px">phrase</div>
+<div id="wt5" class="a chip" style="left:450px;top:330px;width:200px;height:92px">mot</div>
+<div id="wt6" class="a chip" style="left:720px;top:420px;width:210px;height:92px;background:var(--gold);">verbe</div>
+<div id="mag" class="a ds" style="left:0;top:0;width:190px;height:190px"><img src="icons/search.png" width="190" height="190"></div>
+
+<div id="sent" class="a" style="left:60px;top:200px;width:960px;height:170px;background:var(--cream);border-radius:40px;box-shadow:0 18px 44px rgba(40,18,8,.38);display:flex;align-items:center;justify-content:center;font:800 54px M;color:var(--esp);gap:16px">
+  <span class="w" id="s0">Je</span><span class="w" id="s1">suis</span><span class="w" id="s2" style="position:relative">allé<svg style="position:absolute;left:-6px;bottom:-26px" width="120" height="30" viewBox="0 0 120 30"><path id="sq" d="M2 15 Q10 2 18 15 T34 15 T50 15 T66 15 T82 15 T98 15 T114 15" fill="none" stroke="#D8302C" stroke-width="6" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200"/></svg></span><span class="w" id="s3">au</span><span class="w" id="s4">marché</span></div>
+<div id="corr" class="a" style="left:270px;top:405px;width:540px;height:110px;border-radius:999px;background:var(--esp);display:flex;align-items:center;justify-content:center;gap:22px;font:800 46px M;color:#fff;box-shadow:0 14px 32px rgba(30,12,4,.4)">
+  <span id="ok" style="color:#7BD08F">✓</span><span>correcte ?</span><span id="ko" style="color:#FF7B6E">✗</span></div>
+<div id="think" class="a ds" style="left:850px;top:600px;width:170px;height:170px"><img src="icons/thinking-face.png" width="170" height="170"></div>
+
+<!-- ===== C. simple + deux choses 7.5 - 10.88 ===== -->
+<div id="bulb" class="a" style="left:410px;top:110px;width:260px;height:300px">
+  <svg viewBox="0 0 260 300" width="260" height="300">
+    <g id="rays" style="transform-origin:130px 120px">
+      <g stroke="#F2B661" stroke-width="10" stroke-linecap="round">
+      <line x1="130" y1="-2" x2="130" y2="22"/><line x1="130" y1="218" x2="130" y2="242" opacity="0"/>
+      <line x1="8" y1="120" x2="32" y2="120"/><line x1="228" y1="120" x2="252" y2="120"/>
+      <line x1="44" y1="34" x2="61" y2="51"/><line x1="216" y1="34" x2="199" y2="51"/>
+      <line x1="30" y1="190" x2="52" y2="178"/><line x1="230" y1="190" x2="208" y2="178"/></g></g>
+    <circle id="glow" cx="130" cy="120" r="96" fill="#F2B661" opacity="0"/>
+    <path id="glass" d="M130 40 C 82 40 56 76 56 114 C 56 146 76 164 90 184 C 98 196 98 206 98 214 L162 214 C162 206 162 196 170 184 C184 164 204 146 204 114 C204 76 178 40 130 40 Z" fill="#E9DED3" stroke="#fff" stroke-width="7"/>
+    <path d="M108 184 L120 140 L130 160 L140 140 L152 184" fill="none" stroke="#8A5A44" stroke-width="6" stroke-linejoin="round"/>
+    <rect x="98" y="220" width="64" height="18" rx="8" fill="#8A5A44"/><rect x="104" y="242" width="52" height="18" rx="8" fill="#6E4535"/><rect x="114" y="264" width="32" height="14" rx="7" fill="#6E4535"/>
+  </svg></div>
+<div id="simple" class="a sh" style="left:0;width:1080px;top:418px;text-align:center;font:900 76px M;color:#fff">C'est <span style="color:var(--gold)">simple.</span></div>
+<div id="spk" class="a ds" style="left:80px;top:180px;width:200px;height:200px"><img src="icons/speaking-head.png" width="200" height="200"></div>
+<div id="ear" class="a ds" style="left:800px;top:180px;width:200px;height:200px"><img src="icons/ear.png" width="200" height="200"></div>
+<svg id="waves" class="a" style="left:300px;top:170px" width="480" height="220" viewBox="0 0 480 220">
+  <g fill="none" stroke="#FBF4EC" stroke-width="12" stroke-linecap="round">
+  <path id="wv0" d="M60 40 Q110 110 60 180"/><path id="wv1" d="M60 40 Q110 110 60 180"/><path id="wv2" d="M60 40 Q110 110 60 180"/><path id="wv3" d="M60 40 Q110 110 60 180"/></g></svg>
+<div id="two" class="a" style="left:410px;top:110px;width:260px;height:260px">
+  <div style="position:absolute;left:30px;top:30px;width:200px;height:200px;border-radius:46px;transform:rotate(45deg);background:linear-gradient(145deg,#FFD38A,#E39A45);box-shadow:0 0 50px rgba(242,182,97,.75),0 18px 40px rgba(40,18,8,.4);border:6px solid #fff"></div>
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 170px M;color:var(--esp)">2</div></div>
+<div id="slotL" class="a" style="left:40px;top:620px;width:290px;height:130px;border-radius:32px;border:5px dashed rgba(251,244,236,.9);background:rgba(59,38,32,.25);display:flex;align-items:center;justify-content:center;font:900 70px M;color:var(--cream)">?</div>
+<div id="slotR" class="a" style="left:750px;top:620px;width:290px;height:130px;border-radius:32px;border:5px dashed rgba(251,244,236,.9);background:rgba(59,38,32,.25);display:flex;align-items:center;justify-content:center;font:900 70px M;color:var(--cream)">?</div>
+
+<!-- ===== D. grammaire solide + oral régulier 10.9 - 14.02 ===== -->
+<div id="cardL" class="a" style="left:40px;top:620px;width:290px;height:130px;border-radius:32px;background:var(--terra);border:4px solid rgba(255,240,225,.6);display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 16px 36px rgba(40,18,8,.38)"><img src="icons/books.png" width="84" height="84"><span style="font:800 40px M;color:#fff">Grammaire</span></div>
+<div id="br0" class="a" style="left:70px;top:900px;width:230px;height:64px;border-radius:14px;background:var(--gold);border:4px solid #fff;box-shadow:0 10px 22px rgba(40,18,8,.35)"></div>
+<div id="br1" class="a" style="left:70px;top:830px;width:230px;height:64px;border-radius:14px;background:var(--gold2);border:4px solid #fff;box-shadow:0 10px 22px rgba(40,18,8,.35)"></div>
+<div id="br2" class="a" style="left:70px;top:760px;width:230px;height:64px;border-radius:14px;background:var(--gold);border:4px solid #fff;box-shadow:0 10px 22px rgba(40,18,8,.35);display:flex;align-items:center;justify-content:center;font:900 34px M;color:var(--esp)">SOLIDE</div>
+<div id="cardR" class="a" style="left:750px;top:620px;width:290px;height:130px;border-radius:32px;background:var(--terra);border:4px solid rgba(255,240,225,.6);display:flex;align-items:center;justify-content:center;gap:14px;box-shadow:0 16px 36px rgba(40,18,8,.38)"><img src="icons/mic.png" width="84" height="84"><span style="font:800 44px M;color:#fff">Oral</span></div>
+<div id="eq" class="a" style="left:790px;top:770px;width:210px;height:80px;display:flex;align-items:center;justify-content:space-between">
+  <i id="e0" style="width:22px;border-radius:11px;background:var(--cream)"></i><i id="e1" style="width:22px;border-radius:11px;background:var(--gold)"></i><i id="e2" style="width:22px;border-radius:11px;background:var(--cream)"></i><i id="e3" style="width:22px;border-radius:11px;background:var(--gold)"></i><i id="e4" style="width:22px;border-radius:11px;background:var(--cream)"></i><i id="e5" style="width:22px;border-radius:11px;background:var(--gold)"></i></div>
+<div id="cal" class="a" style="left:752px;top:870px;width:286px;height:96px;border-radius:24px;background:var(--cream);display:flex;align-items:center;justify-content:space-evenly;box-shadow:0 12px 28px rgba(40,18,8,.35)"></div>
+
+<!-- ===== E. Lougha Online + 100% interactive 14.1 - 17.42 ===== -->
+<div id="brand" class="a" style="left:170px;top:190px;width:740px;height:160px;border-radius:999px;background:rgba(251,244,236,.94);display:flex;align-items:center;gap:26px;box-shadow:0 18px 44px rgba(40,18,8,.4);overflow:hidden">
+  <img src="icons/logo.png" width="136" height="136" style="margin-left:12px;border-radius:50%">
+  <span style="font:800 66px M;color:var(--esp);white-space:nowrap">Lougha Online</span>
+  <i id="shine" style="position:absolute;top:-20px;width:90px;height:200px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg)"></i></div>
+<div id="hund" class="a sh" style="left:0;width:1080px;top:250px;text-align:center;font:900 210px M;color:#fff;letter-spacing:-6px"><span id="hn">0</span><span style="color:var(--gold)">%</span></div>
+<svg id="arc" class="a" style="left:90px;top:80px" width="900" height="260" viewBox="0 0 900 260">
+  <defs><path id="arcp" d="M60 230 Q450 -40 840 230"/></defs>
+  <text font-family="M" font-weight="900" font-size="92" fill="#fff" letter-spacing="6" style="paint-order:stroke" stroke="rgba(40,18,8,.35)" stroke-width="10"><textPath href="#arcp" startOffset="50%" text-anchor="middle">interactive</textPath></text></svg>
+<div id="orb0" class="a ds" style="left:60px;top:300px;width:150px;height:150px"><img src="icons/chat.png" width="150" height="150"></div>
+<div id="orb1" class="a ds" style="left:870px;top:300px;width:150px;height:150px"><img src="icons/play.png" width="150" height="150"></div>
+<div id="orb2" class="a ds" style="left:70px;top:620px;width:130px;height:130px"><img src="icons/graduation-cap.png" width="130" height="130"></div>
+<div id="orb3" class="a ds" style="left:880px;top:620px;width:130px;height:130px"><img src="icons/cursor.png" width="130" height="130"></div>
+
+<!-- ===== F. toggles grammaire + communication 17.5 - 20.95 ===== -->
+<div id="tg0" class="a" style="left:150px;top:170px;width:780px;height:110px;border-radius:999px;background:var(--cara);display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 46px;box-sizing:border-box;box-shadow:0 16px 36px rgba(40,18,8,.4);border:4px solid rgba(255,240,225,.5)">
+  <span style="font:800 50px M;color:#fff;white-space:nowrap">La grammaire</span><div id="tr0" style="width:110px;height:60px;border-radius:30px;background:rgba(255,255,255,.3);position:relative"><i id="kn0" style="position:absolute;top:6px;left:6px;width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.3)"></i></div></div>
+<div id="tg1" class="a" style="left:150px;top:310px;width:780px;height:110px;border-radius:999px;background:var(--cara);display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 46px;box-sizing:border-box;box-shadow:0 16px 36px rgba(40,18,8,.4);border:4px solid rgba(255,240,225,.5)">
+  <span style="font:800 50px M;color:#fff;white-space:nowrap">La communication</span><div id="tr1" style="width:110px;height:60px;border-radius:30px;background:rgba(255,255,255,.3);position:relative"><i id="kn1" style="position:absolute;top:6px;left:6px;width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.3)"></i></div></div>
+<svg id="ring" class="a" style="left:150px;top:120px" width="780" height="360" viewBox="0 0 780 360"><path id="ringp" d="M120 40 C 420 0 760 30 760 175 C 760 330 360 352 120 330 C 0 318 6 180 30 110 C 48 64 140 34 300 28" fill="none" stroke="#F2B661" stroke-width="11" stroke-linecap="round" stroke-dasharray="2400" stroke-dashoffset="2400"/></svg>
+<div id="spark" class="a ds" style="left:830px;top:80px;width:140px;height:140px"><img src="icons/sparkles.png" width="140" height="140"></div>
+
+<!-- ===== G. temps / phrases / expressions 21.0 - 24.92 ===== -->
+<div id="t0" class="a tile" style="left:70px;top:140px;width:290px;height:290px">
+  <svg id="clock" width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="66" fill="#FBF4EC" stroke="#fff" stroke-width="6"/>
+  <g stroke="#3B2620" stroke-width="5" stroke-linecap="round"><line x1="75" y1="16" x2="75" y2="28"/><line x1="75" y1="122" x2="75" y2="134"/><line x1="16" y1="75" x2="28" y2="75"/><line x1="122" y1="75" x2="134" y2="75"/></g>
+  <line id="hh" x1="75" y1="75" x2="75" y2="42" stroke="#3B2620" stroke-width="9" stroke-linecap="round" style="transform-origin:75px 75px"/>
+  <line id="mh" x1="75" y1="75" x2="75" y2="26" stroke="#B4532F" stroke-width="6" stroke-linecap="round" style="transform-origin:75px 75px"/><circle cx="75" cy="75" r="8" fill="#3B2620"/></svg>
+  <span style="font-size:44px">Les temps</span></div>
+<div id="t1" class="a tile" style="left:395px;top:140px;width:290px;height:290px">
+  <div style="position:relative;width:220px;height:150px">
+    <i id="pb0" style="position:absolute;top:10px;left:0;padding:10px 16px;border-radius:14px;background:#FBF4EC;color:#3B2620;font:800 34px M;font-style:normal">Je</i>
+    <i id="pb1" style="position:absolute;top:10px;left:70px;padding:10px 16px;border-radius:14px;background:#F2B661;color:#3B2620;font:800 34px M;font-style:normal">parle</i>
+    <i id="pb2" style="position:absolute;top:84px;left:30px;padding:10px 16px;border-radius:14px;background:#FBF4EC;color:#3B2620;font:800 34px M;font-style:normal">français</i></div>
+  <span style="font-size:44px">Les phrases</span></div>
+<div id="t2" class="a tile" style="left:720px;top:140px;width:290px;height:290px">
+  <div style="position:relative;width:150px;height:150px"><img src="icons/hot-beverage.png" width="140" height="140" style="position:absolute;left:5px;top:10px">
+  <svg style="position:absolute;left:0;top:-30px" width="150" height="70" viewBox="0 0 150 70"><g fill="none" stroke="#FBF4EC" stroke-width="6" stroke-linecap="round"><path id="st0" d="M55 66 q-12 -14 0 -28 q12 -14 0 -28"/><path id="st1" d="M85 66 q-12 -14 0 -28 q12 -14 0 -28"/></g></svg></div>
+  <span style="font-size:40px">Expressions</span></div>
+<div id="t2b" class="a" style="left:700px;top:450px;padding:14px 26px;border-radius:999px;background:var(--cream);color:var(--esp);font:800 36px M;box-shadow:0 10px 24px rgba(40,18,8,.32);white-space:nowrap">« Ça marche ! »</div>
+
+<!-- ===== H. échanges + situations réelles 25.0 - 28.45 ===== -->
+<div id="bl" class="a" style="left:70px;top:150px;transform-origin:0 100%"><div class="bub" style="background:var(--cream);color:var(--esp);border-bottom-left-radius:10px"><span id="blt">Bonjour, ça va ?</span></div></div>
+<div id="br" class="a" style="right:70px;top:280px;transform-origin:100% 100%"><div class="bub" style="background:var(--terra);color:#fff;border-bottom-right-radius:10px"><span id="brt">Très bien, et vous ?</span></div></div>
+<div id="c0" class="a chip" style="left:60px;top:440px;width:300px;height:100px"><img src="icons/hot-beverage.png" width="64" height="64">Au café</div>
+<div id="c1" class="a chip" style="left:390px;top:440px;width:300px;height:100px"><img src="icons/shopping-cart.png" width="64" height="64">Au marché</div>
+<div id="c2" class="a chip" style="left:720px;top:440px;width:300px;height:100px"><img src="icons/briefcase.png" width="64" height="64">Au travail</div>
+
+<!-- ===== I. CTA 28.5 - end ===== -->
+<div id="clogo" class="a" style="left:420px;top:130px;width:240px;height:240px;border-radius:50%;box-shadow:0 0 0 8px rgba(251,244,236,.9),0 20px 50px rgba(40,18,8,.45)"><img src="icons/logo.png" width="240" height="240" style="border-radius:50%"></div>
+<div id="cglow" class="a" style="left:400px;top:110px;width:280px;height:280px;border-radius:50%;border:6px solid var(--gold)"></div>
+<div id="cname" class="a sh" style="left:0;width:1080px;top:398px;text-align:center;font:900 70px M;color:#fff">Lougha <span style="color:var(--gold)">Online</span></div>
+<div id="url" class="a" style="left:190px;top:1560px;width:700px;height:120px;border-radius:999px;background:var(--cream);display:flex;align-items:center;justify-content:center;gap:20px;box-shadow:0 18px 44px rgba(40,18,8,.45);border:5px solid var(--gold)">
+  <img src="icons/link.png" width="70" height="70"><span style="font:800 54px M;color:var(--esp)">Loughaonline.com</span></div>
+<div id="rip" class="a" style="left:0;top:0;width:60px;height:60px;border-radius:50%;border:6px solid var(--gold)"></div>
+<div id="cur" class="a ds" style="left:0;top:0;width:110px;height:110px"><img src="icons/cursor.png" width="110" height="110"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => cl((t - a) / (b - a));
+// show el between a and b: spring in (scale, slide, spin, blur), quick 0.12 s scale-out at b
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  if (t < a || t >= b) { el.style.opacity = 0; return 0; }
+  const p = S(t - a, o.w || 12), out = cl((b - t) / .12);
+  const s0 = o.s0 ?? .7, s = (s0 + (1 - s0) * p) * (o.sc ?? 1) * (.9 + .1 * out);
+  const x = (o.x || 0) + (o.dx || 0) * (1 - p), y = (o.y || 0) + (o.dy || 0) * (1 - p), r = (o.rot || 0) + (o.spin || 0) * (1 - p);
+  el.style.opacity = cl(p * 1.8) * out;
+  el.style.transform = `translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`;
+  el.style.filter = o.blur ? `blur(${(1 - p) * o.blur}px)` : (o.keepFilter ? '' : el.style.filter);
+  return p;
+}
+// word-by-word reveal inside a line
+function words(id, t, times) {
+  [...$(id).querySelectorAll('.w')].forEach((w, i) => {
+    const p = S(t - times[i], 14);
+    w.style.opacity = cl(p * 1.6); w.style.transform = `translateY(${22 * (1 - p)}px)`; w.style.filter = `blur(${8 * (1 - p)}px)`;
+  });
+}
+const glide = (t, keys, w = 10) => { // [[t, v], ...] spring between keys
+  let v = keys[0][1];
+  for (let i = 1; i < keys.length; i++) if (t > keys[i][0]) v = v + (keys[i][1] - v) * S(t - keys[i][0], w);
+  return v;
+};
+// calendar dots
+const cal = $('cal'); 'LMMJVSD'.split('').forEach((d, i) => { const e = document.createElement('div'); e.id = 'cd' + i;
+  e.style.cssText = 'width:34px;height:34px;border-radius:50%;border:3px solid #8A5A44;display:flex;align-items:center;justify-content:center;font:800 18px M;color:#8A5A44;box-sizing:border-box'; e.textContent = d; cal.appendChild(e); });
+
+function draw(t) {
+  // ---------- A. hook ----------
+  const HE = 3.55;
+  A('h1', t, 0, HE, { s0: 1 }); words('h1', t, [0.0, 0.2]);
+  A('h2', t, 0.82, HE, { s0: 1 }); words('h2', t, [0.82, 0.98]);
+  A('flag', t, 1.02, HE, { s0: .2, spin: -70, w: 13, rot: Math.sin(Math.max(0, t - 1.9) * 26) * 9 * Math.exp(-Math.max(0, t - 1.9) * 4) * (t > 1.9 ? 1 : 0) });
+  const ck = A('hchk', t, 1.25, 1.88, { s0: .3 }); $('hchkp').style.strokeDashoffset = 60 * (1 - S(t - 1.32, 11));
+  A('hq', t, 1.88, HE, { s0: .3, spin: 90 });
+  A('h3', t, 1.5, HE, { s0: 1 }); words('h3', t, [1.5, 1.85]);
+  A('hbub', t, 2.22, HE, { s0: .4, dy: 30, rot: Math.sin(t * 5) * 3 });
+  $('dots').textContent = '.'.repeat(1 + Math.floor((t * 4) % 3));
+  A('hbig', t, 2.9, HE, { s0: .3, spin: -40, rot: -12 + Math.sin(t * 3.4) * 4, y: Math.sin(t * 2.6) * 8 });
+
+  // ---------- B. chercher ses mots ----------
+  const BE = 5.5;
+  for (let i = 0; i < 7; i++) {
+    const a = 3.7 + i * .09;
+    A('wt' + i, t, a, BE, { s0: .4, dy: 40, x: Math.sin(t * 1.6 + i * 1.7) * 14, y: Math.cos(t * 1.3 + i) * 12, rot: Math.sin(t * 1.1 + i * 2) * 5 });
+  }
+  { // magnifier sweeps over the words
+    const u = lin(t, 3.85, 5.45), x = 80 + 760 * (0.5 - 0.5 * Math.cos(u * Math.PI * 1.5)), y = 120 + 260 * (0.5 + 0.5 * Math.sin(u * Math.PI * 3));
+    A('mag', t, 3.85, BE, { s0: .3, x, y, rot: Math.sin(u * 9) * 12 });
+  }
+  const SE = 7.42;
+  A('sent', t, 5.5, SE, { s0: .85, dy: -30 });
+  ['s0', 's1', 's2', 's3', 's4'].forEach((id, i) => { const p = S(t - (5.62 + i * .1), 14); const e = $(id); e.style.opacity = cl(p * 1.6); e.style.transform = `translateY(${18 * (1 - p)}px)`; });
+  $('sq').style.strokeDashoffset = 200 * (1 - S(t - 6.4, 9));
+  A('corr', t, 6.72, SE, { s0: .6, dy: 20 });
+  { const fl = Math.floor((t - 6.72) / .22) % 2 === 0; $('ok').style.opacity = fl ? 1 : .25; $('ko').style.opacity = fl ? .25 : 1; $('ok').style.transform = `scale(${fl ? 1.25 : 1})`; $('ko').style.transform = `scale(${fl ? 1 : 1.25})`; }
+  A('think', t, 5.85, SE, { s0: .3, rot: Math.sin(t * 3) * 10, y: Math.sin(t * 2) * 8 });
+
+  // ---------- C. simple / communiquer / deux choses ----------
+  const lit = S(t - 8.3, 10);
+  A('bulb', t, 7.46, 9.05, { s0: .5, dy: -40, y: Math.sin(t * 2.2) * 6 });
+  $('glass').setAttribute('fill', lit > .5 ? '#FFD98F' : '#E9DED3');
+  $('glow').setAttribute('opacity', (.55 * lit * (0.85 + .15 * Math.sin(t * 9))).toFixed(3));
+  $('rays').style.opacity = lit; $('rays').style.transform = `scale(${.8 + .25 * lit}) rotate(${(t - 8.3) * 25}deg)`;
+  A('simple', t, 8.3, 9.05, { s0: .6, blur: 10 });
+  A('spk', t, 9.05, 10.22, { s0: .3, dx: -80, rot: Math.sin(t * 4) * 4 });
+  A('ear', t, 9.25, 10.22, { s0: .3, dx: 80, rot: Math.sin(t * 4 + 1) * 4 });
+  A('waves', t, 9.3, 10.22, { s0: 1 });
+  for (let i = 0; i < 4; i++) { const u = ((t - 9.3) * 1.2 + i / 4) % 1; const e = $('wv' + i); e.setAttribute('transform', `translate(${u * 330},0)`); e.style.opacity = Math.sin(u * Math.PI); }
+  A('two', t, 10.22, 14.02, { s0: .2, spin: -180, w: 11, sc: glide(t, [[0, 1], [10.95, .62]]), y: glide(t, [[0, 0], [10.95, -60]]) + Math.sin(t * 2.4) * 6 });
+  A('slotL', t, 10.5, 11.1, { s0: .6, dx: -60 });
+  A('slotR', t, 10.62, 12.4, { s0: .6, dx: 60 });
+
+  // ---------- D. grammaire solide / oral régulier ----------
+  const DE = 14.02;
+  A('cardL', t, 11.08, DE, { s0: .5, spin: -8 });
+  A('br0', t, 11.68, DE, { s0: .9, dy: -120, w: 14 });
+  A('br1', t, 11.84, DE, { s0: .9, dy: -120, w: 14 });
+  A('br2', t, 12.0, DE, { s0: .9, dy: -120, w: 14 });
+  A('cardR', t, 12.38, DE, { s0: .5, spin: 8 });
+  A('eq', t, 12.5, DE, { s0: .7 });
+  for (let i = 0; i < 6; i++) $('e' + i).style.height = (20 + 58 * Math.abs(Math.sin(t * (7 + i * 1.3) + i * 1.9))) + 'px';
+  A('cal', t, 12.9, DE, { s0: .7, dy: 30 });
+  for (let i = 0; i < 7; i++) { const on = t > 13.0 + i * .085; const e = $('cd' + i);
+    e.style.background = on ? '#F2B661' : 'transparent'; e.style.borderColor = on ? '#D98E3A' : '#8A5A44'; e.style.color = on ? '#3B2620' : '#8A5A44';
+    const p = S(t - (13.0 + i * .085), 16); e.style.transform = `scale(${on ? .8 + .2 * p : 1})`; e.textContent = on ? '✓' : 'LMMJVSD'[i]; }
+
+  // ---------- E. Lougha Online + 100 % interactive ----------
+  const EE = 17.42;
+  A('brand', t, 14.08, 16.75, { s0: .6, dy: -40, sc: glide(t, [[0, 1], [15.95, .78]]), y: glide(t, [[0, 0], [15.95, -100]]) });
+  $('shine').style.left = (-120 + 1000 * lin(t, 14.45, 15.15)) + 'px';
+  const hp = A('hund', t, 16.0, EE, { s0: .6, blur: 8 });
+  $('hn').textContent = Math.round(100 * (1 - Math.pow(1 - lin(t, 16.05, 16.62), 3)));
+  A('arc', t, 16.75, EE, { s0: 1, dx: -900, w: 10 });
+  A('orb0', t, 16.8, EE, { s0: .3, y: Math.sin(t * 3) * 14, rot: Math.sin(t * 2) * 8 });
+  A('orb1', t, 16.9, EE, { s0: .3, y: Math.sin(t * 3 + 1) * 14, rot: Math.sin(t * 2 + 1) * 8 });
+  A('orb2', t, 17.0, EE, { s0: .3, y: Math.sin(t * 3 + 2) * 14 });
+  A('orb3', t, 17.1, EE, { s0: .3, y: Math.sin(t * 3 + 3) * 14 });
+
+  // ---------- F. toggles ----------
+  const FE = 20.95;
+  A('tg0', t, 17.5, FE, { s0: .85, dx: -500, w: 13 });
+  A('tg1', t, 18.28, FE, { s0: .85, dx: 500, w: 13 });
+  [[0, 17.82], [1, 18.55]].forEach(([i, at]) => { const p = S(t - at, 14); $('kn' + i).style.left = (6 + 50 * p) + 'px'; $('tr' + i).style.background = p > .5 ? '#F2B661' : 'rgba(255,255,255,.3)'; });
+  A('ring', t, 19.85, FE, { s0: 1 }); $('ringp').style.strokeDashoffset = 2400 * (1 - S(t - 19.85, 6));
+  A('spark', t, 20.4, FE, { s0: .2, spin: 60, rot: Math.sin(t * 5) * 8 });
+
+  // ---------- G. tiles ----------
+  const GE = 24.92;
+  A('t0', t, 21.15, GE, { s0: .5, dy: -160, spin: -10, w: 12, y: Math.sin(t * 2) * 5 });
+  $('mh').style.transform = `rotate(${(t - 21.15) * 540}deg)`; $('hh').style.transform = `rotate(${(t - 21.15) * 45}deg)`;
+  A('t1', t, 21.78, GE, { s0: .5, dy: -160, spin: 8, w: 12, y: Math.sin(t * 2 + 1) * 5 });
+  [['pb0', 21.95, -90], ['pb1', 22.4, 90], ['pb2', 22.85, -90]].forEach(([id, at, dx]) => { const p = S(t - at, 13); $(id).style.opacity = cl(p * 1.8); $(id).style.transform = `translateX(${dx * (1 - p)}px)`; });
+  A('t2', t, 23.48, GE, { s0: .5, dy: -160, spin: -8, w: 12, y: Math.sin(t * 2 + 2) * 5 });
+  [0, 1].forEach(i => { const u = ((t * .9) + i * .5) % 1; $('st' + i).style.opacity = Math.sin(u * Math.PI); $('st' + i).setAttribute('transform', `translate(0,${-14 * u})`); });
+  A('t2b', t, 24.2, GE, { s0: .5, dy: 30 });
+
+  // ---------- H. échanges ----------
+  const HH = 28.45;
+  A('bl', t, 25.68, HH, { s0: .3, w: 13 });
+  $('blt').textContent = t < 25.98 ? '•'.repeat(1 + Math.floor((t * 6) % 3)) : 'Bonjour, ça va ?';
+  A('br', t, 26.2, HH, { s0: .3, w: 13 });
+  $('brt').textContent = t < 26.55 ? '•'.repeat(1 + Math.floor((t * 6) % 3)) : 'Très bien, et vous ?';
+  A('c0', t, 26.98, HH, { s0: .5, dy: 60, rot: Math.sin(t * 2.2) * 2 });
+  A('c1', t, 27.28, HH, { s0: .5, dy: 60, rot: Math.sin(t * 2.2 + 1) * 2 });
+  A('c2', t, 27.58, HH, { s0: .5, dy: 60, rot: Math.sin(t * 2.2 + 2) * 2 });
+
+  // ---------- I. CTA ----------
+  const IE = 40;
+  A('clogo', t, 28.5, IE, { s0: .2, spin: -120, w: 10, y: Math.sin(t * 2) * 6 });
+  { const u = ((t - 28.9) * .7) % 1; A('cglow', t, 28.9, IE, { s0: 1, sc: 1 + .35 * u }); if (t >= 28.9) $('cglow').style.opacity = (1 - u) * .9; }
+  A('cname', t, 28.62, IE, { s0: .7, blur: 8 });
+  const press = t > 30.15 ? 1 - .06 * Math.sin(cl((t - 30.15) / .22) * Math.PI) : 1;
+  A('url', t, 28.8, IE, { s0: .7, dy: 160, w: 12, sc: press });
+  $('url').style.background = t > 30.15 && t < 30.6 ? '#FFE3B0' : '#FBF4EC';
+  { const p = S(t - 29.55, 7); const x = 1000 + (830 - 1000) * p, y = 1880 + (1625 - 1880) * p;
+    A('cur', t, 29.55, 31.0, { s0: 1, x, y, sc: t > 30.15 && t < 30.32 ? .85 : 1 });
+    const r = lin(t, 30.15, 30.75); A('rip', t, 30.15, 30.75, { s0: 1, x: 800, y: 1615, sc: 1 + 4 * r }); if (t >= 30.15 && t < 30.75) $('rip').style.opacity = 1 - r; }
+};
+const KEEPS = [[0, 0.2333, 0], [0.3, 1.7, 0.2333], [1.8333, 2.9, 1.6333], [2.9667, 3.6, 2.7], [3.6667, 3.8667, 3.3333], [3.9333, 5.1, 3.5333], [5.1333, 6.5, 4.7], [6.5333, 7.6333, 6.0667], [7.9333, 8.9667, 7.1667], [9.0333, 10.7667, 8.2], [10.8333, 10.8667, 9.9333], [10.9333, 11.0667, 9.9667], [11.1333, 12.3667, 10.1], [12.4, 14.3, 11.3333], [14.3667, 15.4667, 13.2333], [15.5, 17.5, 14.3333], [17.5333, 19.6667, 16.3333], [19.7, 21.1667, 18.4667], [21.2333, 23.2333, 19.9333], [23.4, 23.5, 21.9333], [23.5333, 25.0667, 22.0333], [25.2667, 28.6, 23.5667], [28.6333, 28.8, 26.9], [28.8667, 31.6, 27.0667]], CAPS = [[[3.66, "Vous", false], [3.89, "cherchez", false], [4.34, "vos", false], [4.51, "mots", true]], [[4.74, "et", false], [4.85, "vous", false], [5.11, "n'êtes", false], [5.51, "jamais", false], [5.74, "sûr", false]], [[5.9, "que", false], [6.08, "votre", false], [6.42, "phrase", false], [6.65, "est", false], [6.76, "correcte.", true]], [[7.5, "La raison", false], [8.15, "est", false], [8.35, "simple,", true]], [[9.0, "pour", false], [9.34, "bien", false], [9.46, "communiquer", false]], [[10.04, "il", false], [10.15, "y", false], [10.25, "a", false], [10.27, "deux", true], [10.49, "choses :", true]], [[10.9, "une", false], [11.1, "grammaire", false], [11.71, "solide", true]], [[12.09, "et", false], [12.2, "une", false], [12.4, "pratique", false], [12.97, "régulière", true], [13.52, "de", false], [13.65, "l'oral.", false]], [[14.1, "Chez", false], [14.34, "Lougha", true], [14.76, "Online,", true]], [[15.18, "votre", false], [15.48, "formation", false], [16.06, "est", false], [16.2, "100%", true], [16.79, "interactive,", true]], [[17.5, "la", false], [17.62, "grammaire", false], [18.16, "et", false], [18.31, "la", false], [18.4, "communication", false]], [[19.34, "dont", false], [19.46, "vous", false], [19.67, "avez", false], [19.91, "vraiment", true], [20.49, "besoin.", true]], [[21.0, "Les", false], [21.19, "temps,", true], [21.66, "la", false], [21.81, "construction", false], [22.55, "des", false], [22.85, "phrases", true]], [[23.19, "et", false], [23.36, "les", false], [23.51, "expressions", true], [24.23, "du", true], [24.36, "quotidien.", true]], [[25.0, "À", false], [25.34, "travers", false], [25.67, "des", false], [25.99, "échanges", true]], [[26.58, "et", false], [26.85, "des", false], [27.01, "situations", true], [27.99, "réelles.", true]], [[28.5, "Si", false], [28.61, "vous", false], [28.83, "êtes", false], [29.16, "intéressé,", false]], [[29.69, "le", false], [29.78, "lien", false], [29.97, "d'inscription", false], [30.38, "est", false], [30.5, "dans", true], [30.66, "la", true], [30.74, "bio.", true]]];
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci];
+  if (cap.dataset.i != ci) {   // build the chunk: plain words on line 1, a trailing run of key words big and gold on line 2
+    let k = c.length; while (k > 0 && c[k - 1][2]) k--; if (k === 0) k = c.length;
+    const span = (w, cls) => `<span class="cw ${cls}">${w[1]}</span>`;
+    const l1 = c.slice(0, k).map(w => span(w, w[2] ? 'ce' : '')).join(' '), l2 = c.slice(k).map(w => span(w, 'cb')).join(' ');
+    cap.innerHTML = `<div class="l1">${l1}</div>` + (l2 ? `<div class="l2">${l2}</div>` : '');
+    cap.dataset.i = ci;
+  }
+  [...cap.querySelectorAll('.cw')].forEach((e, j) => { const p = S(t - c[j][0] + .03, 16);
+    e.style.opacity = Math.min(1, p * 1.5); e.style.filter = `blur(${(1 - p) * 9}px)`; e.style.transform = `translateY(${(1 - p) * 14}px) scale(${.92 + .08 * p})`; });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+window.setT(0);
+</script></body></html>
