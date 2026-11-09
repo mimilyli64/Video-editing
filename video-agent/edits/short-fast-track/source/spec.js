@@ -15,7 +15,7 @@ window.SPEC = {
   media: {
     mg: { src: 'assets/mg.mov', width: 1080, alpha: true },
   },
-  cam: { crop: [0, 0, 720, 1280], eyes: [360, 330] },
+  cam: { crop: [0, 0, 1080, 1920], eyes: [540, 495] },   // assets/source.mp4 = the take with zoom transitions on its own jump cuts (alternating 1 / 1.15 framing, motion blur)
   cut: [],
   hold: [[0, 31.93]],   // no silence cut at all: the creator wants her natural flow (2026-11-09: « beaucoup de coupures, pas naturel »)
 
