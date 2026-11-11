@@ -96,9 +96,10 @@ def render_sample(t):
 
 
 def motion_samples(t):
-    """Number of temporal samples (180-degree shutter) from on-screen camera speed."""
+    """Number of temporal samples (180-degree shutter) from on-screen camera speed.
+    t is in scene seconds; one delivered frame spans 1/(FPS*TS) scene seconds."""
     W = _W
-    dt = 1.0 / C.FPS
+    dt = 1.0 / C.FPS / C.TS
     c1, c2 = W.camera(t), W.camera(t + dt)
     P = c1.pos + c1.f * c1.focus
     s2, z = c2.project(P[None])
@@ -109,14 +110,14 @@ def motion_samples(t):
 
 
 def render_frame(i):
-    t = i / C.FPS
+    t = i / C.FPS / C.TS          # scene time of delivered frame i
     n = motion_samples(t)
     if n == 1:
         img = render_sample(t)
     else:
         img = None
         for k in range(n):
-            ts = t + (k / (n - 1) - 0.5) * (0.5 / C.FPS)
+            ts = t + (k / (n - 1) - 0.5) * (0.5 / C.FPS / C.TS)
             s = render_sample(ts)
             img = s if img is None else img + s
         img /= n
@@ -144,7 +145,7 @@ def main():
     ap.add_argument("--stills", default="")
     ap.add_argument("--preview", action="store_true")
     ap.add_argument("--start", type=float, default=0.0)
-    ap.add_argument("--end", type=float, default=C.DUR)
+    ap.add_argument("--end", type=float, default=C.REAL_DUR)
     ap.add_argument("--jobs", type=int, default=os.cpu_count() or 4)
     ap.add_argument("--out", default="")
     a = ap.parse_args()
@@ -159,7 +160,7 @@ def main():
         for s in a.stills.split(","):
             t = float(s)
             t0 = time.time()
-            _, img = render_frame(int(round(t * C.FPS)))
+            _, img = render_frame(int(round(t * C.FPS)))   # --stills are delivered (real) seconds
             p = os.path.join(d, f"{a.fmt}_{t:05.2f}.png")
             cv2.imwrite(p, img[..., ::-1])
             print(p, f"{time.time() - t0:.2f}s")
@@ -168,7 +169,7 @@ def main():
     name = a.out or os.path.join(C.BUILD if a.preview else C.OUT, f"picture_{'16x9' if a.fmt == 'h' else '9x16'}{'_preview' if a.preview else ''}.mp4")
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(C.FPS),
            "-i", "-", "-c:v", "libx264", "-preset", "medium" if not a.preview else "veryfast",
-           "-crf", "15" if not a.preview else "22", "-pix_fmt", "yuv420p", "-movflags", "+faststart", name]
+           "-crf", "18" if not a.preview else "22", "-pix_fmt", "yuv420p", "-movflags", "+faststart", name]
     enc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     t0 = time.time()
     with Pool(a.jobs, initializer=_init, initargs=(a.fmt, W, H)) as pool:

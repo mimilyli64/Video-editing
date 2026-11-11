@@ -72,7 +72,7 @@ def draw_quad(cv, cam, tex, corners, alpha=1.0, dof=True, fog=True):
         coc = cam.coc(zc)
         if coc > 0.9:
             k = min(coc * 0.5, 40)
-            if k > 6:
+            if k > 6 and min(out.shape[:2]) >= 16:
                 small = cv2.resize(out, None, fx=0.25, fy=0.25, interpolation=cv2.INTER_AREA)
                 small = cv2.GaussianBlur(small, (0, 0), k / 4)
                 out = cv2.resize(small, (out.shape[1], out.shape[0]), interpolation=cv2.INTER_LINEAR)

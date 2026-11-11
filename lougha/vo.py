@@ -2,8 +2,9 @@
 
 1. Generate two takes of the whole script as ONE flowing read.
    - ElevenLabs (bright upbeat young female voice) when ELEVENLABS_API_KEY is set,
-   - otherwise a local neural TTS stand-in (Piper, en_US hfc_female) so the film
+   - otherwise a local neural TTS stand-in (Piper, fr_FR siwis) so the film
      can be built and timed offline.
+   The read is in French (config.LANG); all anchors are scene seconds x config.TS.
 2. Transcribe both takes (faster-whisper) and keep the word-perfect one.
 3. Cut the take only at its own pauses (silence detection), one cut per phrase.
 4. Place each phrase on its anchor (never earlier, never overlapping the previous
@@ -26,10 +27,10 @@ from . import config as C
 
 SR = 48000
 PIPER_DIR = os.environ.get("PIPER_VOICES", os.path.join(C.BUILD, "voices"))
-PIPER_VOICE = "en_US-hfc_female-medium"
+PIPER_VOICE = "fr_FR-siwis-medium"
 TAKES = [  # (name, length_scale, noise_scale, noise_w)
-    ("take1", 0.84, 0.60, 0.75),
-    ("take2", 0.80, 0.72, 0.85),
+    ("take1", 0.90, 0.60, 0.75),
+    ("take2", 0.86, 0.70, 0.85),
 ]
 SENT_SIL = 0.42
 
@@ -55,7 +56,7 @@ def take_piper(name, ls, ns, nw):
     model = os.path.join(PIPER_DIR, PIPER_VOICE + ".onnx")
     if not os.path.exists(model):
         os.makedirs(PIPER_DIR, exist_ok=True)
-        base = "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/hfc_female/medium/"
+        base = "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/siwis/medium/"
         for ext in (".onnx", ".onnx.json"):
             subprocess.run(["curl", "-sSL", "-o", os.path.join(PIPER_DIR, PIPER_VOICE + ext),
                             base + PIPER_VOICE + ext], check=True)
@@ -71,8 +72,9 @@ def take_elevenlabs(name, key):
     import urllib.request
     voice = os.environ.get("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")
     body = json.dumps({
-        "text": _tts_text().replace("Loo-gah", "Lougha"),
+        "text": _tts_text().replace("Lougha, onn laïne.", "Lougha Online."),
         "model_id": "eleven_multilingual_v2",
+        "language_code": C.LANG,
         "voice_settings": {"stability": 0.38, "similarity_boost": 0.8, "style": 0.45,
                            "use_speaker_boost": True},
     }).encode()
@@ -89,9 +91,9 @@ def take_elevenlabs(name, key):
 def transcribe(a):
     from faster_whisper import WhisperModel
     os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
-    m = WhisperModel("base.en", device="cpu", compute_type="int8")
+    m = WhisperModel("base", device="cpu", compute_type="int8")
     a16 = resample_poly(a, 16000, SR).astype(np.float32)
-    segs, _ = m.transcribe(a16, word_timestamps=True, language="en",
+    segs, _ = m.transcribe(a16, word_timestamps=True, language=C.LANG,
                            condition_on_previous_text=False)
     words = []
     for s in segs:
@@ -101,16 +103,21 @@ def transcribe(a):
 
 
 def norm(s):
-    s = s.lower().replace("loogha", "lougha")
+    import unicodedata
+    s = unicodedata.normalize("NFD", s.lower())
+    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
     return re.findall(r"[a-z]+", s)
 
 
 def word_perfect(words):
+    """Word errors against the script; the brand name (last phrase) is checked by ear,
+    since Whisper does not know the word "Lougha"."""
     got = norm(" ".join(w[2] for w in words))
-    want = norm(" ".join(p[1] for p in C.vo_script()))
-    # Whisper may hear the brand name as "Luga"/"Lugha"; accept close spellings.
-    got = ["lougha" if g in ("luga", "lugha", "lougha", "loga", "louga", "lua", "lugo", "lauga") else g for g in got]
-    errs = sum(1 for a, b in zip(got, want) if a != b) + abs(len(got) - len(want))
+    want = norm(" ".join(p[1] for p in C.vo_script()[:-1]))
+    got = got[:len(want)]
+    import difflib
+    sm = difflib.SequenceMatcher(a=want, b=got)
+    errs = sum(max(i2 - i1, j2 - j1) for op, i1, i2, j1, j2 in sm.get_opcodes() if op != "equal")
     return errs, got
 
 
@@ -147,7 +154,7 @@ def split_on_pauses(a, n):
     return rng
 
 
-DEADLINE = {14.93: 16.46}   # the tagline must clear the 16.50 breath
+DEADLINE = {k: v for k, v in C.VO_DEADLINE.items()}
 
 
 def tighten_pauses(seg, keep=0.09):
@@ -214,20 +221,21 @@ def main():
     print(f"[vo] keeping {name} (errors={errs})")
 
     rngs = split_on_pauses(a, len(script))
-    total = int(C.DUR * SR)
+    total = int(C.REAL_DUR * SR)
+    TS = C.TS
     out = np.zeros(total, np.float32)
     placed = []
     prev_end = 0.0
-    for k, ((anchor, text, _), (s, e)) in enumerate(zip(script, rngs)):
+    for k, ((anchor, text, _, hitkey), (s, e)) in enumerate(zip(script, rngs)):
         seg = a[s:e]
         # onset inside the segment (first sample above -40 dB of peak)
         env = np.abs(seg)
         on = int(np.argmax(env > env.max() * 0.03))
-        start = max(anchor, prev_end + 0.10)
-        nxt = script[k + 1][0] if k + 1 < len(script) else C.DUR
+        start = max(anchor * TS, prev_end + 0.10)
+        nxt = script[k + 1][0] * TS if k + 1 < len(script) else C.REAL_DUR
         avail = nxt - start - 0.06
         if anchor in DEADLINE:
-            avail = min(avail, DEADLINE[anchor] - start)
+            avail = min(avail, DEADLINE[anchor] * TS - start)
         dur = (len(seg) - on) / SR
         factor = 1.0
         if dur > avail:
@@ -244,38 +252,23 @@ def main():
         out[max(0, i0):i1] += seg[max(0, -i0): i1 - i0]
         prev_end = (i0 + len(seg)) / SR - 0.06
         placed.append({"anchor": anchor, "start": round(start, 3), "end": round(prev_end, 3),
-                       "text": text, "tempo": round(factor, 3)})
+                       "text": text, "tempo": round(factor, 3), "hit": hitkey})
         print(f"[vo] {anchor:6.2f} -> {start:6.2f}..{prev_end:6.2f}  x{factor:.2f}  {text}")
     report["phrases"] = placed
 
-    # word timings on the placed VO -> picture hits
+    # word timings on the placed VO -> picture hits (stored in SCENE seconds)
     words = transcribe(out)
     hits = {}
-    seen_strong = 0
+    for p in placed:
+        if p["hit"]:
+            hits[p["hit"]] = round(p["start"] / TS, 3)
     for (ws, we, w) in words:
         n = norm(w)
         if not n:
             continue
-        n = n[0]
-        if n in ("luga", "lugha", "loga", "louga", "lugo", "lauga"):
-            n = "lougha"
-        if n == "strong":
-            seen_strong += 1
-            hits["strong_roots_%d" % seen_strong] = round(float(ws), 3)
-            continue
-        if n == "endless":
-            hits["endless"] = round(float(ws), 3)
-        key2 = C.VO_WORD_HITS.get(n)
+        key2 = C.VO_WORD_HITS.get(n[0])
         if key2 and key2 not in hits:
-            hits[key2] = round(float(ws), 3)
-    # anchors are authoritative for phrase starts; whisper onsets can be ~50 ms late
-    for p in placed:
-        first = norm(p["text"])[0]
-        k2 = C.VO_WORD_HITS.get(first)
-        if first == "strong":
-            k2 = "strong_roots_%d" % (1 if p["anchor"] < 10 else 2)
-        if k2:
-            hits[k2] = p["start"]
+            hits[key2] = round(float(ws) / TS, 3)
     report["hits"] = hits
     report["words"] = [(round(float(s), 3), round(float(e), 3), w) for s, e, w in words]
     wavfile.write(os.path.join(C.BUILD, "vo.wav"), SR, (np.clip(out, -1, 1) * 32767).astype(np.int16))

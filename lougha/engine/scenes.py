@@ -152,9 +152,9 @@ class World:
         wy = -(1.65 * self.hero_scale + 1.15)
         self.word2 = Plane(self.Oh + [0, wy, -0.8], self.word1.w * 1.12, self.word1.h * 1.12, 1400, 420,
                            self.word1.tw, self.word1.th)
-        self.endtag = Plane(self.Oh + [0, wy - (2.75 if not v else 3.6), -0.8], 15.6 if not v else 12.6,
-                            2.88 if not v else 3.9, 1300 if not v else 1080, 240 if not v else 335,
-                            int((1300 if not v else 1080) * self.s), int((240 if not v else 335) * self.s))
+        self.endtag = Plane(self.Oh + [0, wy - (3.05 if not v else 3.6), -0.8], 15.6 if not v else 12.6,
+                            3.36 if not v else 3.9, 1300 if not v else 1080, 280 if not v else 335,
+                            int((1300 if not v else 1080) * self.s), int((280 if not v else 335) * self.s))
         self._build_roots()
         self._build_camera()
 
@@ -391,7 +391,7 @@ class World:
         k(16.80, hc - [0, 0, dh - 0.7], hc, 0.0)
         k(19.20, hc - [0, 0.4, dh + 1.2], hc - [0, 0.4, 0], 0.5)
         # end card: rise and settle to fit the tagline
-        e_y = -2.2 if not v else -3.0
+        e_y = -2.6 if not v else -3.0
         k(20.30, hc - [0, -e_y, dh + 3.2], hc + [0, e_y, 0], 0.8)
         k(21.20, hc - [0, -e_y, dh + 3.5], hc + [0, e_y, 0], 0.3)
         self.path = Path(K)
@@ -487,8 +487,8 @@ class World:
             st["impact"] = None
         else:
             d = t - t_land
-            st["impact"] = d
-            st["sy"] = 1.0 - 0.20 * spring(d, 2.6, 5.5)
+            st["impact"] = d * C.TS          # springs run in real seconds (stay snappy)
+            st["sy"] = 1.0 - 0.20 * spring(d * C.TS, 2.6, 5.5)
             st["roots"] = ease_out(clamp(d / 0.55), 2)
         if extra:
             st.update(extra)
@@ -552,9 +552,9 @@ class World:
         W_, H_ = 940, (620 if not v else 840)
         tex.card(20, 20, W_ - 40, H_ - 60, r=46, lip=16, shadow=20, top="deep", bot="plum", border=0.4)
         tex.spr(ui.avatar("A", int(84 * self.s), 0), 60, 58)
-        tex.text("Amira's learning journey", 166, 54, 42, 800)
-        tex.text("Spanish  ·  Level A2 to B1", 166, 108, 30, 600, "lav")
-        tex.text("Unit 4  ·  At the café", 60, 182, 34, 700, "mist")
+        tex.text(C.UI["journey_title"], 166, 54, 42, 800)
+        tex.text(C.UI["journey_sub"], 166, 108, 30, 600, "lav")
+        tex.text(C.UI["journey_unit"], 60, 182, 34, 700, "mist")
         # mini journey path
         n = 6
         px0, px1, py = 90, 850, 290
@@ -583,7 +583,7 @@ class World:
         bw, bh = 400 * pr, 110 * pr
         tex.card(470 - bw / 2, by + (1 - pr) * 40, bw, bh, r=int(55 * pr), lip=int(14 * pr), shadow=14,
                  top=mixc(C.RGB["violet"], C.RGB["lav"], 0.2 + lit), bot="violet", border=0.6, hi=0.4)
-        tex.text("START", 470, by + (1 - pr) * 40 + bh / 2 - 4, 46 * pr, 900, "white", anchor="c", tracking=0.08)
+        tex.text(C.UI["start"], 470, by + (1 - pr) * 40 + bh / 2 - 4, 42 * pr, 900, "white", anchor="c", tracking=0.08)
         # touch indicator
         if press - 0.35 < t < press + 0.4:
             mv = smooth(lin(t, press - 0.35, press - 0.04))
@@ -655,7 +655,7 @@ class World:
         tex = Tex(pl.tw, pl.th, self.s)
         x0, y0, w0, h0 = Lyt["card"]
         tex.card(x0, y0, w0, h0, r=50, lip=22, shadow=40, top="deep", bot=(44, 22, 84), border=0.35)
-        tex.text("Lesson 4  ·  Spanish to English", *Lyt["lab"], 34, 700, "lav")
+        tex.text(C.LESSON_LABEL, *Lyt["lab"], 34, 700, "lav")
         chime = C.HIT["chime1"]
         prog = 0.62 * smooth(lin(t, 2.95, 3.3)) + 0.38 * smooth(lin(t, chime, chime + 0.5))
         bx, by, bw, bh = Lyt["bar"]
@@ -667,7 +667,7 @@ class World:
         tex.spr(ui.disc(int(96 * self.s), "violet", "purple", ring="lav"), sx, sy, "c", alpha=sa)
         wv = 1 + 0.12 * math.sin(t * 20) * clamp(1 - abs(t - 3.15) / 0.3)
         tex.spr(ui.icon("speaker", int(56 * self.s)), sx + 2, sy - 4, "c", alpha=sa, scale=wv)
-        srcsz = 60 if not self.v else 54
+        srcsz = 56 if not self.v else 42
         w_ = tex.text(C.LESSON_SRC, Lyt["src"][0], Lyt["src"][1], srcsz, 700, "white", anchor="cl", alpha=sa)
         for k in range(int((w_ - 40) / 16)):
             tex.rect(Lyt["src"][0] + 12 + k * 16, Lyt["src"][1] + srcsz * 0.62, 8, 3, "lav", 0.6 * sa)
@@ -705,8 +705,8 @@ class World:
                      alpha=clamp(e * 1.5))
             tex.spr(ui.disc(int(86 * self.s), "gold", (225, 160, 20)), sx_ + 70, yy + sh / 2 - 4, "c")
             tex.spr(ui.icon("check", int(52 * self.s), "deep"), sx_ + 70, yy + sh / 2 - 8, "c")
-            tex.text("Excellent!", sx_ + 130, yy + (10 if not self.v else 22), 56, 900)
-            sub = f"{C.TEACHER}: natural word order, well done." if not self.v else f"{C.TEACHER}: natural word order."
+            tex.text(C.UI["excellent"], sx_ + 130, yy + (10 if not self.v else 22), 56, 900)
+            sub = C.UI["correction_h"] if not self.v else C.UI["correction_v"]
             tex.text(sub, sx_ + 132, yy + (80 if not self.v else 100), 32, 600, "mist")
             if not self.v:
                 tex.spr(ui.avatar("L", int(70 * self.s), 1), sx_ + sw - 70, yy + sh / 2 - 4, "c")
@@ -744,8 +744,8 @@ class World:
         hx = cx + 60
         hl = smooth(lin(t, 5.05, 5.4))
         hl2 = smooth(lin(t, 5.25, 5.6))
-        tex.text("Every lesson", hx, cyy + 50 + (1 - hl) * 24, 76, 900, alpha=hl)
-        tex.text("helps you grow.", hx, cyy + 140 + (1 - hl2) * 24, 76, 900, "lav", alpha=hl2)
+        tex.text(C.UI["every_lesson"], hx, cyy + 50 + (1 - hl) * 24, 76, 900, alpha=hl)
+        tex.text(C.UI["helps_grow"], hx, cyy + 140 + (1 - hl2) * 24, 76, 900, "lav", alpha=hl2)
         # counter in fixed digit cells (illustrative)
         val = 365 * smooth(lin(t, 5.45, 6.75))
         cell_w, cell_h = 128, 168
@@ -768,14 +768,14 @@ class World:
             self._digit(tex, str(dig), x + cell_w / 2, dy + cell_h / 2 - off, dy, cell_h, hl)
             self._digit(tex, str(nxt), x + cell_w / 2, dy + cell_h / 2 + cell_h - off, dy, cell_h, hl)
         lx = dx + 3 * (cell_w + 18) + 20
-        tex.text("days of", lx, dy + 22, 46, 800, alpha=hl)
-        tex.text("progress", lx, dy + 76, 46, 800, alpha=hl)
-        tw_ = text_w("Illustrative", int(30 * self.s), 700) / self.s
+        tex.text(C.UI["days_of"], lx, dy + 22, 46, 800, alpha=hl)
+        tex.text(C.UI["progress"], lx, dy + 76, 46, 800, alpha=hl)
+        tw_ = text_w(C.UI["illustrative"], int(30 * self.s), 700) / self.s
         tex.rect(lx, dy + 136, tw_ + 32, 44, "lip", 0.9 * hl, r=22)
-        tex.text("Illustrative", lx + 16, dy + 158, 30, 700, "lav", anchor="cl", alpha=hl)
+        tex.text(C.UI["illustrative"], lx + 16, dy + 158, 30, 700, "lav", anchor="cl", alpha=hl)
         # course bar
         by = dy + 230
-        tex.text("Course progress", hx, by, 32, 700, "mist", alpha=hl)
+        tex.text(C.UI["course_progress"], hx, by, 32, 700, "mist", alpha=hl)
         pf = smooth(lin(t, 5.6, 6.9)) * 0.86
         tex.text(f"{int(round(pf * 100))}%", cx + cw - 60, by, 32, 900, "lav", anchor="tr", alpha=hl)
         tex.bar(hx, by + 52, cw - 120, 26, pf, alpha=hl)
@@ -843,14 +843,14 @@ class World:
         h1 = smooth(lin(t, drop + 0.20, drop + 0.5))
         h2 = smooth(lin(t, drop + 0.38, drop + 0.68))
         if not v:
-            tex.text("Grow", hx, hy - 60 + (1 - h1) * 40, 128, 900, alpha=h1)
-            tex.text("together.", hx, hy + 80 + (1 - h2) * 40, 128, 900, "lav", alpha=h2)
-            tex.text("Real teachers. Real progress.", hx + 4, hy + 260, 40, 700, "mist", alpha=smooth(lin(t, drop + 0.7, drop + 1.0)))
+            tex.text(C.UI["grow"], hx, hy - 60 + (1 - h1) * 40, 116, 900, alpha=h1)
+            tex.text(C.UI["together"], hx, hy + 70 + (1 - h2) * 40, 116, 900, "lav", alpha=h2)
+            tex.text(C.UI["real_line"], hx + 4, hy + 240, 40, 700, "mist", alpha=smooth(lin(t, drop + 0.7, drop + 1.0)))
         else:
-            tex.text("Grow together.", hx, hy + (1 - h1) * 40, 104, 900, anchor="tc", alpha=h1)
-            tex.text("Real teachers. Real progress.", hx, hy + 140, 40, 700, "mist", anchor="tc", alpha=smooth(lin(t, drop + 0.7, drop + 1.0)))
-        tex.text("Spanish B1  ·  Evening group", cx + 50, cyy + 44, 36, 800, alpha=ca)
-        tex.text("This week's progress", cx + 50, cyy + 96, 30, 600, "lav", alpha=ca)
+            tex.text(C.UI["grow_together"], hx, hy + (1 - h1) * 40, 94, 900, anchor="tc", alpha=h1)
+            tex.text(C.UI["real_line"], hx, hy + 140, 40, 700, "mist", anchor="tc", alpha=smooth(lin(t, drop + 0.7, drop + 1.0)))
+        tex.text(C.UI["group"], cx + 50, cyy + 44, 36, 800, alpha=ca)
+        tex.text(C.UI["week"], cx + 50, cyy + 96, 30, 600, "lav", alpha=ca)
         rows = C.COMMUNITY
         rh = 102 if not v else 140
         r0 = cyy + 160
@@ -904,8 +904,8 @@ class World:
         bw = 200 if not self.v else 170
         bx = x + w - bw - (210 if not self.v else 230)
         tex.bar(bx, y + h / 2 - 9, bw, 18, pts / 1600, alpha=alpha, headglow=False)
-        tex.text(f"{pts:,}", x + w - 90, y + h / 2, 38 if not self.v else 42, 900, anchor="cr", alpha=alpha)
-        tex.text("pts", x + w - 30, y + h / 2 + 4, 26, 700, "lav", anchor="cr", alpha=alpha)
+        tex.text(f"{pts:,}".replace(",", " "), x + w - 90, y + h / 2, 38 if not self.v else 42, 900, anchor="cr", alpha=alpha)
+        tex.text(C.UI["pts"], x + w - 30, y + h / 2 + 4, 26, 700, "lav", anchor="cr", alpha=alpha)
         if hero and rank == 1:
             tex.spr(ui.icon("star", int(54 * self.s), "gold"), x + 52, y - 4, "c", alpha=alpha)
 
@@ -931,9 +931,9 @@ class World:
         y = y + (1 - e) * 60
         for k, c in enumerate(("lav", "violet", "purple")):
             tex.spr(ui.disc(int(22 * self.s), c, c, lip=0.0), x + 46 + k * 34, y + Ly["bar_h"] / 2, "c")
-        tex.text("Spanish B1  ·  Live class", x + 160, y + Ly["bar_h"] / 2, Ly["title_sz"], 800, anchor="cl")
+        tex.text(C.UI["call_title"], x + 160, y + Ly["bar_h"] / 2, Ly["title_sz"], 800, anchor="cl")
         # recording pill (recorded lessons available)
-        rl = "Recorded for replay"
+        rl = C.UI["recorded"]
         rw = text_w(rl, int(26 * self.s), 700) / self.s + 90
         rx = x + w - rw - 30
         tex.rect(rx, y + Ly["bar_h"] / 2 - 22, rw, 44, (60, 24, 70), 0.95, r=22)
@@ -963,7 +963,7 @@ class World:
                 tex.rect(bx - 5, by_ + bh - 1, bw + 10, 6, "lav", 0.9, r=3)
                 tex.rect(bx - 5, by_ - 5, 6, bh + 10, "lav", 0.9, r=3)
                 tex.rect(bx + bw - 1, by_ - 5, 6, bh + 10, "lav", 0.9, r=3)
-            name = f"{C.TEACHER}  ·  Teacher" if who == "teacher" else "Amira"
+            name = C.UI["teacher_tag"] if who == "teacher" else "Amira"
             nw = text_w(name, int(28 * self.s), 800) / self.s + 70
             tex.rect(bx + 18, by_ + bh - 64, nw, 46, (20, 14, 40), 0.75, r=23)
             tex.spr(ui.icon("mic", int(26 * self.s), "lav"), bx + 42, by_ + bh - 41, "c")
@@ -980,7 +980,7 @@ class World:
             tex.spr(ui.icon("chat", int(44 * self.s), "lav"), bx + 46, yy + bh / 2, "c", alpha=ap)
             # type-on
             n = int(len(line) * clamp((t - t0) / 0.45))
-            sz = 40 if not self.v else 40
+            sz = 34 if not self.v else 38
             tex.text(line[:max(1, n)], bx + 86, yy + bh / 2, sz, 800, anchor="cl", alpha=ap)
         # teacher reaction
         if t > react:
@@ -989,7 +989,7 @@ class World:
             by_ += (1 - e) * 60
             tex.card(bx + bw - 300, by_ + 26, 270, 76, r=38, lip=8, shadow=10, top="gold", bot=(232, 168, 20), border=0.0,
                      alpha=clamp(r))
-            tex.text("¡Excelente!", bx + bw - 165, by_ + 62, 36, 900, (60, 30, 90), anchor="c", alpha=clamp(r))
+            tex.text(C.UI["reaction"], bx + bw - 165, by_ + 62, 36, 900, (60, 30, 90), anchor="c", alpha=clamp(r))
             for k in range(3):
                 hp = lin(t, react + k * 0.12, react + 0.9 + k * 0.12)
                 if 0 < hp < 1:
@@ -1023,16 +1023,16 @@ class World:
             return
         v = self.v
         tex = Tex(pl.tw, pl.th, self.s)
-        names = ["English", "French", "German"]
+        names = C.UI["langs"]
         codes = ["uk", "fr", "de"]
         keys = ["en", "fr", "de"]
         native = ["English", "Français", "Deutsch"]
         hdr = smooth(lin(t, 11.5, 11.8))
         if not v:
-            tex.text("Three languages. One foundation.", 960, 60, 48, 800, "mist", anchor="tc", alpha=hdr)
+            tex.text(C.UI["langs_hdr"], 960, 60, 48, 800, "mist", anchor="tc", alpha=hdr)
         else:
-            tex.text("Three languages.", 540, 120, 60, 900, anchor="tc", alpha=hdr)
-            tex.text("One foundation.", 540, 200, 60, 900, "lav", anchor="tc", alpha=hdr)
+            tex.text(C.UI["langs_hdr_v"][0], 540, 120, 60, 900, anchor="tc", alpha=hdr)
+            tex.text(C.UI["langs_hdr_v"][1], 540, 200, 60, 900, "lav", anchor="tc", alpha=hdr)
         for k in range(3):
             tk = WT[keys[k]]
             la_ = smooth(lin(t, tk - 0.05, tk + 0.2))
@@ -1093,7 +1093,7 @@ class World:
             return
         v = self.v
         tex = Tex(pl.tw, pl.th, self.s)
-        names = ["Speaking", "Listening", "Reading", "Writing"]
+        names = C.UI["skills"]
         icons = ["speakwave", "headphones", "book", "pen"]
         keys = ["speaking", "listening", "reading", "writing"]
         merge = smooth(lin(t, 14.78, 15.15))
@@ -1110,13 +1110,15 @@ class World:
         s1 = smooth(lin(t, t1 - 0.08, t1 + 0.22))
         s2 = smooth(lin(t, min(t2, 15.55) - 0.08, min(t2, 15.55) + 0.25))
         if not v:
-            tex.text(C.TAG1, 960, uy - 400 + (1 - s1) * 40, 132, 900, anchor="tc", alpha=s1)
-            tex.text(C.TAG2, 960, uy - 245 + (1 - s2) * 40, 132, 900, "lav", anchor="tc", alpha=s2)
+            tex.text(C.TAG1, 960, uy - 380 + (1 - s1) * 40, 112, 900, anchor="tc", alpha=s1)
+            tex.text(C.TAG2, 960, uy - 240 + (1 - s2) * 40, 112, 900, "lav", anchor="tc", alpha=s2)
         else:
-            tex.text("Strong roots,", 540, uy - 570 + (1 - s1) * 40, 120, 900, anchor="tc", alpha=s1)
-            tex.text("endless", 540, uy - 420 + (1 - s2) * 40, 120, 900, "lav", anchor="tc", alpha=s2)
+            tv = C.UI["tag_v"]
+            tex.text(tv[0], 540, uy - 700 + (1 - s1) * 40, 108, 900, anchor="tc", alpha=s1)
+            tex.text(tv[1], 540, uy - 560 + (1 - s1) * 40, 108, 900, anchor="tc", alpha=s1)
+            tex.text(tv[2], 540, uy - 420 + (1 - s2) * 40, 108, 900, "lav", anchor="tc", alpha=s2)
             s3 = smooth(lin(t, min(t2, 15.55) + 0.12, min(t2, 15.55) + 0.42))
-            tex.text("possibilities.", 540, uy - 270 + (1 - s3) * 40, 120, 900, "lav", anchor="tc", alpha=s3)
+            tex.text(tv[3], 540, uy - 280 + (1 - s3) * 40, 108, 900, "lav", anchor="tc", alpha=s3)
         draw_quad(cv, cam, tex.a, pl.corners(), alpha=a)
         self.R["to_skills"].draw(cv, cam, grow=g["to_skills"], t=t, alpha=a * (1 - merge * 0.6))
         for k in range(4):
@@ -1167,12 +1169,13 @@ class World:
             pl = self.endtag
             tex = Tex(pl.tw, pl.th, self.s)
             if not self.v:
-                tex.text(C.END_TAG, 650, 20 + (1 - e) * 20, 66, 900, anchor="tc", alpha=e)
-                tex.text(C.END_SUB, 650, 130 + (1 - e2) * 20, 44, 700, "lav", anchor="tc", alpha=e2, tracking=0.06)
+                tex.text(C.UI["end_v"][0], 650, 0 + (1 - e) * 20, 60, 900, anchor="tc", alpha=e)
+                tex.text(C.UI["end_v"][1], 650, 76 + (1 - e) * 20, 60, 900, anchor="tc", alpha=e)
+                tex.text(C.END_SUB, 650, 176 + (1 - e2) * 20, 40, 700, "lav", anchor="tc", alpha=e2, tracking=0.05)
             else:
-                tex.text("Strong roots.", 540, 10 + (1 - e) * 20, 76, 900, anchor="tc", alpha=e)
-                tex.text("Endless possibilities.", 540, 110 + (1 - e) * 20, 76, 900, anchor="tc", alpha=e)
-                tex.text(C.END_SUB, 540, 240 + (1 - e2) * 20, 46, 700, "lav", anchor="tc", alpha=e2, tracking=0.06)
+                tex.text(C.UI["end_v"][0], 540, 10 + (1 - e) * 20, 70, 900, anchor="tc", alpha=e)
+                tex.text(C.UI["end_v"][1], 540, 106 + (1 - e) * 20, 70, 900, anchor="tc", alpha=e)
+                tex.text(C.END_SUB, 540, 236 + (1 - e2) * 20, 42, 700, "lav", anchor="tc", alpha=e2, tracking=0.05)
             draw_quad(cv, cam, tex.a, pl.corners(), alpha=1.0, dof=False)
 
 

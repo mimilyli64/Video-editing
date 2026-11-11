@@ -13,14 +13,20 @@ OUT = os.path.join(ROOT, "out")
 FONTS = os.path.join(ROOT, "assets", "fonts")
 
 FPS = 60
-FILM = 19.2          # main film
-END = 2.0            # end card
-DUR = FILM + END     # 21.2 s
-NFRAMES = int(round(DUR * FPS))  # 1272
+FILM = 19.2          # main film, in SCENE seconds
+END = 2.0            # end card, in SCENE seconds
+DUR = FILM + END     # 21.2 scene seconds
+# Global pacing: every scene time below is played TS x slower on screen.
+# 4/3 -> 25.6 s film + 2.67 s end card = 28.27 s, music at 75 BPM (100 / TS).
+TS = 4.0 / 3.0
+REAL_DUR = DUR * TS
+NFRAMES = int(round(REAL_DUR * FPS))  # 1696
+LANG = "fr"
 
 
 def frame(t):
-    return int(round(t * FPS))
+    """Scene seconds -> delivered 60 fps frame index."""
+    return int(round(t * TS * FPS))
 
 
 # ---------------------------------------------------------------- palette
@@ -82,30 +88,31 @@ HIT = {
     "endcard": 19.20,
 }
 
-# ---------------------------------------------------------------- voice-over
-# (anchor, spoken text, tts text).  The script is read as one flowing take and cut
-# only at its own pauses; each phrase starts on its anchor (or just after the
-# previous phrase if the read runs long).
+# ---------------------------------------------------------------- voice-over (French)
+# (anchor in scene seconds, displayed text, tts text, picture hit for the phrase onset)
+# The script is read as one flowing take and cut only at its own pauses; each phrase
+# starts on its anchor x TS (or just after the previous phrase if the read runs long).
 VO_SCRIPT = [
-    (0.50, "Every language begins with a foundation.", "Every language begins with a foundation."),
-    (2.95, "One word at a time,", "One word at a time."),
-    (4.60, "strong roots that help you grow,", "Strong roots that help you grow."),
-    (7.20, "real teachers who guide your journey,", "Real teachers who guide your journey."),
-    (9.05, "and conversations that build your confidence.", "And conversations that build your confidence."),
-    (11.67, "English,", "English."),
-    (12.42, "French,", "French."),
-    (12.98, "German...", "German."),
-    (13.70, "speaking, listening, reading and writing.", "Speaking, listening, reading and writing."),
-    (14.93, "Strong roots, endless possibilities.", "Strong roots, endless possibilities."),
-    (17.33, "Lougha Online.", "Loo-gah Online."),   # respelt so TTS says LOO-gha
+    (0.50, "Chaque langue commence par des fondations.", "Chaque langue commence par des fondations.", "every"),
+    (2.95, "Un mot à la fois,", "Un mot à la fois.", "one_word"),
+    (4.60, "des racines solides qui vous font grandir,", "Des racines solides qui vous font grandir.", "strong_roots_1"),
+    (7.20, "de vrais professeurs qui guident votre parcours,", "De vrais professeurs qui guident votre parcours.", "real_teachers"),
+    (9.05, "et des conversations qui renforcent votre confiance.", "Et des conversations qui renforcent votre confiance.", "conversations"),
+    (11.67, "Anglais,", "Anglais.", "en"),
+    (12.42, "français,", "Français.", "fr"),
+    (12.98, "allemand...", "Allemand.", "de"),
+    (13.70, "parler, écouter, lire et écrire.", "Parler, écouter, lire et écrire.", "speaking"),
+    (14.93, "Des racines solides, des possibilités infinies.", "Des racines solides, des possibilités infinies.", "strong_roots_2"),
+    (17.33, "Lougha Online.", "Lougha, onn laïne.", "logo"),   # respelt so the French voice says LOO-ga on-LINE
 ]
 # The brief's script also contains "Because learning a language opens a world of
-# possibilities." Between the 13.70 and 17.33 anchors there are 3.6 s for 22 words,
-# which no natural read can fit, so by default it is left out of the timed cut.
-# Set to True to include it (the phrases after it then slide later).
+# possibilities." ("Parce qu'apprendre une langue ouvre un monde de possibilités.").
+# Between the 13.70 and 17.33 anchors there is no room for it at a natural pace, so by
+# default it is left out of the timed cut. Set to True to include it.
 INCLUDE_BECAUSE_LINE = False
-BECAUSE = (14.60, "Because learning a language opens a world of possibilities.",
-           "Because learning a language opens a world of possibilities.")
+BECAUSE = (14.60, "Parce qu'apprendre une langue ouvre un monde de possibilités.",
+           "Parce qu'apprendre une langue ouvre un monde de possibilités.", None)
+VO_DEADLINE = {14.93: 16.46}   # the tagline must clear the 16.50 breath (scene s)
 
 
 def vo_script():
@@ -115,23 +122,18 @@ def vo_script():
     return s
 
 
-# words whose spoken onset drives a picture hit
-VO_WORD_HITS = {
-    "every": "every", "one": "one_word", "strong": "strong_roots_1",
-    "real": "real_teachers", "conversations": "conversations",
-    "english": "en", "french": "fr", "german": "de",
-    "speaking": "speaking", "listening": "listening", "reading": "reading",
-    "writing": "writing", "lougha": "logo",
-}
+# spoken words (inside phrases) whose onset drives a picture hit
+VO_WORD_HITS = {"ecouter": "listening", "lire": "reading", "ecrire": "writing", "possibilites": "endless"}
 DEFAULT_WORD_TIMES = {
     "every": 0.50, "one_word": 2.95, "strong_roots_1": 4.60, "real_teachers": 7.20,
-    "conversations": 9.30, "en": 11.67, "fr": 12.42, "de": 12.98, "speaking": 13.70,
+    "conversations": 9.05, "en": 11.67, "fr": 12.42, "de": 12.98, "speaking": 13.70,
     "listening": 14.05, "reading": 14.38, "writing": 14.62, "strong_roots_2": 14.93,
     "endless": 15.60, "logo": 17.33,
 }
 
 
 def word_times():
+    """Picture hits in SCENE seconds."""
     p = os.path.join(BUILD, "vo_timing.json")
     t = dict(DEFAULT_WORD_TIMES)
     if os.path.exists(p):
@@ -140,11 +142,13 @@ def word_times():
     return t
 
 
-# ---------------------------------------------------------------- copy (fictional data)
+# ---------------------------------------------------------------- copy (French interface, fictional data)
+# The lesson and the live class teach English (one of the three languages Lougha teaches).
 STUDENT = "Amira"
-TEACHER = "Ms. Laila"
-LESSON_PROMPT = "Translate this sentence."
-LESSON_SRC = "Quiero un café, por favor."
+TEACHER = "Mme Laila"
+LESSON_LABEL = "Leçon 4  ·  Français vers anglais"
+LESSON_PROMPT = "Traduisez cette phrase."
+LESSON_SRC = "Je voudrais un café, s'il vous plaît."
 LESSON_TILES = ["I", "would like", "a", "coffee,", "please."]
 LESSON_BANK_ORDER = [3, 0, 4, 1, 2]   # shuffled order in the word bank
 TILE_TIMES = [3.30, 3.44, 3.58, 3.72, 3.86]  # each tile lifts then snaps (+0.16 s)
@@ -158,9 +162,42 @@ VOCAB = {
     "fr": ["bonjour", "ami", "voyage", "grandir"],
     "de": ["hallo", "Freund", "Reise", "wachsen"],
 }
-TEACHER_LINE = "¡Hola! ¿Qué tal tu día?"
-STUDENT_LINE = "¡Muy bien! Pedí un café en español."
-TAG1 = "Strong roots,"
-TAG2 = "endless possibilities."
-END_TAG = "Strong roots. Endless possibilities."
-END_SUB = "Learn. Grow. Connect."
+TEACHER_LINE = "Hi Amira! How was your day?"
+STUDENT_LINE = "Great! I ordered a coffee in English."
+TAG1 = "Des racines solides,"
+TAG2 = "des possibilités infinies."
+END_TAG = "Des racines solides. Des possibilités infinies."
+END_SUB = "Apprendre. Grandir. Se connecter."
+
+UI = {
+    "journey_title": "Le parcours d'Amira",
+    "journey_sub": "Anglais  ·  du niveau A2 au B1",
+    "journey_unit": "Unité 4  ·  Au café",
+    "start": "COMMENCER",
+    "excellent": "Excellent !",
+    "correction_h": "Mme Laila : ordre des mots naturel, bravo.",
+    "correction_v": "Mme Laila : ordre des mots naturel.",
+    "every_lesson": "Chaque leçon",
+    "helps_grow": "vous fait grandir.",
+    "days_of": "jours de",
+    "progress": "progrès",
+    "illustrative": "Illustratif",
+    "course_progress": "Progression du cours",
+    "grow": "Grandir",
+    "together": "ensemble.",
+    "grow_together": "Grandir ensemble.",
+    "real_line": "De vrais profs. De vrais progrès.",
+    "group": "Anglais B1  ·  Groupe du soir",
+    "week": "Progrès de la semaine",
+    "pts": "pts",
+    "call_title": "Anglais B1  ·  Cours en direct",
+    "recorded": "Enregistré pour le replay",
+    "teacher_tag": "Mme Laila  ·  Professeure",
+    "reaction": "Excellent !",
+    "langs": ["Anglais", "Français", "Allemand"],
+    "langs_hdr": "Trois langues. Une seule fondation.",
+    "langs_hdr_v": ["Trois langues.", "Une seule fondation."],
+    "skills": ["Parler", "Écouter", "Lire", "Écrire"],
+    "tag_v": ["Des racines", "solides, des", "possibilités", "infinies."],
+    "end_v": ["Des racines solides.", "Des possibilités infinies."],
+}

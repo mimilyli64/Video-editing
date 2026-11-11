@@ -1,7 +1,11 @@
 # Lougha Online — "The Roots"
 
 A brand film built entirely in code: a Python renderer (NumPy, Pillow, OpenCV) with a real perspective camera.
-It runs 19.2 s plus a 2 s end card at 60 fps, in 16:9 (1920×1080) and a rebuilt 9:16 (1080×1920).
+**French version.** It runs 25.6 s plus a 2.67 s end card (28.27 s) at 60 fps, in 16:9 (1920×1080) and a rebuilt 9:16 (1080×1920).
+
+**Pacing.** The beat sheet is authored in the brief's original "scene" seconds (19.2 s plus a 2 s end card). `config.TS = 4/3` plays every beat 1.33× slower, which brings the music to 75 BPM so the hits stay on the beat. `BRIEF_FRAMES.md` lists the delivered times and frames. Change `TS` to retime the whole film.
+
+**Language.** The voice-over and the whole interface are in French. The lesson (French to English translation) and the live class teach English, one of the three languages Lougha teaches. Every French string is in `config.py` (`UI`, `TAG1/2`, `END_*`, `VO_SCRIPT`).
 The camera flies continuously through the whole film, with no hard cuts.
 
 ## Deliverables (`out/`)
@@ -10,7 +14,7 @@ The camera flies continuously through the whole film, with no hard cuts.
 |---|---|
 | `Lougha_TheRoots_16x9_60fps.mp4` | 1920×1080, 60 fps, H.264 + AAC 320k |
 | `Lougha_TheRoots_9x16_60fps.mp4` | 1080×1920, 60 fps, re-laid-out vertical |
-| `mix.wav` | master, 48 kHz / 24-bit, −14 LUFS integrated, ≤ −1.25 dBTP |
+| `mix.wav` | master (French voice-over), 48 kHz / 24-bit, −14 LUFS integrated, ≤ −1.25 dBTP |
 | `cue_sheet.csv` | every sound cue with its time and 60 fps frame |
 | `BRIEF_FRAMES.md` | the beat sheet, fixed hits and voice-locked hits in frames |
 
@@ -44,9 +48,9 @@ python3 -m lougha.render --fmt v --scale .5 --preview
 
 ## Notes and deviations
 
-- **Voice engine.** The pipeline calls ElevenLabs (`eleven_multilingual_v2`) when `ELEVENLABS_API_KEY` is set (voice choice: `ELEVENLABS_VOICE_ID`). This build had no key and no access to the ElevenLabs API, so the voice is a local neural TTS stand-in (Piper `en_US-hfc_female`), run through the same two-take, word-perfect and cut-at-pauses process. To swap in ElevenLabs, re-run `vo.py` → `render` → `audio` → `master`. The picture re-locks to the new word timings automatically.
-- **Script length.** The brief's script includes "Because learning a language opens a world of possibilities." There are 3.6 s between the 13.70 and 17.33 anchors, and the 22 words there cannot fit at a natural pace, so that sentence is left out of the timed cut. To restore it, set `INCLUDE_BECAUSE_LINE = True` in `config.py`; the later phrases then slide.
-- To land the anchors, two phrases are read 1.3× faster and some comma pauses are tightened ("speaking, listening, reading and writing" and "Strong roots, endless possibilities"). The last word of the tagline runs into the 16.50 breath and ends just as the tree lands at 16.80.
+- **Voice engine.** The pipeline calls ElevenLabs (`eleven_multilingual_v2`) when `ELEVENLABS_API_KEY` is set (voice choice: `ELEVENLABS_VOICE_ID`). This build had no key and no access to the ElevenLabs API, so the voice is a local neural French TTS stand-in (Piper `fr_FR-siwis`), run through the same two-take, word-perfect and cut-at-pauses process. To swap in ElevenLabs, re-run `vo.py` → `render` → `audio` → `master`. The picture re-locks to the new word timings automatically.
+- **Script length.** The line "Parce qu'apprendre une langue ouvre un monde de possibilités." is still left out of the timed cut, because there is no room for it before the tagline. To restore it, set `INCLUDE_BECAUSE_LINE = True` in `config.py`.
+- To land the anchors, two phrases are read slightly faster: "parler, écouter, lire et écrire" at 1.25× and the tagline at 1.18×. Everything else is at natural pace, and the tagline now finishes before the breath.
 - **Illustrative data.** The "365 days of progress" counter is labelled *Illustrative*. Every student name, score and lesson is fictional. There are no prices, dates, schedules or offers.
 - **Fonts.** Nunito (SIL OFL, `assets/fonts/`) is the rounded sans for every Lougha string.
 - A layered Resolve project is not included. The stems are written to `build/stem_{vo,music,sfx}.wav` for that.

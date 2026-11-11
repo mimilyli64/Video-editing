@@ -1,4 +1,4 @@
-"""Original music (100 BPM, D major), the Lougha sonic identity, ~120 synthesized
+"""Original music (written at 100 BPM, delivered at 75 BPM by the global pacing TS, D major), the Lougha sonic identity, ~120 synthesized
 sound cues locked to the picture, and the final mix.
 
   python3 -m lougha.audio     -> build/music.wav, build/sfx.wav, out/mix.wav, out/cue_sheet.csv
@@ -19,9 +19,9 @@ from scipy.signal import butter, lfilter, sosfilt, fftconvolve
 from . import config as C
 
 SR = 48000
-N = int(C.DUR * SR) + SR // 2
+N = int(C.REAL_DUR * SR) + SR // 2
 BPM = 100
-BEAT = 60 / BPM          # 0.6 s
+BEAT = 60 / BPM          # 0.6 scene s = 0.8 s delivered (75 BPM)
 BAR = 4 * BEAT
 RNG = np.random.RandomState(1234)
 WT = C.word_times()
@@ -68,7 +68,8 @@ class Bus:
         self.R = np.zeros(N, np.float64)
 
     def add(self, t, sig, gain=1.0, pan=0.0):
-        i = int(t * SR)
+        """t is in SCENE seconds (x TS on the delivered timeline)."""
+        i = int(t * C.TS * SR)
         if i >= N or len(sig) == 0:
             return
         if i < 0:
@@ -444,7 +445,7 @@ def music():
     # rising build into the breath
     bus.add(15.2, noise_sweep(1.3, 400, 7000, 0.9, shape=lambda u: u ** 2) * 0.35, 0.6)
     # the breath: only a reversed swell
-    bus.add(land - 0.32, reverse_swell(0.32), 0.9)
+    bus.add(land - 0.32, reverse_swell(0.32 * C.TS), 0.9)
     # 16.80 full chord + low hit, ringing under the end card
     for k, nt in enumerate(["D2", "A2", "D3", "F#3", "A3", "D4", "F#4", "A4", "D5"]):
         bus.add(land + k * 0.008, felt(mf(m(nt)), 4.4, 0.95), 0.62, (k - 4) * 0.12)
@@ -633,7 +634,7 @@ def main():
     for t, name, fn, g, pan in Q:
         sig = fn()
         bus.add(t, sig, g, pan)
-        rows.append((f"{t:.3f}", int(round(t * C.FPS)), name))
+        rows.append((f"{t * C.TS:.3f}", C.frame(t), name))
     sfx = reverb(bus.st(), 0.16, 1.2)
     with open(os.path.join(C.OUT, "cue_sheet.csv"), "w", newline="") as f:
         w = csv.writer(f)
@@ -668,7 +669,7 @@ def main():
     duck_db = -9.0 * sm
     # dip music under the hero brand sounds
     for th in (C.HIT["chime1"], C.HIT["rank1"], WT["logo"], C.HIT["fanfare"]):
-        i0, i1 = int((th - 0.05) * SR), int((th + 0.7) * SR)
+        i0, i1 = int((th * C.TS - 0.05) * SR), int((th * C.TS + 0.7) * SR)
         ramp = np.sin(np.linspace(0, np.pi, i1 - i0)) * -5.0
         duck_db[i0:i1] = np.minimum(duck_db[i0:i1], ramp + duck_db[i0:i1])
     gain = 10 ** (duck_db / 20)
@@ -710,11 +711,11 @@ def main():
     for name, x in (("music", mus_d), ("sfx", sfx), ("vo", vo_st)):
         wavfile.write(os.path.join(C.BUILD, f"stem_{name}.wav"), SR, np.clip(x, -1, 1).astype(np.float32))
     mix = vo_st + mus_d + sfx
-    mix = mix[: int(C.DUR * SR)]
+    mix = mix[: int(C.REAL_DUR * SR)]
     # gentle fade at the very end of the end card
     n = len(mix)
     fade = np.ones(n)
-    f0 = int((C.DUR - 0.5) * SR)
+    f0 = int((C.REAL_DUR - 0.5) * SR)
     fade[f0:] = np.linspace(1, 0, n - f0) ** 1.5
     mix *= fade[:, None]
     pre = os.path.join(C.BUILD, "mix_pre.wav")
