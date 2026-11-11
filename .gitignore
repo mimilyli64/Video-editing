@@ -7,3 +7,4 @@ video-agent/edits/*/frames/
 video-agent/edits/*/stills/
 video-agent/edits/*/files/
 video-agent/edits/*/.cache/
+video-agent/edits/*/source/clips/

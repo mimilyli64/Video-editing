@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "name": "ref",
+  "creator": {
+    "lang": "fr"
+  },
+  "colors": {
+    "paper": "#1A1024",
+    "ink": "#FFFFFF",
+    "accent": "#8A3FE0",
+    "pop": "#B50CE1"
+  },
+  "font": {
+    "family": "Montserrat",
+    "src": "video-agent/styles/ref/fonts/montserrat-latin-700-normal.woff2"
+  },
+  "paper": {
+    "bg": "flat",
+    "grain": 0
+  },
+  "layout": {
+    "seam": 0
+  },
+  "captions": {
+    "style": "rise",
+    "block": false,
+    "font": "Montserrat",
+    "size": 52,
+    "weight": 700,
+    "maxWords": 6
+  },
+  "display": {
+    "font": "Montserrat",
+    "weight": 800,
+    "flat": true
+  },
+  "cuts": "hard",
+  "zoom": {
+    "drift": 0
+  },
+  "pace": {
+    "speed": 1.0,
+    "tighten": {
+      "sentence": 0.15,
+      "comma": 0.08,
+      "word": 0.04,
+      "lead": 0.05,
+      "tail": 0.6
+    }
+  },
+  "visual": "motion",
+  "music": {
+    "mute": true
+  },
+  "grade": "eq=contrast=1.04:saturation=1.06",
+  "sfx": {
+    "accents": 0
+  },
+  "notes": [
+    "COULEURS : ne pas reprendre le violet/magenta/turquoise de la référence. Prendre la palette de la vidéo de la créatrice (décor, tenue) et l'appliquer à l'accent, aux pilules, aux badges et au CTA.",
+    "Marque : logo Lougha Online (assets/logos/lougha-online.png), site Loughaonline.com, même CTA final (pilule + curseur qui clique).",
+    "Voix en darija, sous-titres traduits en français.",
+    "PLUS RICHE que la référence : illustrations flat animées et motion graphics sur chaque idée (un élément qui agit toutes les 1,5 à 2,5 s), jamais une image posée qui ne bouge pas. Très important pour la créatrice.",
+    "Sous-titres en français, Montserrat Bold blanc avec ombre douce, 1 à 2 lignes centrées au niveau de la poitrine (~52 % de la hauteur), mot par mot qui apparaît en fondu flou.",
+    "Le mot-clé de chaque phrase passe en violet (accent) sur sa propre ligne, plus gros (x1.3).",
+    "Accroche : sous-titre en serif blanc avec le chiffre clé énorme en magenta (#B50CE1).",
+    "Un élément graphique toutes les 1,5 à 3 s, posé sur le mot qui le nomme : stickers (?, drapeau), pastille logo + nom, texte courbé en haut, pilules empilées, mot entouré au trait violet, badges 3D lumineux, icônes carrées violettes dans les coins, illustration flat, livre/produit réel.",
+    "Les éléments arrivent avec un mouvement (glissé, pop d'échelle, rotation), restent posés, sortent net. Jamais sur le visage.",
+    "CTA final : pilule turquoise avec l'URL en bas du cadre + curseur qui clique.",
+    "Pas de musique. Sons seulement : tension tonale sur l'accroche coupée net sur le changement de plan, un ding à l'arrivée du logo, un whoosh court quand les pilules glissent. 3 à 4 sons max.",
+    "Prises assemblées avec des jump cuts : alterner le cadrage (1 / 1,12 ancré sur le visage). Vers un plan serré : zoom avant en accélération sur les 0,22 s avant la coupe, la prise suivante démarre à ce cadrage. Vers un plan large : la prise suivante démarre plus serrée et dézoome en douceur (0,45 s). Léger push 0,5 %/s entre les coupes. JAMAIS de flou de mouvement (rejeté : « vraiment nul »).",
+    "Silences : couper les blancs ENTRE les phrases (silences mesurés au silencedetect -35 dB, ramenés à ~0,2 s de respiration, via spec.cut), garder les pauses des virgules. Jamais de micro-coupes automatiques (tighten gap 99). Chaque coupe reçoit la transition zoom avant / zoom arrière."
+  ]
+}

@@ -1,0 +1,288 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:F;src:url(fonts/fredoka-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:F;src:url(fonts/fredoka-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:F;src:url(fonts/fredoka-latin-700-normal.woff2);font-weight:700}
+:root{--navy:#14365C;--blue:#1FA2E0;--green:#7CC242;--yellow:#FFC93C;--orange:#F7922A;--cream:#FFF8EC;--red:#E8453C}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:F,sans-serif;position:relative}
+.a{position:absolute;opacity:0;transform-origin:50% 50%}
+.st{border:8px solid #fff;border-radius:40px;box-shadow:0 18px 40px rgba(10,25,45,.38);box-sizing:border-box}
+.card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-weight:700}
+.chip{display:flex;align-items:center;gap:16px;padding:0 34px;height:104px;border-radius:999px;font-weight:700;font-size:46px;color:#fff;border:7px solid #fff;box-shadow:0 14px 32px rgba(10,25,45,.35);white-space:nowrap;box-sizing:border-box}
+.big{font-weight:700;color:#fff;text-align:center;-webkit-text-stroke:0;text-shadow:0 6px 0 var(--navy),0 10px 26px rgba(10,25,45,.55)}
+.shadow{filter:drop-shadow(0 14px 22px rgba(10,25,45,.4))}
+#cap{position:absolute;left:30px;width:1020px;top:1360px;text-align:center}
+#cap .l1{font:600 64px F;color:#fff;line-height:1.12}
+#cap .l2{font:700 92px F;color:var(--yellow);line-height:1.05;margin-top:2px}
+#cap .cw{display:inline-block;text-shadow:0 4px 0 var(--navy),0 0 3px var(--navy),0 8px 22px rgba(10,25,45,.6)}
+#cap .ce{color:var(--yellow);font-weight:700}
+.ltr{display:inline-block}
+</style></head><body>
+
+<!-- ===== HOOK 0.38 - 3.87 ===== -->
+<div id="h1" class="a big" style="left:0;width:1080px;top:110px;font-size:66px;font-weight:600">Le meilleur</div>
+<div id="h2" class="a big" style="left:0;width:1080px;top:180px;font-size:118px;color:var(--yellow)">investissement ?</div>
+<div id="gold" class="a st card" style="left:720px;top:470px;width:300px;height:250px;background:var(--yellow)"><img src="icons/coin.png" width="130"><span style="font-size:48px;color:var(--navy)">L'or</span></div>
+<div id="home" class="a st card" style="left:720px;top:760px;width:300px;height:250px;background:var(--blue)"><img src="icons/house.png" width="130"><span style="font-size:44px">Immobilier</span></div>
+<img id="x1" class="a" src="icons/cross.png" style="left:800px;top:500px;width:150px">
+<img id="x2" class="a" src="icons/cross.png" style="left:800px;top:790px;width:150px">
+<div id="kid" class="a st card" style="left:190px;top:130px;width:700px;height:250px;background:var(--green);flex-direction:row;gap:26px"><img src="icons/trophy.png" width="150"><span style="font-size:76px;line-height:1">Votre<br>enfant</span></div>
+<img id="sp0" class="a" src="icons/sparkles.png" style="left:880px;top:80px;width:150px">
+
+<!-- ===== B1 4.53 - 6.97 apprendre l'anglais avant l'âge adulte ===== -->
+<div id="uk" class="a shadow" style="left:70px;top:150px;width:230px;height:230px">
+  <svg viewBox="0 0 60 60" width="230" height="230"><defs><clipPath id="cc"><circle cx="30" cy="30" r="27"/></clipPath></defs>
+  <g clip-path="url(#cc)"><rect width="60" height="60" fill="#1F3F8F"/>
+  <path d="M0 0 L60 60 M60 0 L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0 L60 60 M60 0 L0 60" stroke="#D52B2B" stroke-width="4"/>
+  <path d="M30 0 V60 M0 30 H60" stroke="#fff" stroke-width="16"/><path d="M30 0 V60 M0 30 H60" stroke="#D52B2B" stroke-width="9"/></g>
+  <circle cx="30" cy="30" r="27" fill="none" stroke="#fff" stroke-width="4"/></svg></div>
+<div id="bA" class="a st card" style="left:430px;top:200px;width:160px;height:160px;background:var(--orange);font-size:100px;border-radius:30px">A</div>
+<div id="bB" class="a st card" style="left:610px;top:200px;width:160px;height:160px;background:var(--green);font-size:100px;border-radius:30px">B</div>
+<div id="bC" class="a st card" style="left:790px;top:200px;width:160px;height:160px;background:var(--blue);font-size:100px;border-radius:30px">C</div>
+<div id="age" class="a" style="left:90px;top:410px;width:900px;height:130px">
+  <div style="position:absolute;left:0;top:30px;width:900px;height:44px;border-radius:22px;background:rgba(255,255,255,.35);border:5px solid #fff;box-sizing:border-box"></div>
+  <div id="ageF" style="position:absolute;left:5px;top:35px;width:0;height:34px;border-radius:17px;background:var(--green)"></div>
+  <div style="position:absolute;left:-10px;top:84px;font:700 38px F;color:#fff;text-shadow:0 3px 0 var(--navy)">Enfant</div>
+  <div style="position:absolute;right:-10px;top:84px;font:700 38px F;color:#fff;text-shadow:0 3px 0 var(--navy)">Adulte</div>
+  <img id="ageS" src="icons/star.png" style="position:absolute;top:0;left:0;width:100px">
+</div>
+
+<!-- ===== B2 7.97 - 12.0 apprentissage / prononciation / éviter ===== -->
+<div id="c1" class="a chip" style="left:40px;top:160px;background:var(--blue)"><img src="icons/books.png" width="70">Apprentissage <span id="c1k" style="color:var(--yellow)">✓</span></div>
+<div id="c2" class="a chip" style="left:150px;top:300px;background:var(--orange)"><img src="icons/mic.png" width="70">Prononciation <span id="c2k" style="color:var(--yellow)">✓</span></div>
+<div id="wave" class="a" style="left:810px;top:300px;width:210px;height:104px;display:flex;align-items:center;justify-content:space-between">
+  <i id="w0" style="width:22px;border-radius:11px;background:#fff"></i><i id="w1" style="width:22px;border-radius:11px;background:var(--yellow)"></i><i id="w2" style="width:22px;border-radius:11px;background:#fff"></i><i id="w3" style="width:22px;border-radius:11px;background:var(--yellow)"></i><i id="w4" style="width:22px;border-radius:11px;background:#fff"></i><i id="w5" style="width:22px;border-radius:11px;background:var(--yellow)"></i></div>
+<div id="warn" class="a st card" style="left:270px;top:440px;width:540px;height:120px;background:var(--red);flex-direction:row;gap:18px;border-radius:999px"><img src="icons/warning.png" width="80"><span style="font-size:54px">À éviter !</span></div>
+
+<!-- ===== C. Macron clips 11.06 - 16.9 ===== -->
+<div id="cardL" class="a st" style="left:24px;top:520px;width:376px;padding:0;overflow:hidden;background:#000;border-radius:34px"><canvas id="cvB" width="360" height="317" style="display:block"></canvas></div>
+<div id="cardR" class="a st" style="left:688px;top:440px;width:356px;padding:0;overflow:hidden;background:#000;border-radius:34px"><canvas id="cvA" width="340" height="464" style="display:block"></canvas></div>
+<div id="tagL" class="a chip" style="left:70px;top:880px;height:90px;font-size:40px;background:var(--orange)">Comme ça…</div>
+<div id="tagR" class="a chip" style="left:740px;top:940px;height:90px;font-size:40px;background:var(--blue)">…ou ça !</div>
+<div id="spkL" class="a" style="left:310px;top:470px;width:110px;height:110px;border-radius:50%;background:var(--yellow);border:7px solid #fff;display:flex;align-items:center;justify-content:center;font-size:58px;box-sizing:border-box">🔊</div>
+<div id="spkR" class="a" style="left:640px;top:390px;width:110px;height:110px;border-radius:50%;background:var(--yellow);border:7px solid #fff;display:flex;align-items:center;justify-content:center;font-size:58px;box-sizing:border-box">🔊</div>
+<img id="lolL" class="a" src="icons/face-with-tears-of-joy.png" style="left:290px;top:820px;width:140px">
+<img id="lolR" class="a" src="icons/face-with-tears-of-joy.png" style="left:640px;top:860px;width:140px">
+<div id="mtitle" class="a big" style="left:0;width:1080px;top:150px;font-size:84px">L'anglais de <span style="color:var(--yellow)">Macron</span> 😅</div>
+
+<!-- ===== D. KidStudio + passive list + 15 min ===== -->
+<img id="robot" class="a" src="icons/robot-a.png" style="left:40px;top:110px;width:330px">
+<div id="wm" class="a" style="left:380px;top:200px;width:660px;height:210px;border-radius:44px;background:var(--cream);border:8px solid #fff;box-shadow:0 18px 40px rgba(10,25,45,.38);overflow:hidden;box-sizing:border-box"><img src="icons/wordmark.png" style="width:640px;margin-top:2px"></div>
+<div id="p0" class="a chip" style="left:60px;top:150px;background:#8A94A6"><img src="icons/headphone.png" width="70">Écouter</div>
+<div id="p1" class="a chip" style="left:330px;top:285px;background:#8A94A6"><img src="icons/pencil.png" width="70">Recopier</div>
+<div id="p2" class="a chip" style="left:120px;top:420px;background:#8A94A6"><img src="icons/memo.png" width="70">Listes par cœur</div>
+<div id="tmr" class="a st card" style="left:740px;top:150px;width:290px;height:250px;background:var(--navy);gap:0"><img src="icons/stopwatch.png" width="110"><span id="tmrT" style="font-size:66px;font-variant-numeric:tabular-nums">00:00</span></div>
+<img id="yawn" class="a" src="icons/yawning-face.png" style="left:780px;top:430px;width:200px">
+<img id="batt" class="a" src="icons/low-battery.png" style="left:640px;top:500px;width:120px">
+
+<!-- ===== E. L'inverse ===== -->
+<div id="inv" class="a st card" style="left:190px;top:150px;width:700px;height:200px;background:var(--orange);border-radius:999px;font-size:104px">L'inverse !</div>
+<div id="pas" class="a chip" style="left:180px;top:410px;background:#8A94A6;font-size:44px"><img src="icons/sleeping-face.png" width="74">Cours où il subit</div>
+<svg id="pasX" class="a" style="left:160px;top:380px" width="760" height="170" viewBox="0 0 760 170"><path id="pasXp" d="M20 150 L740 20" stroke="#E8453C" stroke-width="18" stroke-linecap="round" fill="none" stroke-dasharray="760" stroke-dashoffset="760"/></svg>
+<div id="zero" class="a st card" style="left:800px;top:560px;width:220px;height:170px;background:var(--red);font-size:80px;border-radius:34px">0 %</div>
+
+<!-- ===== F. Interactive ===== -->
+<div id="seance" class="a chip" style="left:330px;top:110px;height:92px;font-size:42px;background:var(--navy)">Chaque séance</div>
+<div id="inter" class="a" style="left:0;width:1080px;top:200px;text-align:center;font:700 124px F;letter-spacing:2px"></div>
+<div id="f0" class="a st card" style="left:60px;top:360px;width:290px;height:190px;background:var(--green)"><img src="icons/raising-hands.png" width="100"><span style="font-size:42px">Participe</span></div>
+<div id="f1" class="a st card" style="left:395px;top:360px;width:290px;height:190px;background:var(--yellow)"><img src="icons/star-struck.png" width="100"><span style="font-size:42px;color:var(--navy)">Réagit</span></div>
+<div id="f2" class="a st card" style="left:730px;top:360px;width:290px;height:190px;background:var(--blue)"><img src="icons/speaking-head.png" width="100"><span style="font-size:42px">Parle !</span></div>
+
+<!-- ===== G. regarde pas / participe / supports animés ===== -->
+<div id="tv" class="a st card" style="left:60px;top:150px;width:260px;height:230px;background:#8A94A6"><img src="icons/television.png" width="130"><span style="font-size:38px">Regarder</span></div>
+<img id="tvX" class="a" src="icons/cross.png" style="left:115px;top:170px;width:150px">
+<div id="part" class="a st card" style="left:760px;top:150px;width:260px;height:230px;background:var(--green)"><img src="icons/clapping-hands.png" width="130"><span style="font-size:38px">Participer</span></div>
+<img id="partK" class="a" src="icons/check.png" style="left:930px;top:120px;width:110px">
+<div id="screen" class="a st" style="left:300px;top:380px;width:480px;height:280px;background:var(--navy);overflow:hidden;border-radius:34px">
+  <div id="sh0" style="position:absolute;width:70px;height:70px;border-radius:50%;background:var(--yellow)"></div>
+  <div id="sh1" style="position:absolute;width:64px;height:64px;border-radius:16px;background:var(--green)"></div>
+  <div id="sh2" style="position:absolute;width:0;height:0;border-left:40px solid transparent;border-right:40px solid transparent;border-bottom:70px solid var(--orange)"></div>
+  <div style="position:absolute;left:14px;bottom:12px;font:700 32px F;color:#fff">Supports animés</div></div>
+<img id="pal" class="a" src="icons/palette.png" style="left:700px;top:560px;width:140px">
+
+<!-- ===== H. Zoom live + 4 compétences ===== -->
+<div id="call" class="a st" style="left:150px;top:120px;width:780px;height:430px;background:#1C2433;border-radius:34px;overflow:hidden">
+  <div style="position:absolute;left:0;top:0;width:100%;height:70px;background:#2A3548;display:flex;align-items:center;gap:14px;padding-left:22px;box-sizing:border-box">
+    <span id="live" style="background:var(--red);color:#fff;font:700 32px F;padding:4px 18px;border-radius:999px">● EN DIRECT</span>
+    <span style="color:#fff;font:600 32px F;display:flex;align-items:center;gap:10px"><img src="icons/video-camera.png" width="44">Zoom</span></div>
+  <div id="g0" style="position:absolute;left:16px;top:84px;width:366px;height:162px;border-radius:18px;background:#3B6EA8;display:flex;align-items:center;justify-content:center"><img src="icons/robot-a.png" width="120"></div>
+  <div id="g1" style="position:absolute;left:398px;top:84px;width:366px;height:162px;border-radius:18px;background:#4D8F3A;display:flex;align-items:center;justify-content:center"><img src="icons/star-struck.png" width="110"></div>
+  <div id="g2" style="position:absolute;left:16px;top:258px;width:366px;height:156px;border-radius:18px;background:#B3661C;display:flex;align-items:center;justify-content:center"><img src="icons/raising-hands.png" width="110"></div>
+  <div id="g3" style="position:absolute;left:398px;top:258px;width:366px;height:156px;border-radius:18px;background:#8A3F8F;display:flex;align-items:center;justify-content:center"><img src="icons/speaking-head.png" width="110"></div></div>
+<div id="k4" class="a big" style="left:0;width:1080px;top:120px;font-size:84px"><span style="color:var(--yellow)">4</span> compétences</div>
+<div id="s0" class="a st card" style="left:50px;top:240px;width:260px;height:200px;background:var(--blue)"><img src="icons/books.png" width="100"><span style="font-size:42px">Lire</span></div>
+<div id="s1" class="a st card" style="left:770px;top:240px;width:260px;height:200px;background:var(--green)"><img src="icons/headphone.png" width="100"><span style="font-size:42px">Écouter</span></div>
+<div id="s2" class="a st card" style="left:50px;top:470px;width:260px;height:200px;background:var(--orange)"><img src="icons/pencil.png" width="100"><span style="font-size:42px">Écrire</span></div>
+<div id="s3" class="a st card" style="left:740px;top:460px;width:320px;height:220px;background:var(--yellow)"><img src="icons/chat.png" width="110"><span style="font-size:40px;color:var(--navy)">Communiquer</span></div>
+<img id="s3sp" class="a" src="icons/sparkles.png" style="left:940px;top:420px;width:120px">
+
+<!-- ===== I. CTA ===== -->
+<img id="crob" class="a" src="icons/robot-a.png" style="left:40px;top:100px;width:330px">
+<div id="cwm" class="a" style="left:380px;top:190px;width:660px;height:210px;border-radius:44px;background:var(--cream);border:8px solid #fff;box-shadow:0 18px 40px rgba(10,25,45,.38);overflow:hidden;box-sizing:border-box"><img src="icons/wordmark.png" style="width:640px;margin-top:2px"></div>
+<div id="cta" class="a" style="left:140px;top:1590px;width:800px;height:124px;border-radius:999px;background:var(--yellow);border:8px solid #fff;display:flex;align-items:center;justify-content:center;gap:18px;box-shadow:0 18px 40px rgba(10,25,45,.45);box-sizing:border-box">
+  <img src="icons/link.png" width="70"><span style="font:700 50px F;color:var(--navy)">Inscription : lien en bio</span></div>
+<div id="rip" class="a" style="left:0;top:0;width:60px;height:60px;border-radius:50%;border:7px solid #fff"></div>
+<img id="cur" class="a" src="icons/cursor.png" style="left:0;top:0;width:110px">
+<img id="party" class="a" src="icons/party-popper.png" style="left:870px;top:1440px;width:150px">
+
+<div id="cap"></div>
+
+<!--FRAMES-->
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => cl((t - a) / (b - a));
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+// playful spring (kid style): a small overshoot that settles fast
+const P = x => x <= 0 ? 0 : 1 - Math.exp(-7 * x) * Math.cos(11 * x);
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  if (t < a || t >= b) { el.style.opacity = 0; return 0; }
+  const p = o.soft ? S(t - a, 12) : P(t - a), q = S(t - a, 12), out = cl((b - t) / .14);
+  const s0 = o.s0 ?? .3, s = (s0 + (1 - s0) * p) * (o.sc ?? 1) * (.6 + .4 * out);
+  const x = (o.x || 0) + (o.dx || 0) * (1 - q), y = (o.y || 0) + (o.dy || 0) * (1 - q), r = (o.rot || 0) + (o.spin || 0) * (1 - q);
+  el.style.opacity = cl(q * 2) * out;
+  el.style.transform = `translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)` + (o.ry ? ` rotateY(${o.ry * (1 - q)}deg)` : '');
+  return p;
+}
+const wob = (t, k = 1, ph = 0) => Math.sin(t * 2.4 + ph) * 3 * k;   // gentle idle sway (deg)
+const bob = (t, k = 1, ph = 0) => Math.sin(t * 2.0 + ph) * 7 * k;   // gentle idle float (px)
+
+// clip frames
+const FA = [...document.querySelectorAll('img.fa')], FB = [...document.querySelectorAll('img.fb')];
+const cvA = $('cvA').getContext('2d'), cvB = $('cvB').getContext('2d');
+function frame(ctx, arr, ct) { const i = Math.max(0, Math.min(arr.length - 1, Math.floor(ct * 24))); const im = arr[i]; if (im && im.complete) ctx.drawImage(im, 0, 0, ctx.canvas.width, ctx.canvas.height); }
+
+// "INTERACTIVE" multicolor letters
+const COLS = ['#14365C', '#1FA2E0', '#7CC242', '#FFC93C', '#F7922A'];
+$('inter').innerHTML = 'INTERACTIVE'.split('').map((c, i) => `<span class="ltr" style="color:${COLS[i % 5] === '#14365C' ? '#fff' : COLS[i % 5]};text-shadow:0 6px 0 #14365C,0 10px 24px rgba(10,25,45,.5)">${c}</span>`).join('');
+
+function draw(t) {
+  // ---------- HOOK ----------
+  const HE = 3.86;
+  A('h1', t, 0.38, 3.35, { s0: .6, dy: -30 });
+  A('h2', t, 0.46, 3.35, { s0: .4, rot: wob(t, .6) });
+  A('gold', t, 1.68, 3.35, { dx: 200, rot: -4 + wob(t), y: bob(t) });
+  A('home', t, 2.09, 3.35, { dx: 200, rot: 4 + wob(t, 1, 1), y: bob(t, 1, 1) });
+  A('x1', t, 2.86, 3.35, { s0: 2.2, rot: -8 });
+  A('x2', t, 2.95, 3.35, { s0: 2.2, rot: 8 });
+  A('kid', t, 3.36, HE + .01, { s0: .2, spin: -12, rot: wob(t, .5) });
+  A('sp0', t, 3.5, HE + .01, { s0: .2, spin: 90, rot: wob(t, 2) });
+
+  // ---------- B1 ----------
+  const B1 = 6.98;
+  A('uk', t, 4.55, B1, { spin: -200, rot: wob(t, 1.5), y: bob(t) });
+  A('bA', t, 5.16, B1, { dy: -260, rot: -6 + wob(t) });
+  A('bB', t, 5.28, B1, { dy: -260, rot: 4 + wob(t, 1, 1) });
+  A('bC', t, 5.40, B1, { dy: -260, rot: -3 + wob(t, 1, 2) });
+  A('age', t, 6.1, B1, { s0: .8, dy: 40 });
+  { const f = 330 * S(t - 6.25, 6); $('ageF').style.width = f + 'px'; $('ageS').style.left = (f - 40) + 'px'; $('ageS').style.transform = `rotate(${t * 120}deg)`; }
+
+  // ---------- B2 ----------
+  const B2 = 11.04;
+  A('c1', t, 8.6, B2, { dx: -400, rot: wob(t, .5) }); $('c1k').style.opacity = t > 9.0 ? 1 : 0;
+  A('c2', t, 9.62, B2, { dx: 400, rot: wob(t, .5, 1) }); $('c2k').style.opacity = t > 10.1 ? 1 : 0;
+  A('wave', t, 9.75, B2, { s0: .6 });
+  for (let i = 0; i < 6; i++) $('w' + i).style.height = (24 + 64 * Math.abs(Math.sin(t * (8 + i) + i * 1.7))) + 'px';
+  A('warn', t, 10.62, B2, { s0: .2, rot: Math.sin(t * 18) * 3 * Math.exp(-Math.max(0, t - 10.62) * 3) });
+
+  // ---------- C. Macron clips ----------
+  const CE = 16.9;
+  A('mtitle', t, 11.04, CE, { s0: .5, dy: -40, rot: wob(t, .3) });
+  const pB = t >= 13.05 && t < 14.55, pA = t >= 14.8 && t < 16.95;
+  A('cardL', t, 11.08, CE, { dx: -420, spin: -10, rot: -3, sc: pB ? 1.07 : 1 });
+  A('cardR', t, 11.22, CE, { dx: 420, spin: 10, rot: 3, sc: pA ? 1.07 : 1 });
+  frame(cvB, FB, t < 13.05 ? 0 : t - 13.05); frame(cvA, FA, t < 14.8 ? 0 : t - 14.8);
+  $('cardL').style.borderColor = pB ? '#FFC93C' : '#fff'; $('cardR').style.borderColor = pA ? '#FFC93C' : '#fff';
+  A('tagL', t, 12.3, CE, { dy: 60, rot: -3 });
+  A('tagR', t, 14.48, CE, { dy: 60, rot: 3 });
+  A('spkL', t, 13.05, 14.6, { sc: 1 + .08 * Math.sin(t * 16) });
+  A('spkR', t, 14.8, 16.95, { sc: 1 + .08 * Math.sin(t * 16) });
+  A('lolL', t, 13.9, CE, { spin: 30, rot: wob(t, 3), y: bob(t, 1.5) });
+  A('lolR', t, 16.1, CE, { spin: -30, rot: wob(t, 3, 1), y: bob(t, 1.5, 1) });
+
+  // ---------- D. KidStudio / passive / 15 min ----------
+  A('robot', t, 16.92, 18.75, { dy: 300, rot: Math.sin(t * 6) * 6, y: bob(t, 1.5) });
+  A('wm', t, 17.05, 18.75, { dx: 500, rot: wob(t, .4) });
+  const DE = 23.9, fall = t > 23.5 ? (t - 23.5) : 0;
+  A('p0', t, 18.85, DE, { dx: -500, rot: wob(t, .5) + fall * 60, y: fall * fall * 1600 });
+  A('p1', t, 19.72, DE, { dx: 500, rot: wob(t, .5, 1) - fall * 50, y: fall * fall * 1700 });
+  A('p2', t, 21.47, DE, { dx: -500, rot: wob(t, .5, 2) + fall * 40, y: fall * fall * 1500 });
+  A('tmr', t, 22.3, DE, { dx: 300, rot: wob(t, .6) });
+  { const m = Math.round(15 * Math.pow(lin(t, 22.45, 23.2), 1.4)); $('tmrT').textContent = String(m).padStart(2, '0') + ':00'; }
+  A('yawn', t, 23.35, DE, { s0: .1, rot: wob(t, 2), y: bob(t) });
+  A('batt', t, 23.45, DE, { s0: .1, rot: -10 + wob(t, 2) });
+
+  // ---------- E. L'inverse ----------
+  const EE = 27.92;
+  A('inv', t, 24.28, EE, { s0: .5, ry: 180, rot: wob(t, .6) });
+  A('pas', t, 25.15, EE, { dx: -500 });
+  A('pasX', t, 26.2, EE, { s0: 1 }); $('pasXp').style.strokeDashoffset = 760 * (1 - S(t - 26.2, 9));
+  A('zero', t, 27.35, EE, { spin: 20, rot: -6 + wob(t) });
+
+  // ---------- F. Interactive ----------
+  const FE = 32.92;
+  A('seance', t, 28.28, FE, { dy: -60 });
+  A('inter', t, 29.1, FE, { s0: 1 });
+  [...$('inter').children].forEach((e, i) => { const p = P(t - 29.12 - i * .045); e.style.opacity = cl(S(t - 29.12 - i * .045) * 2); e.style.transform = `translateY(${(1 - p) * -90 + Math.sin(t * 4 + i * .7) * 6}px) scale(${.4 + .6 * p})`; });
+  A('f0', t, 30.52, FE, { dy: 200, rot: -4 + wob(t), y: bob(t) });
+  A('f1', t, 31.15, FE, { dy: 200, rot: 3 + wob(t, 1, 1), y: bob(t, 1, 1) });
+  A('f2', t, 32.22, FE, { dy: 200, rot: -3 + wob(t, 1, 2), y: bob(t, 1, 2), sc: 1.08 });
+
+  // ---------- G. regarder / participer / supports ----------
+  const GE = 37.32;
+  A('tv', t, 33.55, GE, { dx: -300, rot: -4 });
+  A('tvX', t, 33.8, GE, { s0: 2.2, rot: -8 });
+  A('part', t, 34.15, GE, { dx: 300, rot: 4 + wob(t), y: bob(t) });
+  A('partK', t, 34.45, GE, { s0: .2, spin: 120 });
+  A('screen', t, 35.9, GE, { s0: .3, rot: wob(t, .4) });
+  { const u = t - 35.9; $('sh0').style.left = (40 + 330 * (.5 + .5 * Math.sin(u * 3))) + 'px'; $('sh0').style.top = (20 + 120 * Math.abs(Math.sin(u * 5))) + 'px';
+    $('sh1').style.left = (300 - 220 * (.5 + .5 * Math.sin(u * 2.2))) + 'px'; $('sh1').style.top = '120px'; $('sh1').style.transform = `rotate(${u * 200}deg)`;
+    $('sh2').style.left = (180 + 120 * Math.sin(u * 2.7)) + 'px'; $('sh2').style.top = (40 + 40 * Math.sin(u * 4)) + 'px'; }
+  A('pal', t, 36.5, GE, { s0: .2, spin: -60, rot: wob(t, 2), y: bob(t) });
+
+  // ---------- H. Zoom + 4 skills ----------
+  A('call', t, 37.85, 40.05, { s0: .4, dy: -60 });
+  $('live').style.opacity = Math.floor(t * 2.5) % 2 ? .55 : 1;
+  for (let i = 0; i < 4; i++) { const on = Math.floor(t * 1.6 + i * .5) % 4 === i; $('g' + i).style.boxShadow = on ? 'inset 0 0 0 6px #7CC242' : 'none'; }
+  const HE2 = 44.26;
+  A('k4', t, 40.1, HE2, { s0: .4, rot: wob(t, .3) });
+  A('s0', t, 41.15, HE2, { dx: -300, rot: -4 + wob(t), y: bob(t) });
+  A('s1', t, 41.45, HE2, { dx: 300, rot: 4 + wob(t, 1, 1), y: bob(t, 1, 1) });
+  A('s2', t, 42.05, HE2, { dx: -300, rot: 3 + wob(t, 1, 2), y: bob(t, 1, 2) });
+  A('s3', t, 43.05, HE2, { s0: .2, spin: 20, rot: -3 + wob(t), y: bob(t), sc: 1.06 + .03 * Math.sin(t * 6) });
+  A('s3sp', t, 43.3, HE2, { s0: .2, spin: 90, rot: wob(t, 3) });
+
+  // ---------- I. CTA ----------
+  const IE = 99;
+  A('crob', t, 44.9, IE, { dy: 300, rot: Math.sin(t * 6) * 6, y: bob(t, 1.5) });
+  A('cwm', t, 45.05, IE, { dx: 500, rot: wob(t, .4) });
+  const press = t > 46.35 && t < 46.6 ? .94 : 1;
+  A('cta', t, 45.45, IE, { dy: 220, sc: press, rot: wob(t, .3) });
+  { const p = S(t - 45.8, 7); A('cur', t, 45.8, 47.0, { s0: 1, x: 1000 + (760 - 1000) * p, y: 1900 + (1660 - 1900) * p, sc: t > 46.35 && t < 46.5 ? .85 : 1 });
+    const r = lin(t, 46.35, 46.95); A('rip', t, 46.35, 46.95, { s0: 1, soft: 1, x: 730, y: 1630, sc: 1 + 4 * r }); if (t >= 46.35 && t < 46.95) $('rip').style.opacity = 1 - r; }
+  A('party', t, 46.5, IE, { spin: -40, rot: wob(t, 2), y: bob(t) });
+}
+
+const KEEPS = /*KEEPS*/, CAPS = /*CAPS*/;
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci];
+  if (cap.dataset.i != ci) {
+    let k = c.length; while (k > 0 && c[k - 1][2]) k--; if (k === 0) k = c.length;
+    const span = (w, cls) => `<span class="cw ${cls}">${w[1]}</span>`;
+    const l1 = c.slice(0, k).map(w => span(w, w[2] ? 'ce' : '')).join(' '), l2 = c.slice(k).map(w => span(w, 'cb')).join(' ');
+    cap.innerHTML = `<div class="l1">${l1}</div>` + (l2 ? `<div class="l2">${l2}</div>` : '');
+    cap.dataset.i = ci;
+  }
+  [...cap.querySelectorAll('.cw')].forEach((e, j) => { const p = P(t - c[j][0] + .03), q = S(t - c[j][0] + .03, 16);
+    e.style.opacity = Math.min(1, q * 1.6); e.style.transform = `translateY(${(1 - p) * 26}px) scale(${.7 + .3 * p})`; });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+window.setT(0);
+</script></body></html>
