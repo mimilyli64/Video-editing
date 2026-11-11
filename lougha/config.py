@@ -21,7 +21,7 @@ DUR = FILM + END     # 21.2 scene seconds
 TS = 4.0 / 3.0
 REAL_DUR = DUR * TS
 NFRAMES = int(round(REAL_DUR * FPS))  # 1696
-LANG = "fr"
+LANG = os.environ.get("LOUGHA_LANG", "en")   # "en" (default) or "fr"
 
 
 def frame(t):
@@ -92,7 +92,7 @@ HIT = {
 # (anchor in scene seconds, displayed text, tts text, picture hit for the phrase onset)
 # The script is read as one flowing take and cut only at its own pauses; each phrase
 # starts on its anchor x TS (or just after the previous phrase if the read runs long).
-VO_SCRIPT = [
+VO_SCRIPT_FR = [
     (0.50, "Chaque langue commence par des fondations.", "Chaque langue commence par des fondations.", "every"),
     (2.95, "Un mot à la fois,", "Un mot à la fois.", "one_word"),
     (4.60, "des racines solides qui vous font grandir,", "Des racines solides qui vous font grandir.", "strong_roots_1"),
@@ -110,9 +110,31 @@ VO_SCRIPT = [
 # Between the 13.70 and 17.33 anchors there is no room for it at a natural pace, so by
 # default it is left out of the timed cut. Set to True to include it.
 INCLUDE_BECAUSE_LINE = False
-BECAUSE = (14.60, "Parce qu'apprendre une langue ouvre un monde de possibilités.",
+BECAUSE_FR = (14.60, "Parce qu'apprendre une langue ouvre un monde de possibilités.",
            "Parce qu'apprendre une langue ouvre un monde de possibilités.", None)
 VO_DEADLINE = {14.93: 16.46}   # the tagline must clear the 16.50 breath (scene s)
+
+
+VO_SCRIPT_EN = [
+    (0.50, "Every language begins with a foundation.", "Every language begins with a foundation.", "every"),
+    (2.95, "One word at a time,", "One word at a time.", "one_word"),
+    (4.60, "strong roots that help you grow,", "Strong roots that help you grow.", "strong_roots_1"),
+    (7.20, "real teachers who guide your journey,", "Real teachers who guide your journey.", "real_teachers"),
+    (9.05, "and conversations that build your confidence.", "And conversations that build your confidence.", "conversations"),
+    (11.67, "English,", "English.", "en"),
+    (12.42, "French,", "French.", "fr"),
+    (12.98, "German...", "German.", "de"),
+    (13.70, "speaking, listening, reading and writing.", "Speaking, listening, reading and writing.", "speaking"),
+    (14.93, "Strong roots, endless possibilities.", "Strong roots, endless possibilities.", "strong_roots_2"),
+    (17.33, "Lougha Online.", "Loo-gah Online.", "logo"),   # respelt so TTS says LOO-gha
+]
+BECAUSE_EN = (14.60, "Because learning a language opens a world of possibilities.",
+              "Because learning a language opens a world of possibilities.", None)
+VO_WORD_HITS_EN = {"listening": "listening", "reading": "reading", "writing": "writing", "endless": "endless"}
+
+VO_SCRIPT = VO_SCRIPT_EN if LANG == "en" else VO_SCRIPT_FR
+BECAUSE = BECAUSE_EN if LANG == "en" else BECAUSE_FR
+VO_WORD_HITS = VO_WORD_HITS_EN if LANG == "en" else VO_WORD_HITS_FR
 
 
 def vo_script():
@@ -123,7 +145,7 @@ def vo_script():
 
 
 # spoken words (inside phrases) whose onset drives a picture hit
-VO_WORD_HITS = {"ecouter": "listening", "lire": "reading", "ecrire": "writing", "possibilites": "endless"}
+VO_WORD_HITS_FR = {"ecouter": "listening", "lire": "reading", "ecrire": "writing", "possibilites": "endless"}
 DEFAULT_WORD_TIMES = {
     "every": 0.50, "one_word": 2.95, "strong_roots_1": 4.60, "real_teachers": 7.20,
     "conversations": 9.05, "en": 11.67, "fr": 12.42, "de": 12.98, "speaking": 13.70,
@@ -142,12 +164,10 @@ def word_times():
     return t
 
 
-# ---------------------------------------------------------------- copy (French interface, fictional data)
-# The lesson and the live class teach English (one of the three languages Lougha teaches).
+# ---------------------------------------------------------------- copy (fictional data)
+# No Spanish anywhere: the lesson translates French -> English and the live class is
+# an English class (English, French and German are the languages Lougha teaches).
 STUDENT = "Amira"
-TEACHER = "Mme Laila"
-LESSON_LABEL = "Leçon 4  ·  Français vers anglais"
-LESSON_PROMPT = "Traduisez cette phrase."
 LESSON_SRC = "Je voudrais un café, s'il vous plaît."
 LESSON_TILES = ["I", "would like", "a", "coffee,", "please."]
 LESSON_BANK_ORDER = [3, 0, 4, 1, 2]   # shuffled order in the word bank
@@ -164,12 +184,13 @@ VOCAB = {
 }
 TEACHER_LINE = "Hi Amira! How was your day?"
 STUDENT_LINE = "Great! I ordered a coffee in English."
-TAG1 = "Des racines solides,"
-TAG2 = "des possibilités infinies."
-END_TAG = "Des racines solides. Des possibilités infinies."
-END_SUB = "Apprendre. Grandir. Se connecter."
-
-UI = {
+UI_FR = {
+    "teacher": "Mme Laila",
+    "lesson_label": "Leçon 4  ·  Français vers anglais",
+    "lesson_prompt": "Traduisez cette phrase.",
+    "tag1": "Des racines solides,",
+    "tag2": "des possibilités infinies.",
+    "end_sub": "Apprendre. Grandir. Se connecter.",
     "journey_title": "Le parcours d'Amira",
     "journey_sub": "Anglais  ·  du niveau A2 au B1",
     "journey_unit": "Unité 4  ·  Au café",
@@ -201,3 +222,49 @@ UI = {
     "tag_v": ["Des racines", "solides, des", "possibilités", "infinies."],
     "end_v": ["Des racines solides.", "Des possibilités infinies."],
 }
+
+UI_EN = {
+    "teacher": "Ms. Laila",
+    "lesson_label": "Lesson 4  ·  French to English",
+    "lesson_prompt": "Translate this sentence.",
+    "tag1": "Strong roots,",
+    "tag2": "endless possibilities.",
+    "end_sub": "Learn. Grow. Connect.",
+    "journey_title": "Amira's learning journey",
+    "journey_sub": "English  ·  Level A2 to B1",
+    "journey_unit": "Unit 4  ·  At the café",
+    "start": "START",
+    "excellent": "Excellent!",
+    "correction_h": "Ms. Laila: natural word order, well done.",
+    "correction_v": "Ms. Laila: natural word order.",
+    "every_lesson": "Every lesson",
+    "helps_grow": "helps you grow.",
+    "days_of": "days of",
+    "progress": "progress",
+    "illustrative": "Illustrative",
+    "course_progress": "Course progress",
+    "grow": "Grow",
+    "together": "together.",
+    "grow_together": "Grow together.",
+    "real_line": "Real teachers. Real progress.",
+    "group": "English B1  ·  Evening group",
+    "week": "This week's progress",
+    "pts": "pts",
+    "call_title": "English B1  ·  Live class",
+    "recorded": "Recorded for replay",
+    "teacher_tag": "Ms. Laila  ·  Teacher",
+    "reaction": "Excellent!",
+    "langs": ["English", "French", "German"],
+    "langs_hdr": "Three languages. One foundation.",
+    "langs_hdr_v": ["Three languages.", "One foundation."],
+    "skills": ["Speaking", "Listening", "Reading", "Writing"],
+    "tag_v": ["", "Strong roots,", "endless", "possibilities."],
+    "end_v": ["Strong roots.", "Endless possibilities."],
+}
+UI = UI_EN if LANG == "en" else UI_FR
+TEACHER = UI["teacher"]
+LESSON_LABEL = UI["lesson_label"]
+LESSON_PROMPT = UI["lesson_prompt"]
+TAG1, TAG2 = UI["tag1"], UI["tag2"]
+END_SUB = UI["end_sub"]
+

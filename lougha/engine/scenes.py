@@ -904,7 +904,7 @@ class World:
         bw = 200 if not self.v else 170
         bx = x + w - bw - (210 if not self.v else 230)
         tex.bar(bx, y + h / 2 - 9, bw, 18, pts / 1600, alpha=alpha, headglow=False)
-        tex.text(f"{pts:,}".replace(",", " "), x + w - 90, y + h / 2, 38 if not self.v else 42, 900, anchor="cr", alpha=alpha)
+        tex.text(f"{pts:,}".replace(",", " " if C.LANG == "fr" else ","), x + w - 90, y + h / 2, 38 if not self.v else 42, 900, anchor="cr", alpha=alpha)
         tex.text(C.UI["pts"], x + w - 30, y + h / 2 + 4, 26, 700, "lav", anchor="cr", alpha=alpha)
         if hero and rank == 1:
             tex.spr(ui.icon("star", int(54 * self.s), "gold"), x + 52, y - 4, "c", alpha=alpha)
@@ -1120,7 +1120,7 @@ class World:
             s3 = smooth(lin(t, min(t2, 15.55) + 0.12, min(t2, 15.55) + 0.42))
             tex.text(tv[3], 540, uy - 280 + (1 - s3) * 40, 108, 900, "lav", anchor="tc", alpha=s3)
         draw_quad(cv, cam, tex.a, pl.corners(), alpha=a)
-        self.R["to_skills"].draw(cv, cam, grow=g["to_skills"], t=t, alpha=a * (1 - merge * 0.6))
+        self.R["to_skills"].draw(cv, cam, grow=g["to_skills"], t=t, alpha=a * (1 - merge))
         for k in range(4):
             self.R["sk"][k].draw(cv, cam, grow=g["sk"][k], t=t, g0=merge * 0.98, alpha=a)
         for k in range(4):

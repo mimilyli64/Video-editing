@@ -53,31 +53,31 @@ Times below are delivered seconds; frames are 60 fps frame indices.
 | fr | 16.560 | 994 |
 | de | 17.307 | 1038 |
 | speaking | 18.267 | 1096 |
-| listening | 18.660 | 1120 |
-| reading | 19.120 | 1147 |
-| writing | 19.400 | 1164 |
+| listening | 18.720 | 1123 |
+| reading | 19.080 | 1145 |
+| writing | 19.340 | 1160 |
 | strong_roots_2 | 19.907 | 1194 |
-| endless | 21.000 | 1260 |
+| endless | 20.800 | 1248 |
 | logo | 23.107 | 1386 |
 
-## Voice-over (piper (stand-in), kept take1)
+## Voice-over (piper (stand-in), kept take2)
 
 | Anchor s | Placed s | End s | Tempo | Line |
 |---|---|---|---|---|
-| 0.67 | 0.67 | 2.80 | x1.0 | Chaque langue commence par des fondations. |
-| 3.93 | 3.93 | 4.75 | x1.0 | Un mot à la fois, |
-| 6.13 | 6.13 | 7.92 | x1.0 | des racines solides qui vous font grandir, |
-| 9.60 | 9.60 | 11.79 | x1.0 | de vrais professeurs qui guident votre parcours, |
-| 12.07 | 12.07 | 14.61 | x1.0 | et des conversations qui renforcent votre confiance. |
-| 15.56 | 15.56 | 15.99 | x1.0 | Anglais, |
-| 16.56 | 16.56 | 17.05 | x1.0 | français, |
-| 17.31 | 17.31 | 17.71 | x1.0 | allemand... |
-| 18.27 | 18.27 | 19.79 | x1.246 | parler, écouter, lire et écrire. |
-| 19.91 | 19.91 | 21.89 | x1.182 | Des racines solides, des possibilités infinies. |
-| 23.11 | 23.11 | 24.38 | x1.0 | Lougha Online. |
+| 0.67 | 0.67 | 2.77 | x1.0 | Every language begins with a foundation. |
+| 3.93 | 3.93 | 5.21 | x1.0 | One word at a time, |
+| 6.13 | 6.13 | 7.52 | x1.0 | strong roots that help you grow, |
+| 9.60 | 9.60 | 11.31 | x1.0 | real teachers who guide your journey, |
+| 12.07 | 12.07 | 14.13 | x1.0 | and conversations that build your confidence. |
+| 15.56 | 15.56 | 16.07 | x1.0 | English, |
+| 16.56 | 16.56 | 16.98 | x1.0 | French, |
+| 17.31 | 17.31 | 17.97 | x1.0 | German... |
+| 18.27 | 18.27 | 19.80 | x1.217 | speaking, listening, reading and writing. |
+| 19.91 | 19.91 | 21.89 | x1.099 | Strong roots, endless possibilities. |
+| 23.11 | 23.11 | 23.96 | x1.0 | Lougha Online. |
 
 Takes:
-- take1: 0 word errors
-- take2: 5 word errors
+- take1: 2 word errors
+- take2: 0 word errors
 
 ## Sound: 171 cues, see `out/cue_sheet.csv` (time, frame, cue).

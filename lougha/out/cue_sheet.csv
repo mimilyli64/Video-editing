@@ -138,12 +138,12 @@ time_s,frame_60fps,cue
 17.733,1064,camera drops to the skills
 17.973,1078,root to speaking
 18.267,1096,skill node speaking lights
-18.367,1102,root to listening
-18.660,1120,skill node listening lights
-18.827,1130,root to reading
-19.107,1146,root to writing
-19.120,1147,skill node reading lights
-19.400,1164,skill node writing lights
+18.427,1106,root to listening
+18.720,1123,skill node listening lights
+18.787,1127,root to reading
+19.047,1143,root to writing
+19.080,1145,skill node reading lights
+19.340,1160,skill node writing lights
 19.733,1184,skills merge into light
 19.760,1186,roots converge
 19.840,1190,underline root grows

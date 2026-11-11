@@ -27,10 +27,10 @@ from . import config as C
 
 SR = 48000
 PIPER_DIR = os.environ.get("PIPER_VOICES", os.path.join(C.BUILD, "voices"))
-PIPER_VOICE = "fr_FR-siwis-medium"
+PIPER_VOICE = "en_US-hfc_female-medium" if C.LANG == "en" else "fr_FR-siwis-medium"
 TAKES = [  # (name, length_scale, noise_scale, noise_w)
-    ("take1", 0.90, 0.60, 0.75),
-    ("take2", 0.86, 0.70, 0.85),
+    ("take1", 0.92, 0.60, 0.75),
+    ("take2", 0.88, 0.70, 0.85),
 ]
 SENT_SIL = 0.42
 
@@ -56,7 +56,8 @@ def take_piper(name, ls, ns, nw):
     model = os.path.join(PIPER_DIR, PIPER_VOICE + ".onnx")
     if not os.path.exists(model):
         os.makedirs(PIPER_DIR, exist_ok=True)
-        base = "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/siwis/medium/"
+        base = ("https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/hfc_female/medium/" if C.LANG == "en"
+                else "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/siwis/medium/")
         for ext in (".onnx", ".onnx.json"):
             subprocess.run(["curl", "-sSL", "-o", os.path.join(PIPER_DIR, PIPER_VOICE + ext),
                             base + PIPER_VOICE + ext], check=True)
@@ -72,7 +73,7 @@ def take_elevenlabs(name, key):
     import urllib.request
     voice = os.environ.get("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")
     body = json.dumps({
-        "text": _tts_text().replace("Lougha, onn laïne.", "Lougha Online."),
+        "text": _tts_text().replace("Lougha, onn laïne.", "Lougha Online.").replace("Loo-gah Online.", "Lougha Online."),
         "model_id": "eleven_multilingual_v2",
         "language_code": C.LANG,
         "voice_settings": {"stability": 0.38, "similarity_boost": 0.8, "style": 0.45,

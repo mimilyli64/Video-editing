@@ -2,102 +2,102 @@
  "engine": "piper (stand-in)",
  "takes": {
   "take1": {
-   "errors": 0,
-   "heard": "chaque langue commence par des fondations un mot a la fois des racines solides qui vous font grandir de vrais professeurs qui guident votre parcours et des conversations qui renforcent votre confiance anglais francais allemand parler ecouter lire et ecrire des racines solides des possibilites infinies",
-   "dur": 24.273666666666667
+   "errors": 2,
+   "heard": "every language begins with a foundation one word at a time strong roots that help you grow real teachers who guide your journey and conversations that build your confidence english french german speaking listening reading and writing strong roots and endless",
+   "dur": 24.204
   },
   "take2": {
-   "errors": 5,
-   "heard": "chaque langue commence par des fondations un mot a la fois des racines solides qui vous font grandir de vrais professeurs qui guident votre parcours et des conversations qui renforcent votre confiance anglais francais allemand par les ecouter les reecrients des racines solides des possibilites infinies",
-   "dur": 24.041458333333335
+   "errors": 0,
+   "heard": "every language begins with a foundation one word at a time strong roots that help you grow real teachers who guide your journey and conversations that build your confidence english french german speaking listening reading and writing strong roots endless possibilities",
+   "dur": 23.553833333333333
   }
  },
- "chosen": "take1",
+ "chosen": "take2",
  "phrases": [
   {
    "anchor": 0.5,
    "start": 0.667,
-   "end": 2.799,
-   "text": "Chaque langue commence par des fondations.",
+   "end": 2.773,
+   "text": "Every language begins with a foundation.",
    "tempo": 1.0,
    "hit": "every"
   },
   {
    "anchor": 2.95,
    "start": 3.933,
-   "end": 4.751,
-   "text": "Un mot à la fois,",
+   "end": 5.208,
+   "text": "One word at a time,",
    "tempo": 1.0,
    "hit": "one_word"
   },
   {
    "anchor": 4.6,
    "start": 6.133,
-   "end": 7.921,
-   "text": "des racines solides qui vous font grandir,",
+   "end": 7.521,
+   "text": "strong roots that help you grow,",
    "tempo": 1.0,
    "hit": "strong_roots_1"
   },
   {
    "anchor": 7.2,
    "start": 9.6,
-   "end": 11.791,
-   "text": "de vrais professeurs qui guident votre parcours,",
+   "end": 11.306,
+   "text": "real teachers who guide your journey,",
    "tempo": 1.0,
    "hit": "real_teachers"
   },
   {
    "anchor": 9.05,
    "start": 12.067,
-   "end": 14.607,
-   "text": "et des conversations qui renforcent votre confiance.",
+   "end": 14.13,
+   "text": "and conversations that build your confidence.",
    "tempo": 1.0,
    "hit": "conversations"
   },
   {
    "anchor": 11.67,
    "start": 15.56,
-   "end": 15.991,
-   "text": "Anglais,",
+   "end": 16.069,
+   "text": "English,",
    "tempo": 1.0,
    "hit": "en"
   },
   {
    "anchor": 12.42,
    "start": 16.56,
-   "end": 17.047,
-   "text": "français,",
+   "end": 16.985,
+   "text": "French,",
    "tempo": 1.0,
    "hit": "fr"
   },
   {
    "anchor": 12.98,
    "start": 17.307,
-   "end": 17.713,
-   "text": "allemand...",
+   "end": 17.969,
+   "text": "German...",
    "tempo": 1.0,
    "hit": "de"
   },
   {
    "anchor": 13.7,
    "start": 18.267,
-   "end": 19.792,
-   "text": "parler, écouter, lire et écrire.",
-   "tempo": 1.246,
+   "end": 19.796,
+   "text": "speaking, listening, reading and writing.",
+   "tempo": 1.217,
    "hit": "speaking"
   },
   {
    "anchor": 14.93,
    "start": 19.907,
-   "end": 21.892,
-   "text": "Des racines solides, des possibilités infinies.",
-   "tempo": 1.182,
+   "end": 21.893,
+   "text": "Strong roots, endless possibilities.",
+   "tempo": 1.099,
    "hit": "strong_roots_2"
   },
   {
    "anchor": 17.33,
    "start": 23.107,
-   "end": 24.384,
+   "end": 23.961,
    "text": "Lougha Online.",
    "tempo": 1.0,
    "hit": "logo"
@@ -115,251 +115,230 @@
   "speaking": 13.7,
   "strong_roots_2": 14.93,
   "logo": 17.33,
-  "listening": 13.995,
-  "reading": 14.34,
-  "writing": 14.55,
-  "endless": 15.75
+  "listening": 14.04,
+  "reading": 14.31,
+  "writing": 14.505
  },
  "words": [
   [
    0.0,
-   1.04,
-   "Chaque"
+   0.88,
+   "Every"
   ],
   [
-   1.04,
-   1.2,
-   "langue"
+   0.88,
+   1.28,
+   "language"
   ],
   [
-   1.2,
-   1.8,
-   "commence"
+   1.28,
+   1.62,
+   "begins"
   ],
   [
-   1.8,
-   2.08,
-   "par"
+   1.62,
+   1.84,
+   "with"
   ],
   [
-   2.08,
-   2.22,
-   "des"
+   1.84,
+   1.94,
+   "a"
   ],
   [
-   2.22,
-   2.76,
-   "fondations."
+   1.94,
+   2.54,
+   "foundation,"
   ],
   [
-   3.96,
-   4.04,
-   "Un"
+   3.06,
+   4.14,
+   "one"
   ],
   [
-   4.04,
-   4.22,
-   "mot"
-  ],
-  [
-   4.22,
+   4.14,
    4.34,
-   "à"
+   "word"
   ],
   [
    4.34,
-   4.46,
-   "la"
+   4.5,
+   "at"
   ],
   [
-   4.46,
-   4.68,
-   "fois."
+   4.5,
+   4.6,
+   "a"
   ],
   [
-   6.18,
-   6.24,
-   "Des"
+   4.6,
+   5.12,
+   "time,"
   ],
   [
-   6.24,
-   6.54,
-   "racines"
+   5.3,
+   6.36,
+   "strong"
   ],
   [
-   6.54,
-   6.86,
-   "solides"
+   6.36,
+   6.62,
+   "roots"
   ],
   [
-   6.86,
-   7.06,
-   "qui"
+   6.62,
+   6.8,
+   "that"
   ],
   [
-   7.06,
+   6.8,
+   7.0,
+   "help"
+  ],
+  [
+   7.0,
    7.16,
-   "vous"
+   "you"
   ],
   [
    7.16,
-   7.34,
-   "font"
+   7.44,
+   "grow."
   ],
   [
-   7.34,
-   7.86,
-   "grandir."
+   9.26,
+   9.82,
+   "Real"
   ],
   [
-   9.48,
-   9.72,
-   "De"
+   9.82,
+   10.16,
+   "teachers"
   ],
   [
-   9.72,
-   9.94,
-   "vrais"
+   10.16,
+   10.4,
+   "who"
   ],
   [
-   9.94,
-   10.52,
-   "professeurs"
-  ],
-  [
-   10.52,
-   10.8,
-   "qui"
-  ],
-  [
-   10.8,
-   10.98,
+   10.4,
+   10.68,
    "guide"
   ],
   [
-   10.98,
-   11.2,
-   "votre"
+   10.68,
+   10.84,
+   "your"
   ],
   [
-   11.2,
-   11.8,
-   "parcours"
+   10.84,
+   11.22,
+   "journey"
   ],
   [
-   11.8,
-   12.14,
-   "et"
+   11.22,
+   12.18,
+   "and"
   ],
   [
-   12.14,
-   12.24,
-   "des"
-  ],
-  [
-   12.24,
-   12.68,
+   12.18,
+   12.72,
    "conversations"
   ],
   [
-   12.68,
-   13.26,
-   "qui"
+   12.72,
+   13.12,
+   "that"
   ],
   [
-   13.26,
-   13.64,
-   "renforcent"
+   13.12,
+   13.34,
+   "build"
   ],
   [
-   13.64,
-   13.88,
-   "votre"
+   13.34,
+   13.48,
+   "your"
   ],
   [
-   13.88,
-   14.48,
-   "confiance."
+   13.48,
+   13.96,
+   "confidence."
   ],
   [
-   15.32,
-   15.92,
-   "Anglais,"
+   15.26,
+   15.82,
+   "English,"
   ],
   [
-   16.54,
-   16.94,
-   "français,"
+   16.48,
+   16.72,
+   "French,"
   ],
   [
    17.4,
-   17.66,
-   "allemand."
+   17.6,
+   "German,"
   ],
   [
-   18.3,
-   18.54,
-   "Parler,"
+   18.08,
+   18.52,
+   "speaking,"
   ],
   [
-   18.66,
-   18.96,
-   "écouter,"
+   18.72,
+   18.88,
+   "listening,"
   ],
   [
-   19.12,
-   19.22,
-   "lire"
+   19.08,
+   19.2,
+   "reading"
   ],
   [
-   19.22,
-   19.4,
-   "et"
+   19.2,
+   19.34,
+   "and"
   ],
   [
-   19.4,
-   19.72,
-   "écrire"
+   19.34,
+   19.56,
+   "writing,"
   ],
   [
-   19.72,
-   20.02,
-   "des"
+   19.96,
+   20.12,
+   "strong"
   ],
   [
-   20.02,
-   20.3,
-   "racines"
+   20.12,
+   20.42,
+   "roots"
   ],
   [
-   20.3,
-   20.78,
-   "solides,"
+   20.42,
+   20.76,
+   "and"
   ],
   [
-   21.0,
-   21.0,
-   "des"
+   20.76,
+   20.94,
+   "less"
   ],
   [
-   21.0,
-   21.5,
-   "possibilités"
+   20.94,
+   21.54,
+   "possibilities."
   ],
   [
-   21.5,
-   21.9,
-   "infinies."
+   21.54,
+   23.4,
+   "Luga"
   ],
   [
-   23.2,
-   23.42,
-   "Luga,"
-  ],
-  [
-   23.76,
-   24.02,
-   "online."
+   23.4,
+   23.84,
+   "Online"
   ]
  ]
 }
