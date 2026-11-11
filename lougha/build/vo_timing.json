@@ -1,0 +1,329 @@
+{
+ "engine": "piper (stand-in)",
+ "takes": {
+  "take1": {
+   "errors": 13,
+   "heard": "every language begins with a foundation one word at a time strong roots that help you grow real teachers who guide your journey and conversations that build your confidence english speaking listening reading and writing strong roots and less possibilities lougha online",
+   "dur": 22.91529166666667
+  },
+  "take2": {
+   "errors": 0,
+   "heard": "every language begins with a foundation one word at a time strong roots that help you grow real teachers who guide your journey and conversations that build your confidence english french german speaking listening reading and writing strong roots endless possibilities lougha online",
+   "dur": 22.358020833333335
+  }
+ },
+ "chosen": "take2",
+ "phrases": [
+  {
+   "anchor": 0.5,
+   "start": 0.5,
+   "end": 2.356,
+   "text": "Every language begins with a foundation.",
+   "tempo": 1.0
+  },
+  {
+   "anchor": 2.95,
+   "start": 2.95,
+   "end": 4.025,
+   "text": "One word at a time,",
+   "tempo": 1.0
+  },
+  {
+   "anchor": 4.6,
+   "start": 4.6,
+   "end": 6.074,
+   "text": "strong roots that help you grow,",
+   "tempo": 1.0
+  },
+  {
+   "anchor": 7.2,
+   "start": 7.2,
+   "end": 8.904,
+   "text": "real teachers who guide your journey,",
+   "tempo": 1.0
+  },
+  {
+   "anchor": 9.05,
+   "start": 9.05,
+   "end": 11.013,
+   "text": "and conversations that build your confidence.",
+   "tempo": 1.0
+  },
+  {
+   "anchor": 11.67,
+   "start": 11.67,
+   "end": 12.302,
+   "text": "English,",
+   "tempo": 1.093
+  },
+  {
+   "anchor": 12.42,
+   "start": 12.42,
+   "end": 12.727,
+   "text": "French,",
+   "tempo": 1.0
+  },
+  {
+   "anchor": 12.98,
+   "start": 12.98,
+   "end": 13.447,
+   "text": "German...",
+   "tempo": 1.0
+  },
+  {
+   "anchor": 13.7,
+   "start": 13.7,
+   "end": 15.133,
+   "text": "speaking, listening, reading and writing.",
+   "tempo": 1.3
+  },
+  {
+   "anchor": 14.93,
+   "start": 15.233,
+   "end": 16.782,
+   "text": "Strong roots, endless possibilities.",
+   "tempo": 1.3
+  },
+  {
+   "anchor": 17.33,
+   "start": 17.33,
+   "end": 18.131,
+   "text": "Lougha Online.",
+   "tempo": 1.0
+  }
+ ],
+ "hits": {
+  "every": 0.5,
+  "one_word": 2.95,
+  "strong_roots_1": 4.6,
+  "real_teachers": 7.2,
+  "conversations": 9.1,
+  "en": 11.67,
+  "fr": 12.42,
+  "de": 12.98,
+  "speaking": 13.7,
+  "listening": 14.08,
+  "reading": 14.38,
+  "writing": 14.72,
+  "strong_roots_2": 15.233,
+  "endless": 15.82,
+  "logo": 17.33
+ },
+ "words": [
+  [
+   0.0,
+   0.6,
+   "Every"
+  ],
+  [
+   0.6,
+   0.96,
+   "language"
+  ],
+  [
+   0.96,
+   1.24,
+   "begins"
+  ],
+  [
+   1.24,
+   1.56,
+   "with"
+  ],
+  [
+   1.56,
+   1.62,
+   "a"
+  ],
+  [
+   1.62,
+   1.94,
+   "foundation."
+  ],
+  [
+   3.04,
+   3.04,
+   "One"
+  ],
+  [
+   3.04,
+   3.3,
+   "word"
+  ],
+  [
+   3.3,
+   3.44,
+   "at"
+  ],
+  [
+   3.44,
+   3.48,
+   "a"
+  ],
+  [
+   3.48,
+   3.76,
+   "time."
+  ],
+  [
+   4.58,
+   4.76,
+   "Strong"
+  ],
+  [
+   4.76,
+   5.08,
+   "roots"
+  ],
+  [
+   5.08,
+   5.3,
+   "that"
+  ],
+  [
+   5.3,
+   5.48,
+   "help"
+  ],
+  [
+   5.48,
+   5.62,
+   "you"
+  ],
+  [
+   5.62,
+   5.84,
+   "grow."
+  ],
+  [
+   6.76,
+   7.26,
+   "Real"
+  ],
+  [
+   7.26,
+   7.54,
+   "teachers"
+  ],
+  [
+   7.54,
+   7.88,
+   "who"
+  ],
+  [
+   7.88,
+   8.06,
+   "guide"
+  ],
+  [
+   8.06,
+   8.28,
+   "your"
+  ],
+  [
+   8.28,
+   8.56,
+   "journey"
+  ],
+  [
+   8.56,
+   9.1,
+   "and"
+  ],
+  [
+   9.1,
+   9.48,
+   "conversations"
+  ],
+  [
+   9.48,
+   10.02,
+   "that"
+  ],
+  [
+   10.02,
+   10.16,
+   "build"
+  ],
+  [
+   10.16,
+   10.34,
+   "your"
+  ],
+  [
+   10.34,
+   10.7,
+   "confidence."
+  ],
+  [
+   11.54,
+   11.76,
+   "English,"
+  ],
+  [
+   12.3,
+   12.46,
+   "French,"
+  ],
+  [
+   13.18,
+   13.18,
+   "German,"
+  ],
+  [
+   13.68,
+   13.84,
+   "speaking,"
+  ],
+  [
+   14.08,
+   14.24,
+   "listening,"
+  ],
+  [
+   14.38,
+   14.54,
+   "reading"
+  ],
+  [
+   14.54,
+   14.72,
+   "and"
+  ],
+  [
+   14.72,
+   14.88,
+   "writing."
+  ],
+  [
+   15.28,
+   15.36,
+   "Strong"
+  ],
+  [
+   15.36,
+   15.6,
+   "roots,"
+  ],
+  [
+   15.82,
+   15.96,
+   "endless"
+  ],
+  [
+   15.96,
+   16.38,
+   "possibilities."
+  ],
+  [
+   17.44,
+   17.62,
+   "Luga"
+  ],
+  [
+   17.62,
+   17.82,
+   "Online."
+  ]
+ ]
+}

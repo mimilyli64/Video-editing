@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+lougha/build/*
+!lougha/build/vo.wav
+!lougha/build/vo_timing.json
+lougha/out/picture_*.mp4

@@ -1,0 +1,172 @@
+time_s,frame_60fps,cue
+0.000,0,seed root shimmer
+0.020,1,root accelerates toward camera
+0.040,2,root growth crackle
+0.170,10,TREE SLAM - sub hit
+0.190,11,light particles
+0.200,12,leaves react
+0.230,14,branch creak L
+0.250,15,roots spread
+0.290,17,branch creak R
+0.400,24,camera eases back (air)
+0.470,28,wordmark root crawl 1
+0.600,36,wordmark reveal shimmer
+0.620,37,wordmark root crawl 2
+0.780,47,wordmark root crawl 3
+0.920,55,wordmark root crawl 4
+1.100,66,golden book glint
+1.300,78,tree gesture rustle
+1.350,81,branch creak (gesture)
+1.450,87,root races along the path
+1.480,89,lesson node 1 lights
+1.500,90,dive into the roots
+1.600,96,lesson node 2 lights
+1.720,103,lesson node 3 lights
+1.840,110,lesson node 4 lights
+1.920,115,interface rises from node
+1.960,118,lesson node 5 lights
+2.080,125,lesson node 6 lights
+2.080,125,touch moves in
+2.180,131,lesson node 7 lights
+2.200,132,interface settles
+2.400,144,START pressed
+2.420,145,start ripple
+2.420,145,root to lesson
+2.720,163,camera flies to lesson
+2.900,174,lesson panel arrives
+2.980,179,prompt pops
+3.080,185,sentence audio button
+3.100,186,speaker plays (soft)
+3.200,192,root crawls under the lesson
+3.300,198,tile 1 lifts
+3.440,206,tile 2 lifts
+3.580,215,tile 3 lifts
+3.600,216,tile 1 snaps
+3.720,223,tile 4 lifts
+3.740,224,tile 2 snaps
+3.860,232,tile 5 lifts
+3.880,233,tile 3 snaps
+4.020,241,tile 4 snaps
+4.160,250,tile 5 snaps
+4.230,254,LOUGHA SUCCESS #1
+4.250,255,correction strip pops
+4.280,257,progress bar fills
+4.740,284,root leans out
+4.950,297,progress card pops
+5.000,300,root curls upward
+5.250,315,trunk lights up
+5.400,324,young tree grows 1
+5.470,328,counter digit tick 1
+5.565,334,counter digit tick 2
+5.620,337,course bar fills
+5.659,340,counter digit tick 3
+5.750,345,progress node 1
+5.754,345,counter digit tick 4
+5.800,348,young tree grows 2
+5.848,351,counter digit tick 5
+5.920,355,progress node 2
+5.943,357,counter digit tick 6
+6.038,362,counter digit tick 7
+6.090,365,progress node 3
+6.132,368,counter digit tick 8
+6.200,372,young tree grows 3
+6.200,372,leaf / flag pops 1
+6.227,374,counter digit tick 9
+6.260,376,progress node 4
+6.300,378,leaf / flag pops 2
+6.322,379,counter digit tick 10
+6.416,385,counter digit tick 11
+6.420,385,leaf / flag pops 3
+6.430,386,progress node 5
+6.511,391,counter digit tick 12
+6.550,393,leaf / flag pops 4
+6.600,396,progress node 6
+6.605,396,counter digit tick 13
+6.700,402,counter digit tick 14
+6.770,406,progress node 7
+6.880,413,fly to the community
+7.200,432,DROP - card lands
+7.420,445,'Grow' pops
+7.450,447,row 1 appears
+7.500,450,row 2 appears
+7.550,453,row 3 appears
+7.600,456,row 4 appears
+7.600,456,'together.' pops
+7.650,459,row 5 appears
+7.700,462,row 6 appears
+7.750,465,row 7 appears
+7.800,468,Amira's row lifts
+7.950,477,row rises
+8.050,483,passes a classmate 1
+8.170,490,passes a classmate 2
+8.290,497,passes a classmate 3
+8.410,505,passes a classmate 4
+8.530,512,passes a classmate 5
+8.700,522,LOUGHA SUCCESS #2 (#1)
+8.700,522,sparkle burst
+9.050,543,fly to the class
+9.150,549,video call opens
+9.300,558,recording indicator
+9.420,565,teacher caption appears
+9.450,567,caption type 1
+9.550,573,camera orbits
+9.570,574,caption type 2
+9.690,581,caption type 3
+10.100,606,root becomes a voice wave
+10.120,607,student caption appears
+10.150,609,caption type 4
+10.270,616,caption type 5
+10.390,623,caption type 6
+10.980,659,teacher reacts
+11.000,660,heart 1
+11.120,667,heart 2
+11.180,671,push into the call
+11.240,674,heart 3
+11.370,682,branch to en
+11.380,683,FAST pull-back
+11.400,684,root to the hub
+11.670,700,language node EN lights
+11.720,703,vocab tiles orbit en
+12.120,727,branch to fr
+12.420,745,language node FR lights
+12.470,748,vocab tiles orbit fr
+12.680,761,branch to de
+12.980,779,language node DE lights
+13.030,782,vocab tiles orbit de
+13.050,783,central learning structure
+13.080,785,golden book node
+13.300,798,camera drops to the skills
+13.480,809,root to speaking
+13.700,822,skill node speaking lights
+13.860,832,root to listening
+14.080,845,skill node listening lights
+14.160,850,root to reading
+14.380,863,skill node reading lights
+14.500,870,root to writing
+14.720,883,skill node writing lights
+14.800,888,skills merge into light
+14.820,889,roots converge
+15.183,911,underline root grows
+15.233,914,"'Strong roots,' appears"
+15.500,930,'endless possibilities.' appears
+16.080,965,camera cranes up
+16.100,966,root climbs to the landing spot
+16.630,998,tree drops
+16.800,1008,TREE LANDS ON THE HIT
+16.820,1009,roots spread under the book
+16.840,1010,leaves
+16.900,1014,branches extend L
+16.980,1019,flag 1 pops
+17.000,1020,branches extend R
+17.030,1022,roots reveal the wordmark
+17.040,1022,flag 2 pops
+17.100,1026,flag 3 pops
+17.160,1030,flag 4 pops
+17.220,1033,flag 5 pops
+17.280,1037,flag 6 pops
+17.330,1040,LOUGHA SONIC SIGNATURE
+18.070,1084,Lougha lesson-complete fanfare
+18.100,1086,happy branches
+18.700,1122,leaf flutter
+19.250,1155,end card tagline
+19.620,1177,'Learn. Grow. Connect.'
