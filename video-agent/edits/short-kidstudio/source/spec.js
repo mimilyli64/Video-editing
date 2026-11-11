@@ -5,7 +5,7 @@
 window.SPEC = {
   title: 'KidStudio - anglais pour enfants',
   media: { mg: { src: 'assets/mg.mov', width: 1080, alpha: true } },
-  cam: { crop: [0, 0, 1080, 1920], eyes: [540, 640] },
+  cam: { crop: [0, 0, 1080, 1920], eyes: [540, 640], q: 1 },   // q 1: near-lossless camera frames (480p take upscaled)
   // dead air between sentences cut to a short breath; the two silences after « comme ça » / « ou ça » are kept for the Macron clips
   cut: [[0, 0.38], [3.86, 4.54], [6.98, 7.97], [12.0, 12.28], [23.9, 24.1], [27.93, 28.23], [32.93, 33.51], [37.33, 37.81], [44.25, 44.88], [47.3, 99]],
   tighten: { gap: 99 },

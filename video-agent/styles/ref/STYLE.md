@@ -53,3 +53,4 @@ Voix en darija marocaine, sous-titres traduits en français.
 - 9 novembre 2026 : les micro-coupes de silence (24 coupes en 30 s) : « pas smooth, pas naturel ». Désormais la prise reste entière, sans aucune coupe.
 - 9 novembre 2026 : le flou de mouvement sur les transitions (« vraiment nul »). Remplacé par des zooms nets : zoom avant à travers la coupe, dézoom après la coupe.
 - 9 novembre 2026 : les blancs entre les phrases (« enlève complètement le côté naturel »). Coupés à ~0,2 s, pauses des virgules gardées.
+- 11 novembre 2026 : zooms pas fluides et qualité trop basse (KidStudio). Corrigé : prise à 30 i/s avant le zoom, courbe smootherstep à travers la coupe, upscale soigné, export CRF 17.
