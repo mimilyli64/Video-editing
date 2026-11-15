@@ -1,0 +1,227 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:M;src:url(fonts/montserrat-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-900-normal.woff2);font-weight:900}
+:root{--wine:#8E2336;--rose:#FF9DB0;--slate:#343A40;--cream:#FBF5EE;--mint:#2FB5A5;--red:#E0433A}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:M,sans-serif;position:relative}
+.a{position:absolute;opacity:0;transform-origin:50% 50%}
+.pill{display:flex;align-items:center;gap:16px;padding:0 34px;height:100px;border-radius:999px;font-weight:800;font-size:44px;white-space:nowrap;box-shadow:0 14px 34px rgba(20,10,12,.35);box-sizing:border-box}
+.card{background:var(--cream);border-radius:34px;box-shadow:0 18px 44px rgba(20,10,12,.4);overflow:hidden;box-sizing:border-box}
+.sh{text-shadow:0 4px 20px rgba(20,8,10,.6),0 2px 4px rgba(20,8,10,.45)}
+.ds{filter:drop-shadow(0 14px 22px rgba(20,8,10,.38))}
+.term{position:absolute;width:300px;height:250px}
+.term .bar{height:62px;background:var(--wine);color:#fff;font:800 30px M;display:flex;align-items:center;justify-content:center;letter-spacing:2px}
+.term .en{font:900 60px M;color:var(--slate);text-align:center;margin-top:30px}
+.term .fr{font:700 34px M;color:var(--mint);text-align:center;margin-top:8px}
+#cap{position:absolute;left:30px;width:1020px;top:1370px;text-align:center}
+#cap .l1{font:700 60px M;color:#fff;line-height:1.14}
+#cap .l2{font:900 84px M;color:var(--rose);line-height:1.08;margin-top:2px}
+#cap .cw{display:inline-block;text-shadow:0 4px 18px rgba(20,8,10,.7),0 2px 3px rgba(20,8,10,.55)}
+#cap .ce{color:var(--rose);font-weight:900}
+</style></head><body>
+
+<!-- A. intro -->
+<img id="wave" class="a ds" src="icons/waving-hand.png" style="left:90px;top:200px;width:190px">
+<div id="newS" class="a pill" style="left:330px;top:150px;background:var(--mint);color:#fff">Nouvelle série</div>
+<div id="title" class="a" style="left:130px;top:270px;width:820px;height:220px;border-radius:44px;background:var(--wine);box-shadow:0 20px 50px rgba(20,8,10,.45);display:flex;align-items:center;justify-content:center;gap:26px;border:6px solid rgba(255,255,255,.85);box-sizing:border-box">
+  <img src="icons/stethoscope.png" width="150"><span style="font:900 92px M;color:#fff;letter-spacing:-2px;white-space:nowrap">SCRUB TALK</span></div>
+<div id="badge" class="a" style="left:300px;top:40px;width:480px;height:520px;transform-origin:50% 0">
+  <div style="position:absolute;left:150px;top:0;width:20px;height:150px;background:var(--mint);transform:rotate(-12deg);transform-origin:top"></div>
+  <div style="position:absolute;left:310px;top:0;width:20px;height:150px;background:var(--mint);transform:rotate(12deg);transform-origin:top"></div>
+  <div class="card" style="position:absolute;left:40px;top:140px;width:400px;height:370px;border:5px solid #fff">
+    <div style="height:84px;background:var(--wine);display:flex;align-items:center;gap:14px;padding-left:18px"><img id="blogo" src="icons/logo.png" width="64" style="border-radius:50%"><span style="font:800 34px M;color:#fff">Lougha Online</span></div>
+    <div style="display:flex;align-items:center;gap:18px;padding:26px 22px 10px">
+      <div style="width:110px;height:110px;border-radius:50%;background:#E9DCD8;display:flex;align-items:center;justify-content:center"><img src="icons/bust-in-silhouette.png" width="80"></div>
+      <div><div style="font:900 56px M;color:var(--slate)">Hadeel</div><div style="font:700 26px M;color:var(--wine)">PROF</div></div></div>
+    <div style="margin:6px 22px;padding:12px 16px;border-radius:16px;background:var(--mint);color:#fff;font:800 30px M;text-align:center">Anglais médical</div>
+  </div></div>
+
+<!-- B. confusion + professionals -->
+<div id="q0" class="a" style="left:100px;top:170px;width:150px;height:150px;border-radius:50%;background:var(--wine);color:#fff;font:900 100px M;display:flex;align-items:center;justify-content:center;border:6px solid #fff;box-sizing:border-box">?</div>
+<div id="q1" class="a" style="left:465px;top:120px;width:150px;height:150px;border-radius:50%;background:var(--mint);color:#fff;font:900 100px M;display:flex;align-items:center;justify-content:center;border:6px solid #fff;box-sizing:border-box">?</div>
+<div id="q2" class="a" style="left:830px;top:170px;width:150px;height:150px;border-radius:50%;background:var(--wine);color:#fff;font:900 100px M;display:flex;align-items:center;justify-content:center;border:6px solid #fff;box-sizing:border-box">?</div>
+<div id="conf" class="a pill" style="left:290px;top:320px;background:var(--cream);color:var(--wine)"><img src="icons/thinking-face.png" width="70">Confusion</div>
+<div id="pr0" class="a card" style="left:60px;top:170px;width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><img src="icons/stethoscope.png" width="120"><span style="font:800 40px M;color:var(--slate)">Médecins</span></div>
+<div id="pr1" class="a card" style="left:390px;top:170px;width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><img src="icons/syringe.png" width="120"><span style="font:800 40px M;color:var(--slate)">Infirmiers</span></div>
+<div id="pr2" class="a card" style="left:720px;top:170px;width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><img src="icons/graduation-cap.png" width="120"><span style="font:800 40px M;color:var(--slate)">Étudiants</span></div>
+
+<!-- C/D. three terms, shuffle, = then ≠ -->
+<div id="tI" class="a card term"><div class="bar">TERME 1</div><div class="en">INJURY</div><div class="fr" id="tIfr">?</div></div>
+<div id="tW" class="a card term"><div class="bar">TERME 2</div><div class="en">WOUND</div><div class="fr" id="tWfr">?</div></div>
+<div id="tT" class="a card term"><div class="bar">TERME 3</div><div class="en">TRAUMA</div><div class="fr" id="tTfr">?</div></div>
+<div id="eq0" class="a" style="left:356px;top:300px;width:44px;text-align:center;font:900 80px M;color:#fff" class="sh">=</div>
+<div id="eq1" class="a" style="left:680px;top:300px;width:44px;text-align:center;font:900 80px M;color:#fff">=</div>
+<div id="nope" class="a pill" style="left:300px;top:450px;background:var(--red);color:#fff;font-size:50px">Pas pareil !</div>
+
+<!-- E. injury: body silhouette, external / internal -->
+<div id="defI" class="a card term" style="left:60px;top:150px"><div class="bar">INJURY</div><div class="en" style="font-size:54px">Blessure</div><div class="fr">toute lésion</div></div>
+<div id="body" class="a" style="left:640px;top:110px;width:300px;height:430px">
+  <svg viewBox="0 0 300 430" width="300" height="430">
+    <defs><radialGradient id="gx" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF9DB0" stop-opacity=".9"/><stop offset="1" stop-color="#FF9DB0" stop-opacity="0"/></radialGradient></defs>
+    <circle id="outGlow" cx="150" cy="215" r="210" fill="url(#gx)" opacity="0"/>
+    <g fill="#FBF5EE" stroke="#fff" stroke-width="4">
+      <circle cx="150" cy="60" r="42"/><rect x="95" y="110" width="110" height="160" rx="42"/>
+      <rect x="45" y="118" width="40" height="140" rx="20"/><rect x="215" y="118" width="40" height="140" rx="20"/>
+      <rect x="102" y="262" width="42" height="160" rx="21"/><rect x="156" y="262" width="42" height="160" rx="21"/></g>
+    <circle id="inDot" cx="150" cy="175" r="0" fill="#E0433A"/>
+    <circle id="exDot" cx="232" cy="200" r="0" fill="#E0433A"/>
+  </svg></div>
+<div id="ext" class="a pill" style="left:60px;top:440px;background:var(--wine);color:#fff;height:90px;font-size:40px">Externe</div>
+<div id="int" class="a pill" style="left:330px;top:440px;background:var(--mint);color:#fff;height:90px;font-size:40px">Interne</div>
+
+<!-- F. wound: skin layers that open, bandage -->
+<div id="defW" class="a card term" style="left:60px;top:150px"><div class="bar">WOUND</div><div class="en" style="font-size:58px">Plaie</div><div class="fr">peau ouverte</div></div>
+<div id="skin" class="a" style="left:400px;top:150px;width:620px;height:300px;border-radius:30px;overflow:hidden;box-shadow:0 18px 44px rgba(20,10,12,.4);border:5px solid #fff;box-sizing:border-box">
+  <svg viewBox="0 0 620 300" width="610" height="290">
+    <rect width="620" height="300" fill="#C9465A"/>
+    <rect width="620" height="70" fill="#F6C9B8"/><rect y="70" width="620" height="90" fill="#EDA79A"/><rect y="160" width="620" height="140" fill="#D8707A"/>
+    <path id="cutV" d="M310 0 L310 0 L310 0 Z" fill="#7E1426"/>
+    <text x="16" y="46" font-family="M" font-weight="800" font-size="30" fill="#8E2336">Peau</text>
+    <text x="16" y="128" font-family="M" font-weight="800" font-size="30" fill="#8E2336">Derme</text>
+    <text x="16" y="250" font-family="M" font-weight="800" font-size="30" fill="#fff">Tissus</text>
+  </svg></div>
+<img id="drop" class="a" src="icons/drop-of-blood.png" style="left:640px;top:330px;width:70px">
+<img id="band" class="a" src="icons/adhesive-bandage.png" style="left:600px;top:150px;width:220px">
+<div id="lac" class="a pill" style="left:420px;top:470px;background:var(--cream);color:var(--wine);height:90px;font-size:40px">Laceration = Lacération</div>
+
+<!-- G. trauma: sudden external force -->
+<div id="defT" class="a card term" style="left:60px;top:150px"><div class="bar">TRAUMA</div><div class="en" style="font-size:44px">Traumatisme</div><div class="fr">choc soudain</div></div>
+<div id="phys" class="a pill" style="left:400px;top:170px;background:var(--wine);color:#fff">Blessure physique</div>
+<img id="car" class="a" src="icons/car.png" style="left:0;top:300px;width:230px">
+<img id="boom" class="a" src="icons/collision.png" style="left:640px;top:240px;width:300px">
+<img id="bolt" class="a" src="icons/bolt.png" style="left:900px;top:420px;width:120px">
+<div id="f0" class="a pill" style="left:380px;top:470px;background:var(--cream);color:var(--slate);height:90px;font-size:40px">Force</div>
+<div id="f1" class="a pill" style="left:620px;top:470px;background:var(--cream);color:var(--slate);height:90px;font-size:40px">Événement</div>
+
+<!-- H. CTA -->
+<div id="brand" class="a" style="left:170px;top:130px;width:740px;height:160px;border-radius:999px;background:rgba(251,245,238,.95);display:flex;align-items:center;gap:26px;box-shadow:0 18px 44px rgba(20,8,10,.4)">
+  <img src="icons/logo.png" width="136" height="136" style="margin-left:12px;border-radius:50%"><span style="font:800 66px M;color:var(--slate);white-space:nowrap">Lougha Online</span></div>
+<div id="course" class="a" style="left:250px;top:320px;width:580px;height:150px;border-radius:34px;background:var(--wine);display:flex;align-items:center;gap:20px;padding-left:26px;box-sizing:border-box;box-shadow:0 18px 44px rgba(20,8,10,.4);border:5px solid rgba(255,255,255,.85)">
+  <img src="icons/stethoscope.png" width="96"><div><div style="font:900 50px M;color:#fff">Anglais médical</div><div style="font:700 30px M;color:var(--rose)">Cours en ligne</div></div></div>
+<img id="up" class="a ds" src="icons/chart-increasing.png" style="left:860px;top:300px;width:170px">
+<div id="url" class="a" style="left:190px;top:1610px;width:700px;height:120px;border-radius:999px;background:var(--cream);display:flex;align-items:center;justify-content:center;gap:20px;box-shadow:0 18px 44px rgba(20,8,10,.45);border:5px solid var(--mint);box-sizing:border-box">
+  <img src="icons/link.png" width="70"><span style="font:800 54px M;color:var(--slate)">Loughaonline.com</span></div>
+<div id="rip" class="a" style="left:0;top:0;width:60px;height:60px;border-radius:50%;border:6px solid var(--mint)"></div>
+<img id="cur" class="a ds" src="icons/cursor.png" style="left:0;top:0;width:110px">
+
+<div id="cap"></div>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => cl((t - a) / (b - a));
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  if (t < a || t >= b) { el.style.opacity = 0; return 0; }
+  const p = S(t - a, o.w || 12), out = cl((b - t) / .12);
+  const s0 = o.s0 ?? .7, s = (s0 + (1 - s0) * p) * (o.sc ?? 1) * (.9 + .1 * out);
+  const x = (o.x || 0) + (o.dx || 0) * (1 - p), y = (o.y || 0) + (o.dy || 0) * (1 - p), r = (o.rot || 0) + (o.spin || 0) * (1 - p);
+  el.style.opacity = cl(p * 1.8) * out;
+  el.style.transform = `translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`;
+  return p;
+}
+const glide = (t, keys, w = 10) => { let v = keys[0][1]; for (let i = 1; i < keys.length; i++) if (t > keys[i][0]) v = v + (keys[i][1] - v) * S(t - keys[i][0], w); return v; };
+const flo = (t, k = 1, ph = 0) => Math.sin(t * 2 + ph) * 6 * k;
+
+function draw(t) {
+  // ---------- A. intro ----------
+  A('wave', t, 0.85, 3.3, { s0: .3, rot: Math.sin(t * 9) * 16, y: flo(t) });
+  A('newS', t, 1.25, 3.3, { dy: -40 });
+  A('title', t, 2.08, 3.35, { s0: .5, dy: 40, rot: Math.sin(t * 2) * 1.2 });
+  { const u = Math.max(0, t - 3.4); A('badge', t, 3.38, 6.7, { s0: 1, dy: -560, w: 9, rot: 9 * Math.exp(-u * 2.2) * Math.cos(u * 6.5) }); }
+  $('blogo').style.transform = `scale(${t > 5.95 ? 1 + .25 * Math.exp(-(t - 5.95) * 4) : 1})`;
+
+  // ---------- B. confusion / professionals ----------
+  A('q0', t, 8.9, 10.85, { s0: .2, spin: -60, rot: Math.sin(t * 4) * 10, y: flo(t, 1.4) });
+  A('q1', t, 9.02, 10.85, { s0: .2, spin: 60, rot: Math.sin(t * 4 + 1) * 10, y: flo(t, 1.4, 1) });
+  A('q2', t, 9.14, 10.85, { s0: .2, spin: -60, rot: Math.sin(t * 4 + 2) * 10, y: flo(t, 1.4, 2) });
+  A('conf', t, 8.95, 10.85, { s0: .6, dy: 30, rot: Math.sin(t * 3) * 2 });
+  A('pr0', t, 11.35, 15.05, { dy: -200, rot: -3 + Math.sin(t * 2) * 1.5, y: flo(t) });
+  A('pr1', t, 12.1, 15.05, { dy: -200, rot: 2 + Math.sin(t * 2 + 1) * 1.5, y: flo(t, 1, 1) });
+  A('pr2', t, 14.35, 15.05, { dy: -200, rot: 3 + Math.sin(t * 2 + 2) * 1.5, y: flo(t, 1, 2) });
+
+  // ---------- C/D. terms ----------
+  const CE = 24.6;
+  // slots: x 50 / 390 / 730, shuffled during « interchangeably »
+  // shuffle: 4 swaps of 0.45 s during « interchangeably », then back home
+  const X = [50, 390, 730], PERM = [[0, 1, 2], [1, 2, 0], [2, 0, 1], [1, 0, 2], [0, 1, 2]];
+  const st = t < 19.6 ? 0 : Math.min(4, Math.floor((t - 19.6) / .45) + 1), ph = t < 19.6 ? 1 : Math.min(1, ((t - 19.6) - (st - 1) * .45) / .45);
+  [['tI', 16.0, 0], ['tW', 16.58, 1], ['tT', 17.3, 2]].forEach(([id, at, i]) => {
+    const from = X[PERM[Math.max(0, st - 1)][i]], to = X[PERM[st][i]], e = st === 0 ? 1 : S(ph * .45, 16);
+    $(id).style.left = (from + (to - from) * e) + 'px'; $(id).style.top = '150px';
+    A(id, t, at, CE, { s0: .4, dy: -180, rot: (i - 1) * 2 + Math.sin(t * 2 + i) * 1.2 });
+  });
+  A('eq0', t, 21.95, CE, { s0: .3 }); A('eq1', t, 22.05, CE, { s0: .3 });
+  const neq = t > 23.85; $('eq0').textContent = $('eq1').textContent = neq ? '≠' : '='; $('eq0').style.color = $('eq1').style.color = neq ? '#E0433A' : '#fff';
+  $('eq0').style.top = $('eq1').style.top = '220px';
+  A('nope', t, 24.1, CE, { s0: 1.6, rot: -5 });
+
+  // ---------- E. injury ----------
+  const EE = 29.92;
+  A('defI', t, 24.96, EE, { s0: .5, spin: -8 });
+  A('body', t, 25.4, EE, { s0: .6, dy: 40, y: flo(t, .6) });
+  const ex = S(t - 26.7, 8), inn = S(t - 27.4, 8);
+  $('outGlow').setAttribute('opacity', (ex * (.55 + .25 * Math.sin(t * 6))).toFixed(3));
+  $('exDot').setAttribute('r', (ex * (16 + 4 * Math.sin(t * 7))).toFixed(1));
+  $('inDot').setAttribute('r', (inn * (22 + 5 * Math.sin(t * 7 + 1))).toFixed(1));
+  A('ext', t, 26.7, EE, { dx: -300 });
+  A('int', t, 27.38, EE, { dx: -300 });
+
+  // ---------- F. wound ----------
+  const FE = 36.06;
+  A('defW', t, 30.44, FE, { s0: .5, spin: -8 });
+  A('skin', t, 30.5, FE, { s0: .7, dx: 400 });
+  { const o = S(t - 30.65, 6), b = 1 - S(t - 35.2, 10); const w = 70 * o * b, d = 270 * o;
+    $('cutV').setAttribute('d', `M${310 - w} 0 L${310 + w} 0 L310 ${d} Z`); }
+  { const u = (t - 31.3) % 1.1; A('drop', t, 31.3, 35.2, { s0: 1, y: 160 * u * u }); if (t > 31.3 && t < 35.2) $('drop').style.opacity = 1 - u; }
+  A('band', t, 35.15, FE, { s0: .4, dy: -200, rot: -12 });
+  A('lac', t, 34.55, FE, { dy: 60 });
+
+  // ---------- G. trauma ----------
+  const GE = 46.04;
+  A('defT', t, 36.86, GE, { s0: .5, spin: -8 });
+  A('phys', t, 40.5, GE, { dx: 400 });
+  { const p = S(t - 42.2, 5); A('car', t, 42.2, 43.3, { s0: 1, x: -250 + 780 * Math.min(1, (t - 42.2) / .6), rot: 0 }); }
+  const shake = t > 42.8 && t < 43.4 ? Math.sin(t * 90) * 14 * (1 - (t - 42.8) / .6) : 0;
+  A('boom', t, 42.8, GE, { s0: .1, rot: shake, x: shake });
+  A('bolt', t, 43.0, GE, { s0: .2, spin: 40, rot: Math.sin(t * 6) * 8 });
+  A('f0', t, 44.12, GE, { dy: 60 });
+  A('f1', t, 44.6, GE, { dy: 60 });
+
+  // ---------- H. CTA ----------
+  A('brand', t, 46.73, 99, { s0: .6, dy: -40 });
+  A('course', t, 47.2, 99, { s0: .6, dy: 40, rot: Math.sin(t * 2) * 1 });
+  A('up', t, 47.3, 99, { s0: .2, spin: -30, y: flo(t) });
+  const press = t > 50.62 ? 1 - .06 * Math.sin(cl((t - 50.62) / .22) * Math.PI) : 1;
+  A('url', t, 50.0, 99, { dy: 160, sc: press });
+  { const p = S(t - 50.15, 7); A('cur', t, 50.15, 51.4, { s0: 1, x: 1000 + (820 - 1000) * p, y: 1900 + (1680 - 1900) * p, sc: t > 50.62 && t < 50.78 ? .85 : 1 });
+    const r = lin(t, 50.62, 51.2); A('rip', t, 50.62, 51.2, { s0: 1, x: 790, y: 1660, sc: 1 + 4 * r }); if (t >= 50.62 && t < 51.2) $('rip').style.opacity = 1 - r; }
+
+  // term translations revealed when each is defined
+  $('tIfr').textContent = $('tWfr').textContent = $('tTfr').textContent = '= ?';
+}
+
+const KEEPS = [[0.8, 11.3667, 0], [11.8, 13.7667, 10.5667], [14.0333, 23.0667, 12.5333], [23.8, 24.5667, 21.5667], [24.9667, 29.9, 22.3333], [30.4333, 36.0667, 27.2667], [36.8667, 37.8667, 32.9], [40.1, 46.0333, 33.9], [46.7333, 49.9, 39.8333], [50.1333, 51.6, 43]], CAPS = [[[0.9, "Bienvenue", false], [1.083, "dans", false], [1.266, "notre", false], [1.449, "nouvelle", true], [1.632, "série,", true]], [[2.12, "Scrub", true], [2.44, "Talk", true], [2.76, "!", true]], [[3.4, "Je", false], [3.71, "m'appelle", false], [4.02, "Hadeel,", true]], [[4.64, "prof", false], [4.9, "d'anglais", false], [5.16, "médical", false], [5.42, "chez", false], [5.68, "Lougha", true], [5.94, "Online.", true]], [[6.72, "Aujourd'hui,", false], [7.04, "on", false], [7.36, "va", false], [7.68, "lever", false]], [[8.43, "une", false], [8.649, "confusion", true], [8.869, "très", false], [9.088, "courante", false]], [[9.6, "chez", false], [9.92, "les", false], [10.24, "professionnels", true], [10.56, "de", true], [10.88, "santé,", true]], [[14.033, "qu'ils", false], [14.196, "travaillent", false], [14.359, "ou", false], [14.522, "qu'ils", false], [14.685, "étudient,", true]], [[15.12, "entre", false], [15.44, "injury,", true], [15.76, "wound", true], [16.08, "et", true], [16.4, "trauma.", true]], [[18.2, "Ils", false], [18.512, "utilisent", false], [18.825, "ces", false], [19.137, "trois", false], [19.45, "mots", false], [19.762, "indifféremment,", true]], [[20.7, "en", false], [20.938, "pensant", false], [21.176, "que", false], [21.414, "c'est", false], [21.651, "la", true], [21.889, "même", true], [22.127, "chose,", true]], [[22.92, "mais", false], [22.957, "en", false], [22.993, "réalité,", false]], [[23.8, "ce", true], [23.915, "n'est", true], [24.03, "pas", true], [24.145, "le", true], [24.26, "cas.", true]], [[24.967, "Une", false], [25.164, "injury,", true], [25.361, "c'est", false], [25.558, "toute", false], [25.755, "lésion,", true]], [[26.28, "externe", true], [26.6, "ou", false], [26.92, "interne,", true]], [[28.1, "qui", false], [28.42, "touche", false], [28.74, "le", true], [29.06, "corps.", true]], [[30.44, "Une", false], [30.541, "wound,", true], [30.641, "c'est", false], [30.742, "une", false], [30.842, "ouverture", false]], [[31.11, "de", false], [31.339, "la", false], [31.567, "peau", true], [31.796, "ou", false], [32.025, "des", false], [32.254, "tissus,", true]], [[32.94, "par", false], [33.26, "exemple,", false], [33.58, "une", true], [33.9, "lacération.", true]], [[36.867, "Un", false], [37.058, "trauma,", true], [37.249, "en", false], [37.44, "revanche,", false]], [[40.12, "c'est", false], [40.44, "une", false], [40.76, "blessure", true], [41.08, "physique", true]], [[41.98, "causée", false], [42.3, "par", false], [42.62, "une", false], [42.94, "force", true], [43.26, "extérieure", true], [43.58, "soudaine.", true]], [[46.733, "Si", false], [46.945, "vous", false], [47.156, "voulez", false], [47.367, "améliorer", false]], [[47.86, "votre", false], [48.18, "anglais", true], [48.5, "médical,", true]], [[49.23, "découvrez", true], [49.55, "nos", true], [49.87, "cours", true], [50.423, "!", true]]];
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci];
+  if (cap.dataset.i != ci) {
+    let k = c.length; while (k > 0 && c[k - 1][2]) k--; if (k === 0) k = c.length;
+    const span = (w, cls) => `<span class="cw ${cls}">${w[1]}</span>`;
+    const l1 = c.slice(0, k).map(w => span(w, w[2] ? 'ce' : '')).join(' '), l2 = c.slice(k).map(w => span(w, 'cb')).join(' ');
+    cap.innerHTML = `<div class="l1">${l1}</div>` + (l2 ? `<div class="l2">${l2}</div>` : '');
+    cap.dataset.i = ci;
+  }
+  [...cap.querySelectorAll('.cw')].forEach((e, j) => { const p = S(t - c[j][0] + .03, 16);
+    e.style.opacity = Math.min(1, p * 1.5); e.style.filter = `blur(${(1 - p) * 9}px)`; e.style.transform = `translateY(${(1 - p) * 14}px) scale(${.92 + .08 * p})`; });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+window.setT(0);
+</script></body></html>
