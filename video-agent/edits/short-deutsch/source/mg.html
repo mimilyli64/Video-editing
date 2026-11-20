@@ -1,0 +1,216 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:M;src:url(fonts/montserrat-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-900-normal.woff2);font-weight:900}
+:root{--violet:#4B2A9E;--violet2:#7B4FE0;--gold:#FFCE00;--cream:#FBF7FF;--ink:#24123F;--red:#DD2B2B;--green:#3FB36B}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:M,sans-serif;position:relative}
+.a{position:absolute;opacity:0;transform-origin:50% 50%}
+.pill{display:flex;align-items:center;gap:16px;padding:0 34px;height:100px;border-radius:999px;font-weight:800;font-size:44px;white-space:nowrap;box-shadow:0 14px 34px rgba(15,5,35,.45);box-sizing:border-box}
+.card{background:var(--cream);border-radius:34px;box-shadow:0 18px 44px rgba(15,5,35,.5);box-sizing:border-box;border:5px solid #fff}
+.ds{filter:drop-shadow(0 14px 22px rgba(15,5,35,.45))}
+.ic{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.lbl{font:800 38px M;color:var(--ink)}
+#cap{position:absolute;left:30px;width:1020px;top:1440px;text-align:center}
+#cap .l1{font:700 60px M;color:#fff;line-height:1.14}
+#cap .l2{font:900 84px M;color:var(--gold);line-height:1.08;margin-top:2px}
+#cap .cw{display:inline-block;text-shadow:0 4px 18px rgba(15,5,30,.75),0 2px 3px rgba(15,5,30,.6)}
+#cap .ce{color:var(--gold);font-weight:900}
+</style></head><body>
+
+<!-- A. Allemagne -->
+<div id="flag" class="a ds" style="left:60px;top:120px;width:220px;height:220px">
+  <svg viewBox="0 0 60 60" width="220" height="220"><defs><clipPath id="c"><circle cx="30" cy="30" r="27"/></clipPath></defs>
+  <g clip-path="url(#c)"><rect width="60" height="20" fill="#111"/><rect y="20" width="60" height="20" fill="#DD0000"/><rect y="40" width="60" height="20" fill="#FFCE00"/></g>
+  <circle cx="30" cy="30" r="27" fill="none" stroke="#fff" stroke-width="3"/></svg></div>
+<div id="deu" class="a pill" style="left:300px;top:180px;background:var(--cream);color:var(--ink)">Allemagne</div>
+<img id="plane" class="a ds" src="icons/airplane.png" style="left:0;top:0;width:160px">
+<svg id="trail" class="a" style="left:0;top:0" width="1080" height="600"><path id="trailp" d="M120 560 Q 520 380 900 200" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="14 14" stroke-linecap="round" opacity=".8"/></svg>
+<div id="notall" class="a pill" style="left:620px;top:330px;background:var(--red);color:#fff;font-size:40px;height:90px">Pas tout le monde…</div>
+
+<!-- C. courage -->
+<div id="cour" class="a card ic" style="left:40px;top:120px;width:300px;height:250px;background:var(--green);border-color:#fff"><img src="icons/heart.png" width="120"><span style="font:800 40px M;color:#fff">Courage ✓</span></div>
+<div id="abd" class="a card ic" style="left:740px;top:120px;width:300px;height:250px;background:#6B6B7A"><img src="icons/cross.png" width="110"><span style="font:800 40px M;color:#fff">Abandon</span></div>
+
+<!-- D. marathon -->
+<div id="mara" class="a pill" style="left:330px;top:120px;background:var(--gold);color:var(--ink);font-size:48px">Marathon</div>
+<div id="track" class="a" style="left:60px;top:250px;width:960px;height:120px">
+  <div style="position:absolute;left:0;top:70px;width:960px;height:14px;border-radius:7px;background:rgba(255,255,255,.55)"></div>
+  <div id="trackF" style="position:absolute;left:0;top:70px;width:0;height:14px;border-radius:7px;background:var(--gold)"></div>
+  <div style="position:absolute;right:-6px;top:6px;font-size:66px">🏁</div>
+  <img id="runner" src="icons/person-running.png" style="position:absolute;left:0;top:-6px;width:100px">
+  <div id="km" style="position:absolute;left:0;top:96px;font:800 34px M;color:#fff;text-shadow:0 3px 10px rgba(0,0,0,.5)">0 km</div></div>
+
+<!-- E. programme exigeant (+ held through the next phrase) -->
+<div id="prog" class="a card" style="left:140px;top:110px;width:800px;height:250px;display:flex;align-items:center;gap:24px;padding:0 34px">
+  <img src="icons/flexed-biceps.png" width="140">
+  <div style="flex:1"><div style="font:900 52px M;color:var(--violet)">Programme Lougha</div>
+    <div style="display:flex;gap:12px;margin-top:14px"><span id="lv0" style="padding:8px 22px;border-radius:999px;background:#E6DDF8;font:800 34px M;color:var(--violet)">A1</span><span id="lv1" style="padding:8px 22px;border-radius:999px;background:#E6DDF8;font:800 34px M;color:var(--violet)">A2</span><span id="exi" style="padding:8px 22px;border-radius:999px;background:var(--red);font:800 34px M;color:#fff;opacity:0">Exigeant</span></div>
+    <div style="margin-top:16px;height:16px;border-radius:8px;background:#E6DDF8"><div id="pbar" style="height:16px;border-radius:8px;background:var(--violet2);width:0"></div></div></div></div>
+
+<!-- G. pédagogie unique -->
+<img id="globe" class="a ds" src="icons/globe.png" style="left:110px;top:110px;width:240px">
+<img id="crown" class="a ds" src="icons/crown.png" style="left:190px;top:40px;width:120px">
+<div id="uniq" class="a pill" style="left:400px;top:190px;background:var(--gold);color:var(--ink);font-size:48px">Pédagogie unique</div>
+
+<!-- I. fini les pages / PDF -->
+<div id="o0" class="a card ic" style="left:90px;top:120px;width:280px;height:240px"><img src="icons/memo.png" width="110"><span class="lbl">Pages à remplir</span></div>
+<div id="o1" class="a card ic" style="left:710px;top:120px;width:280px;height:240px"><img src="icons/file.png" width="110"><span class="lbl">PDF</span></div>
+<img id="x0" class="a" src="icons/cross.png" style="left:160px;top:140px;width:150px">
+<img id="x1" class="a" src="icons/cross.png" style="left:780px;top:140px;width:150px">
+
+<!-- J. 100% interactif + le livre -->
+<div id="h100" class="a" style="left:0;width:1080px;top:100px;text-align:center;font:900 190px M;color:#fff;letter-spacing:-6px;text-shadow:0 8px 30px rgba(15,5,35,.6)"><span id="hn">0</span><span style="color:var(--gold)">%</span></div>
+<div id="inter" class="a pill" style="left:350px;top:310px;background:var(--violet2);color:#fff">Interactif</div>
+<div id="bookTag" class="a pill" style="left:690px;top:640px;background:var(--gold);color:var(--ink);font-size:38px;height:86px">+ le livre !</div>
+<svg id="bookArrow" class="a" style="left:560px;top:690px" width="200" height="200" viewBox="0 0 200 200"><path id="arp" d="M180 10 Q 120 40 40 150" fill="none" stroke="#FFCE00" stroke-width="12" stroke-linecap="round" stroke-dasharray="260" stroke-dashoffset="260"/><path d="M30 120 L40 160 L80 150" fill="none" stroke="#FFCE00" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" id="arh" opacity="0"/></svg>
+
+<!-- K. contenu du livre + prof en direct -->
+<div id="list" class="a card" style="left:180px;top:90px;width:720px;height:300px;padding:22px 34px">
+  <div id="li0" style="font:800 46px M;color:var(--ink);opacity:0">✅ Résumé de tout</div>
+  <div id="li1" style="font:800 46px M;color:var(--ink);opacity:0;margin-top:14px">✅ Activités</div>
+  <div id="li2" style="font:800 46px M;color:var(--ink);opacity:0;margin-top:14px">✅ Exercices</div></div>
+<div id="live" class="a pill" style="left:300px;top:410px;background:var(--red);color:#fff;font-size:42px;height:90px"><span id="dot">●</span> Prof en direct</div>
+
+<!-- L. livraison + paiement -->
+<img id="pkg" class="a ds" src="icons/package.png" style="left:0;top:0;width:150px">
+<img id="home" class="a ds" src="icons/house.png" style="left:820px;top:140px;width:200px">
+<svg id="road" class="a" style="left:0;top:0" width="1080" height="420"><path d="M130 300 Q 520 120 860 250" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="14 14" stroke-linecap="round" opacity=".8"/></svg>
+<div id="chez" class="a pill" style="left:330px;top:120px;background:var(--cream);color:var(--ink)">Livré chez vous</div>
+<div id="pay" class="a card ic" style="left:60px;top:110px;width:300px;height:240px"><img src="icons/credit-card.png" width="120"><span class="lbl">Paiement ✓</span></div>
+
+<!-- M. QR code -> groupe -->
+<div id="qr" class="a card" style="left:380px;top:80px;width:320px;height:320px;padding:22px;background:#fff"><canvas id="qrc" width="266" height="266"></canvas><div id="scan" style="position:absolute;left:14px;width:282px;height:6px;background:var(--red);box-shadow:0 0 18px var(--red)"></div></div>
+<div id="grp" class="a card ic" style="left:760px;top:120px;width:290px;height:250px;background:var(--violet2)"><img src="icons/users.png" width="120"><span style="font:800 36px M;color:#fff">Ton groupe ✓</span></div>
+<div id="auto" class="a pill" style="left:60px;top:200px;background:var(--gold);color:var(--ink);font-size:38px;height:86px">Auto</div>
+
+<!-- N. avis + résultats -->
+<div id="stars" class="a" style="left:0;width:1080px;top:110px;text-align:center"></div>
+<div id="avis" class="a pill" style="left:120px;top:290px;background:var(--cream);color:var(--ink)">Avis</div>
+<div id="res" class="a pill" style="left:560px;top:290px;background:var(--violet2);color:#fff"><img src="icons/chart-increasing.png" width="64">Résultats</div>
+
+<!-- O. CTA -->
+<div id="brand" class="a" style="left:170px;top:110px;width:740px;height:160px;border-radius:999px;background:rgba(251,247,255,.96);display:flex;align-items:center;gap:26px;box-shadow:0 18px 44px rgba(15,5,35,.5)">
+  <img src="icons/logo.png" width="136" height="136" style="margin-left:12px;border-radius:50%"><span style="font:800 66px M;color:var(--ink);white-space:nowrap">Lougha Online</span></div>
+<div id="url" class="a" style="left:190px;top:1680px;width:700px;height:120px;border-radius:999px;background:var(--cream);display:flex;align-items:center;justify-content:center;gap:20px;box-shadow:0 18px 44px rgba(15,5,35,.5);border:5px solid var(--gold);box-sizing:border-box">
+  <img src="icons/link.png" width="70"><span style="font:800 54px M;color:var(--ink)">Loughaonline.com</span></div>
+<div id="rip" class="a" style="left:0;top:0;width:60px;height:60px;border-radius:50%;border:6px solid var(--gold)"></div>
+<img id="cur" class="a ds" src="icons/cursor.png" style="left:0;top:0;width:110px">
+
+<div id="cap"></div>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => cl((t - a) / (b - a));
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  if (t < a || t >= b) { el.style.opacity = 0; return 0; }
+  const p = S(t - a, o.w || 12), out = cl((b - t) / .12);
+  const s0 = o.s0 ?? .7, s = (s0 + (1 - s0) * p) * (o.sc ?? 1) * (.9 + .1 * out);
+  const x = (o.x || 0) + (o.dx || 0) * (1 - p), y = (o.y || 0) + (o.dy || 0) * (1 - p), r = (o.rot || 0) + (o.spin || 0) * (1 - p);
+  el.style.opacity = cl(p * 1.8) * out;
+  el.style.transform = `translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`;
+  return p;
+}
+const flo = (t, k = 1, ph = 0) => Math.sin(t * 2 + ph) * 6 * k;
+// QR pattern (decorative)
+{ const c = $('qrc').getContext('2d'), n = 25, s = 266 / n; let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  c.fillStyle = '#fff'; c.fillRect(0, 0, 266, 266); c.fillStyle = '#24123F';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (rnd() > .52) c.fillRect(x * s, y * s, s + .5, s + .5);
+  for (const [fx, fy] of [[0, 0], [n - 7, 0], [0, n - 7]]) { c.fillStyle = '#24123F'; c.fillRect(fx * s, fy * s, 7 * s, 7 * s); c.fillStyle = '#fff'; c.fillRect((fx + 1) * s, (fy + 1) * s, 5 * s, 5 * s); c.fillStyle = '#24123F'; c.fillRect((fx + 2) * s, (fy + 2) * s, 3 * s, 3 * s); }
+  c.fillStyle = '#fff'; c.fillRect(103, 103, 60, 60); }
+$('stars').innerHTML = [0, 1, 2, 3, 4].map(i => `<span id="st${i}" style="display:inline-block;font-size:120px;color:#FFCE00;text-shadow:0 6px 20px rgba(0,0,0,.4);margin:0 6px">★</span>`).join('');
+
+function draw(t) {
+  // A. Allemagne 0.3 - 5.5
+  const AE = 5.55;
+  A('flag', t, 1.45, AE, { s0: .2, spin: -120, y: flo(t), rot: Math.sin(t * 2) * 4 });
+  A('deu', t, 1.6, AE, { dx: 300 });
+  A('trail', t, 0.35, 2.3, { s0: 1 });
+  { const u = S(t - 0.35, 3.2), x = 120 + 780 * u, y = 560 - 360 * u - 160 * Math.sin(u * Math.PI) * .6; A('plane', t, 0.35, 2.3, { s0: 1, x: x - 80, y: y - 80, rot: -28 }); }
+  A('notall', t, 2.0, AE, { s0: .5, dy: 40, rot: -3 });
+
+  // C. courage 5.88 - 9.0
+  A('cour', t, 6.9, 9.02, { s0: .3, spin: -10, y: flo(t), sc: 1 + .04 * Math.sin(t * 6) });
+  A('abd', t, 8.1, 9.02, { s0: .3, spin: 10, y: flo(t, 1, 1) });
+
+  // D. marathon 9.3 - 12.7
+  A('mara', t, 9.6, 12.74, { s0: .5, dy: -40 });
+  A('track', t, 9.4, 12.74, { s0: 1, dy: 30 });
+  { const u = lin(t, 9.6, 12.6); $('trackF').style.width = (900 * u) + 'px'; $('runner').style.left = (900 * u - 40) + 'px'; $('runner').style.transform = `translateY(${Math.abs(Math.sin(t * 14)) * -10}px)`; $('km').style.left = (900 * u - 20) + 'px'; $('km').textContent = Math.round(42 * u) + ' km'; }
+
+  // E. programme 13.3 - 22.4 (held through the next phrase)
+  A('prog', t, 13.4, 22.42, { s0: .6, dy: -60, rot: Math.sin(t * 1.6) * .8 });
+  $('lv0').style.background = t > 18.4 ? '#7B4FE0' : '#E6DDF8'; $('lv0').style.color = t > 18.4 ? '#fff' : '#4B2A9E';
+  $('lv1').style.background = t > 20.6 ? '#7B4FE0' : '#E6DDF8'; $('lv1').style.color = t > 20.6 ? '#fff' : '#4B2A9E';
+  $('exi').style.opacity = t > 14.9 ? 1 : 0; $('exi').style.transform = `scale(${t > 14.9 ? .7 + .3 * S(t - 14.9, 14) : 1})`;
+  $('pbar').style.width = (100 * lin(t, 14.2, 22.2)) + '%';
+
+  // G. pédagogie unique 23.3 - 29.3
+  A('globe', t, 23.3, 29.3, { s0: .3, rot: (t - 23.3) * 30, y: flo(t) });
+  A('crown', t, 24.0, 29.3, { s0: .2, dy: -80, rot: -12 + Math.sin(t * 3) * 6 });
+  A('uniq', t, 23.6, 29.3, { dx: 400 });
+
+  // I. fini les pages / PDF 30.0 - 33.85
+  A('o0', t, 30.2, 33.86, { s0: .5, dy: -100, rot: -4 });
+  A('o1', t, 31.9, 33.86, { s0: .5, dy: -100, rot: 4 });
+  A('x0', t, 30.9, 33.86, { s0: 2.2, rot: -8 }); A('x1', t, 32.6, 33.86, { s0: 2.2, rot: 8 });
+
+  // J. 100% interactif + le livre 34.2 - 37.6
+  A('h100', t, 34.3, 37.62, { s0: .6 }); $('hn').textContent = Math.round(100 * (1 - Math.pow(1 - lin(t, 34.4, 35.4), 3)));
+  A('inter', t, 35.2, 37.62, { dy: 40 });
+  A('bookTag', t, 36.55, 37.62, { s0: .4, rot: 4 }); A('bookArrow', t, 36.6, 37.62, { s0: 1 });
+  $('arp').style.strokeDashoffset = 260 * (1 - S(t - 36.6, 9)); $('arh').setAttribute('opacity', t > 36.95 ? 1 : 0);
+
+  // K. résumé / activités / exercices / prof en direct 38.0 - 42.1
+  A('list', t, 38.0, 42.14, { s0: .7, dy: -60 });
+  [['li0', 38.3], ['li1', 39.3], ['li2', 40.2]].forEach(([id, at]) => { const p = S(t - at, 14); $(id).style.opacity = cl(p * 1.6); $(id).style.transform = `translateX(${(1 - p) * -60}px)`; });
+  A('live', t, 41.3, 42.14, { s0: .5, dy: 40 }); $('dot').style.opacity = Math.floor(t * 3) % 2 ? .4 : 1;
+
+  // L. livraison 43.0 - 44.9, paiement 44.9 - 47.0
+  A('home', t, 43.1, 44.9, { s0: .4, dy: -80 }); A('road', t, 43.1, 44.9, { s0: 1 }); A('chez', t, 43.4, 44.9, { dy: -40 });
+  { const u = S(t - 43.25, 4), x = 130 + 700 * u, y = 300 - 180 * Math.sin(u * Math.PI) + (250 - 300) * u; A('pkg', t, 43.15, 44.9, { s0: 1, x: x - 70, y: y - 90, rot: Math.sin(t * 8) * 6 }); }
+  A('pay', t, 44.9, 47.0, { s0: .3, spin: -10, y: flo(t) });
+
+  // M. QR code 47.0 - 49.6
+  A('qr', t, 47.0, 49.62, { s0: .5, rot: -2 }); $('scan').style.top = (16 + 290 * (.5 + .5 * Math.sin((t - 47) * 4))) + 'px';
+  A('grp', t, 48.25, 49.62, { dx: 300, y: flo(t) });
+  A('auto', t, 48.5, 49.62, { s0: .5, rot: -5 });
+
+  // N. avis + résultats 51.2 - 55.0
+  A('stars', t, 51.3, 55.05, { s0: 1 });
+  for (let i = 0; i < 5; i++) { const p = S(t - 51.5 - i * .14, 14); $('st' + i).style.opacity = cl(p * 1.6); $('st' + i).style.transform = `scale(${.3 + .7 * p}) rotate(${(1 - p) * -90}deg)`; }
+  A('avis', t, 52.6, 55.05, { dx: -300 }); A('res', t, 53.2, 55.05, { dx: 300 });
+
+  // O. CTA
+  A('brand', t, 55.1, 99, { s0: .6, dy: -40 });
+  const press = t > 56.25 ? 1 - .06 * Math.sin(cl((t - 56.25) / .22) * Math.PI) : 1;
+  A('url', t, 55.25, 99, { dy: 160, sc: press });
+  { const p = S(t - 55.6, 8); A('cur', t, 55.6, 99, { s0: 1, x: 1000 + (820 - 1000) * p, y: 1900 + (1750 - 1900) * p, sc: t > 56.25 && t < 56.4 ? .85 : 1 });
+    const r = lin(t, 56.25, 56.8); A('rip', t, 56.25, 56.8, { s0: 1, x: 790, y: 1730, sc: 1 + 4 * r }); if (t >= 56.25 && t < 56.8) $('rip').style.opacity = 1 - r; }
+}
+
+const KEEPS = [[0.2667, 3.1, 0], [3.3667, 9.0333, 2.8333], [9.2333, 12.7667, 8.5], [13.2333, 17.2, 12.0333], [18.1333, 22.4, 16], [23.2, 25.7, 20.2667], [26.7667, 29.3, 22.7667], [29.9667, 33.8333, 25.3], [34.2333, 42.1333, 29.1667], [43, 49.6, 37.0667], [51.2, 56.5667, 43.6667]], CAPS = [[[0.32, "Beaucoup", false], [0.473, "de", false], [0.626, "gens", false], [0.778, "rêvent", false], [0.931, "de", false], [1.084, "partir", false], [1.237, "en", true], [1.39, "Allemagne,", true]], [[1.95, "mais", false], [2.077, "tout", true], [2.204, "le", true], [2.33, "monde", true], [2.457, "n'y", false], [2.584, "arrive", false], [2.711, "pas.", false]], [[3.4, "", false]], [[5.88, "Certains", false], [6.17, "ont", false], [6.46, "le", true], [6.75, "courage", true], [7.04, "d'apprendre", false], [7.33, "l'allemand,", false]], [[8.2, "d'autres", true], [8.519, "non.", true]], [[9.25, "", false]], [[13.3, "C'est", false], [13.473, "pour", false], [13.645, "ça", false], [13.818, "qu'on", false], [13.99, "a", false], [14.162, "créé", false], [14.335, "un", true], [14.508, "programme", true], [14.68, "exigeant", true], [14.852, ":", true]], [[15.6, "tout", true], [15.771, "le", true], [15.943, "monde", true], [16.114, "ne", false], [16.286, "pourra", false], [16.457, "pas", false], [16.629, "suivre.", false]], [[17.9, "", false]], [[23.25, "Une", false], [23.475, "pédagogie", true], [23.7, "qu'on", false], [23.925, "ne", false], [24.15, "trouve", false], [24.375, "nulle", true], [24.6, "part", true], [24.825, "ailleurs.", true]], [[25.65, "", false]], [[30.05, "Fini", true], [30.328, "les", false], [30.605, "livres", false], [30.883, "à", false], [31.16, "remplir", false]], [[31.9, "et", false], [32.22, "les", false], [32.54, "PDF.", true]], [[33.8, "", false]], [[34.3, "Le", false], [34.575, "cours", false], [34.85, "est", false], [35.125, "100", true], [35.4, "%", true], [35.675, "interactif,", true]], [[36.5, "avec", false], [36.725, "ce", true], [36.95, "livre", true], [37.175, "en", false], [37.4, "plus.", false]], [[38.0, "Il", false], [38.15, "contient", false], [38.3, "un", true], [38.45, "résumé", true], [38.6, "de", false], [38.75, "tout,", false]], [[39.2, "des", false], [39.425, "activités", true], [39.65, "et", false], [39.875, "des", false], [40.1, "exercices", true]], [[40.7, "à", false], [40.859, "faire", false], [41.018, "avec", false], [41.177, "le", true], [41.336, "prof", true], [41.495, "en", true], [41.654, "direct.", true]], [[43.05, "Et", false], [43.22, "on", false], [43.389, "vous", false], [43.559, "envoie", false], [43.729, "le", false], [43.898, "livre", false], [44.068, "chez", true], [44.238, "vous.", true]], [[44.86, "Quand", false], [45.094, "vous", false], [45.327, "achetez", false], [45.561, "le", false], [45.794, "livre", false], [46.028, "et", false], [46.261, "payez,", false]], [[47.04, "ce", false], [47.229, "QR", true], [47.418, "code", true], [47.607, "vous", false], [47.796, "ajoute", false]], [[48.3, "automatiquement", true], [48.525, "à", false], [48.75, "votre", false], [48.975, "groupe.", false]], [[49.5, "", false]], [[51.25, "Si", false], [51.409, "ça", false], [51.569, "vous", false], [51.728, "intéresse,", false]], [[52.1, "découvrez", false], [52.354, "les", true], [52.608, "avis", true], [52.862, "et", false], [53.117, "les", true], [53.371, "résultats", true], [53.625, "de", false], [53.879, "nos", false], [54.133, "étudiants", false]], [[55.15, "Tout", false], [55.319, "est", false], [55.487, "sur", true], [55.656, "notre", true], [55.825, "site", true], [55.994, "!", true]]];
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0 || !CAPS[ci][0][1]) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci];
+  if (cap.dataset.i != ci) {
+    let k = c.length; while (k > 0 && c[k - 1][2]) k--; if (k === 0) k = c.length;
+    const span = (w, cls) => `<span class="cw ${cls}">${w[1]}</span>`;
+    const l1 = c.slice(0, k).map(w => span(w, w[2] ? 'ce' : '')).join(' '), l2 = c.slice(k).map(w => span(w, 'cb')).join(' ');
+    cap.innerHTML = `<div class="l1">${l1}</div>` + (l2 ? `<div class="l2">${l2}</div>` : '');
+    cap.dataset.i = ci;
+  }
+  [...cap.querySelectorAll('.cw')].forEach((e, j) => { const p = S(t - c[j][0] + .03, 16);
+    e.style.opacity = Math.min(1, p * 1.5); e.style.filter = `blur(${(1 - p) * 9}px)`; e.style.transform = `translateY(${(1 - p) * 14}px) scale(${.92 + .08 * p})`; });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+window.setT(0);
+</script></body></html>
