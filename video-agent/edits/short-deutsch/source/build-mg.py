@@ -1,7 +1,7 @@
 # builds source/mg.html: KEEPS + French captions timed on the English phrases (*word* = emphasised)
 import json
 tl = json.load(open('assets/timeline.json'))
-keeps = [[round(a, 4), round(b, 4), round(c, 4)] for a, b, c in tl['keeps']]
+keeps = json.load(open('source/keeps.json'))   # original take -> cut video (cuts done in source.mp4)
 # (source start of the English phrase, French text)
 FR = [
  (0.32, "Beaucoup de gens rêvent de partir *en Allemagne,*"),

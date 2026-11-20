@@ -4,7 +4,7 @@ from PIL import Image, ImageFilter
 SRC, BG, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 BLUR = float(sys.argv[4]) if len(sys.argv) > 4 else 3
 LIMIT = int(sys.argv[5]) if len(sys.argv) > 5 else 10**9
-TINT = np.array([.97, .94, 1.04], np.float32)   # match the purple room light
+TINT = np.array([float(v) for v in (sys.argv[6] if len(sys.argv) > 6 else "1,1,1").split(",")], np.float32)   # colour match to the room light
 IW, IH, OW, OH = 720, 1280, 1080, 1920
 y0, y1 = 22, 1100; h = y1 - y0; w = int(h * 9 / 16); x0 = 360 - w // 2     # shins up, 9:16
 im = Image.open(BG).convert('RGB'); iw, ih = im.size; s = max(OW / iw, OH / ih)

@@ -1,11 +1,12 @@
 // Lougha Online - cours d'allemand (DEUTSCH A1+A2). Darija voice, French captions only on the phrases we understood.
-// Green screen keyed onto the Lougha studio photo the creator sent (source/key.py), framed shins-up, zoom transitions on each cut.
+// Green screen keyed onto the German study room the creator sent (plaque relabelled LOUGHA ONLINE), framed shins-up.
+// assets/source.mp4 = keyed take with the silences cut + a camera move: smooth zooms in/out on key words and cuts, slow breathing.
 // One overlay: source/mg.html -> assets/mg.mov (motion graphics + captions). All times are SOURCE seconds.
 window.SPEC = {
   title: 'Lougha Online - Deutsch',
   media: { mg: { src: 'assets/mg.mov', width: 1080, alpha: true } },
   cam: { crop: [0, 0, 1080, 1920], eyes: [540, 560], q: 1 },
-  cut: [[0, 0.25], [3.1, 3.37], [9.02, 9.22], [12.75, 13.24], [17.19, 18.14], [22.41, 23.21], [25.71, 26.77], [29.29, 29.98], [33.84, 34.22], [42.13, 43.01], [49.59, 51.21], [56.55, 99]],
+  cut: [],   // the silences are already cut in assets/source.mp4 (keeps in mg.html KEEPS)
   tighten: { gap: 99 },
   layout: { keys: [[0, 0]] },
   zoom: { keys: [[0, 1]] },
@@ -15,6 +16,6 @@ window.SPEC = {
   mix: { ceil: -2.2 },
   grade: false,
   sfx: { swish: 0, accents: 0,
-    extra: [[1.6, 'pop', .1], [7.2, 'pop', .08], [10.2, 'pop', .08], [14.9, 'thud', .4], [23.6, 'bell', .1], [36.6, 'pop', .1], [44.2, 'pop', .08], [48.4, 'bell', .1], [56.0, 'tap', .12]] },
+    extra: [[0.75, 'pop', 0.1], [6.48, 'pop', 0.1], [8.08, 'thud', 0.35], [11.78, 'pop', 0.08], [13.69, 'thud', 0.5], [21.14, 'bell', 0.1], [27.89, 'thud', 0.45], [30.31, 'pop', 0.1], [31.51, 'bell', 0.1], [38.28, 'pop', 0.08], [40.03, 'pop', 0.1], [42.38, 'bell', 0.1], [47.61, 'pop', 0.1], [48.71, 'tap', 0.12]] },   // short times (source.mp4 is already cut)
   captions: { hide: [[0, 99]] },
 };
