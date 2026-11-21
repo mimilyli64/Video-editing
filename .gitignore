@@ -8,3 +8,4 @@ video-agent/edits/*/stills/
 video-agent/edits/*/files/
 video-agent/edits/*/.cache/
 video-agent/edits/*/source/clips/
+ffmpeg2pass-*.log*
