@@ -1,0 +1,164 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:F;src:url(fonts/fredoka-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:F;src:url(fonts/fredoka-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:F;src:url(fonts/fredoka-latin-700-normal.woff2);font-weight:700}
+:root{--y:#FFD43B;--pink:#FF6FA8;--blue:#4DA3FF;--mint:#3DDC97;--ink:#1D1630;--violet:#7B4FE0}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:F,sans-serif;position:relative}
+.a{position:absolute;opacity:0;transform-origin:50% 50%}
+.stk{background:#fff;border-radius:34px;padding:18px 30px;box-shadow:0 14px 30px rgba(0,0,0,.35);border:6px solid #fff;box-sizing:border-box;white-space:nowrap}
+.voc{position:absolute;opacity:0;transform-origin:50% 50%;background:#fff;border-radius:30px;padding:16px 30px 18px;box-shadow:0 16px 34px rgba(0,0,0,.38);white-space:nowrap}
+.voc .en{font:700 70px F;color:var(--ink);line-height:1}
+.voc .fr{font:600 40px F;color:var(--violet);margin-top:6px}
+.voc .tag{position:absolute;top:-30px;left:24px;background:var(--pink);color:#fff;font:700 30px F;padding:4px 16px;border-radius:999px}
+.doodle{position:absolute;opacity:0}
+#fx{position:absolute;left:0;top:0}
+#cap{position:absolute;left:30px;width:1020px;top:1500px;text-align:center}
+#cap .cw{display:inline-block;font:700 74px F;color:#fff;margin:0 6px;padding:2px 12px;border-radius:18px;-webkit-text-stroke:3px #1D1630;paint-order:stroke fill;text-shadow:0 6px 0 #1D1630}
+#cap .ce{color:var(--y)}
+#cap .cur{background:var(--pink);-webkit-text-stroke:0;text-shadow:none;color:#fff}
+</style></head><body>
+<canvas id="fx" width="1080" height="1920"></canvas>
+
+<!-- intro -->
+<img id="wave" class="a" src="icons/waving-hand.png" style="left:90px;top:230px;width:220px">
+<div id="hi" class="a stk" style="left:300px;top:250px;font:700 84px F;color:var(--ink)">Hello! <span style="color:var(--pink)">♥</span></div>
+<div id="brand" class="a stk" style="left:40px;top:90px;display:flex;align-items:center;gap:16px;padding:10px 26px 10px 10px"><img src="icons/logo.png" width="90" style="border-radius:50%"><span style="font:700 48px F;color:var(--ink)">Lougha Online</span></div>
+<div id="pin" class="a stk" style="left:540px;top:260px;display:flex;align-items:center;gap:10px;background:var(--y);border-color:#fff"><img src="icons/pin.png" width="64"><span style="font:700 56px F;color:var(--ink)">At the mall</span></div>
+<div id="slow" class="a stk" style="left:150px;top:400px;display:flex;align-items:center;gap:14px;background:var(--mint)"><img src="icons/turtle.png" width="80"><span style="font:700 56px F;color:#fff">Slow English vlog</span></div>
+<img id="bags" class="a" src="icons/shopping-bags.png" style="left:790px;top:300px;width:220px">
+
+<!-- vocab stickers (filled in JS) -->
+<div id="vocs"></div>
+<svg id="arrow" class="doodle" style="left:0;top:0" width="1080" height="1920"><path id="arp" fill="none" stroke="#FFD43B" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+<!-- colour swatches -->
+<div id="sw0" class="a stk" style="left:80px;top:300px;display:flex;align-items:center;gap:16px"><i style="width:60px;height:60px;border-radius:50%;background:#111"></i><span style="font:700 58px F;color:var(--ink)">black</span><span style="font:600 40px F;color:var(--violet)">noir</span></div>
+<div id="sw1" class="a stk" style="left:560px;top:400px;display:flex;align-items:center;gap:16px"><i style="width:60px;height:60px;border-radius:50%;background:#8B5A2B"></i><span style="font:700 58px F;color:var(--ink)">brown</span><span style="font:600 40px F;color:var(--violet)">marron</span></div>
+
+<!-- recap checklist -->
+<div id="recap" class="a stk" style="left:220px;top:180px;padding:24px 40px;background:#fff">
+  <div id="r0" style="font:700 60px F;color:var(--ink);opacity:0">✅ winter hat</div>
+  <div id="r1" style="font:700 60px F;color:var(--ink);opacity:0">✅ scarf</div>
+  <div id="r2" style="font:700 60px F;color:var(--ink);opacity:0">✅ gloves</div></div>
+
+<!-- outro -->
+<div id="ty" class="a stk" style="left:200px;top:260px;font:700 80px F;color:var(--ink)">Thank you! <span style="color:var(--pink)">💜</span></div>
+<div id="follow" class="a" style="left:240px;top:280px;width:600px;height:150px;border-radius:999px;background:var(--pink);display:flex;align-items:center;gap:20px;padding:0 20px;box-sizing:border-box;box-shadow:0 18px 40px rgba(0,0,0,.4)">
+  <img src="icons/logo.png" width="112" style="border-radius:50%;border:5px solid #fff"><span id="fT" style="font:700 64px F;color:#fff">+ Follow</span></div>
+<img id="tap" class="a" src="icons/cursor.png" style="left:0;top:0;width:120px">
+<div id="bye" class="a stk" style="left:150px;top:280px;font:700 76px F;color:var(--ink)">Goodbye! 👋 <span style="color:var(--mint)">Stay safe</span></div>
+
+<div id="cap"></div>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => cl((t - a) / (b - a));
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+const B = x => x <= 0 ? 0 : 1 - Math.exp(-6 * x) * Math.cos(11 * x);     // bouncy sticker pop
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  if (t < a || t >= b) { el.style.opacity = 0; return 0; }
+  const p = B(t - a), q = S(t - a, 14), out = cl((b - t) / .15);
+  const s = (.2 + .8 * p) * (o.sc ?? 1) * (.5 + .5 * out);
+  const r = (o.rot || 0) + (o.spin || 0) * (1 - q) + Math.sin(t * 2.2 + (o.ph || 0)) * (o.wob ?? 2.5);
+  const y = (o.y || 0) + Math.sin(t * 1.8 + (o.ph || 0)) * (o.bob ?? 6) + (o.dy || 0) * (1 - q);
+  el.style.opacity = cl(q * 2) * out;
+  el.style.transform = `translate(${(o.x || 0) + (o.dx || 0) * (1 - q)}px,${y}px) scale(${s}) rotate(${r}deg)`;
+  return p;
+}
+// ---- vocab stickers: [orig time, english, french, side(0 left / 1 right), y, until] ----
+const V = [
+  [15.7, 'automatic doors', 'portes automatiques', 0, 230, 19.9],
+  [22.0, "women's clothing", 'vêtements femme', 1, 200, 24.5],
+  [24.5, 'first floor ⬆️', '1er étage', 0, 230, 27.5],
+  [27.55, 'escalator', 'escalier roulant', 1, 230, 29.9],
+  [31.8, 'a pair of shoes', 'une paire de chaussures', 0, 200, 33.35],
+  [33.35, 'slippers', 'chaussons', 1, 230, 36.7],
+  [44.05, 'boots', 'bottes', 0, 230, 47.4],
+  [49.72, 'handbag', 'sac à main', 1, 210, 52.25],
+  [52.25, 'wallet', 'portefeuille', 0, 210, 54.6],
+  [60.9, 'winter hat', "chapeau d'hiver", 1, 210, 63.6],
+  [65.15, 'scarf', 'écharpe', 0, 210, 66.9],
+  [66.9, 'gloves', 'gants', 1, 210, 68.7],
+  [75.9, 'winter clothes', "vêtements d'hiver", 0, 210, 79.9],
+  [79.95, 'winter coat', "manteau d'hiver", 1, 210, 82.3],
+];
+const COLS = ['#FF6FA8', '#4DA3FF', '#3DDC97', '#7B4FE0', '#FF9F43'];
+$('vocs').innerHTML = V.map((v, i) => `<div class="voc" id="v${i}" style="${v[3] ? 'right:50px' : 'left:50px'};top:${v[4]}px"><div class="tag" style="background:${COLS[i % 5]}">NEW WORD</div><div class="en">${v[1]}</div><div class="fr">🇫🇷 ${v[2]}</div></div>`).join('');
+
+// ---- particles: snow in the winter part, hearts at the end, confetti on follow ----
+const fx = $('fx').getContext('2d');
+function snow(t) {
+  const a = cl(lin(t, 59.9, 60.6)) * (1 - lin(t, 81.8, 82.4)); if (a <= 0) return;
+  fx.fillStyle = '#fff';
+  for (let i = 0; i < 46; i++) {
+    const sp = 120 + (i * 37) % 90, x = (i * 173) % 1080 + Math.sin(t * 1.2 + i) * 30, y = ((t * sp + i * 211) % 2000) - 60, r = 5 + (i % 4) * 3;
+    fx.globalAlpha = a * (.55 + (i % 3) * .15); fx.beginPath(); fx.arc(x, y, r, 0, 7); fx.fill();
+  }
+  fx.globalAlpha = 1;
+}
+function hearts(t) {
+  const u0 = t - 82.4; if (u0 < 0 || u0 > 3.5) return;
+  fx.font = '64px sans-serif';
+  for (let i = 0; i < 14; i++) { const u = u0 - i * .12; if (u < 0 || u > 2.2) continue;
+    const x = 160 + (i * 97) % 760 + Math.sin(u * 4 + i) * 24, y = 1400 - u * 520; fx.globalAlpha = cl(1 - u / 2.2); fx.fillText(['💜', '💖', '💛'][i % 3], x, y); }
+  fx.globalAlpha = 1;
+}
+function confetti(t, t0, x, y) {
+  const u = t - t0; if (u < 0 || u > 1.4) return;
+  for (let i = 0; i < 36; i++) { const a = i / 36 * 6.283, v = 700 * (.5 + (i * 7 % 10) / 12);
+    const px = x + Math.cos(a) * v * u * Math.exp(-u * 1.5), py = y + Math.sin(a) * v * u * Math.exp(-u * 1.5) + 600 * u * u;
+    fx.globalAlpha = cl(1.3 - u); fx.fillStyle = COLS[i % 5]; fx.save(); fx.translate(px, py); fx.rotate(u * 9 + i); fx.fillRect(-9, -5, 18, 10); fx.restore(); }
+  fx.globalAlpha = 1;
+}
+
+function draw(t) {
+  fx.clearRect(0, 0, 1080, 1920);
+  // intro
+  A('wave', t, 1.8, 4.2, { spin: -40, rot: Math.sin(t * 10) * 18, wob: 0 });
+  A('hi', t, 1.95, 4.2, { rot: -4 });
+  A('brand', t, 4.4, 11.0, { rot: -2, wob: 1, bob: 3 });
+  A('pin', t, 7.05, 11.0, { rot: 5, dy: -60 });
+  A('slow', t, 8.55, 11.0, { rot: -4 });
+  A('bags', t, 12.5, 14.0, { spin: 30, rot: 8 });
+  // vocab stickers + a doodle arrow from the sticker toward the middle of the frame
+  let arrowOn = false;
+  V.forEach((v, i) => { const on = A('v' + i, t, v[0], v[5], { rot: v[3] ? 4 : -4, ph: i, spin: v[3] ? 20 : -20 });
+    if (t >= v[0] + .25 && t < v[5]) { arrowOn = true; const p = S(t - v[0] - .25, 8), x0 = v[3] ? 760 : 320, y0 = v[4] + 190, x1 = 540 + (v[3] ? -40 : 40), y1 = y0 + 300;
+      const mx = (x0 + x1) / 2 + (v[3] ? 120 : -120), my = (y0 + y1) / 2;
+      const ex = x0 + (x1 - x0) * p, ey = y0 + (y1 - y0) * p;
+      $('arp').setAttribute('d', `M${x0} ${y0} Q${mx} ${my} ${ex} ${ey}` + (p > .95 ? ` M${x1 - 34} ${y1 - 24} L${x1} ${y1} L${x1 + (v[3] ? -6 : 6)} ${y1 - 40}` : '')); } });
+  $('arrow').style.opacity = arrowOn ? 1 : 0;
+  A('sw0', t, 36.7, 38.6, { rot: -5 }); A('sw1', t, 39.4, 41.6, { rot: 5 });
+  // recap
+  A('recap', t, 68.7, 73.6, { rot: -3, wob: 1 });
+  [['r0', 68.75], ['r1', 70.65], ['r2', 71.55]].forEach(([id, at]) => { const p = B(t - at); $(id).style.opacity = cl(S(t - at) * 2); $(id).style.transform = `scale(${.3 + .7 * p})`; });
+  snow(t);
+  // outro
+  A('ty', t, 82.35, 86.3, { rot: -4 }); hearts(t);
+  A('follow', t, 86.4, 91.6, { rot: -2, wob: 1, sc: t > 89.6 && t < 89.8 ? .93 : 1 });
+  $('fT').textContent = t > 89.7 ? 'Following ✓' : '+ Follow'; $('follow').style.background = t > 89.7 ? '#3DDC97' : '#FF6FA8';
+  { const p = S(t - 88.9, 8); A('tap', t, 88.9, 90.6, { x: 1000 + (700 - 1000) * p, y: 700 + (390 - 700) * p, wob: 0, bob: 0, sc: t > 89.6 && t < 89.8 ? .85 : 1 }); }
+  confetti(t, 89.7, 540, 360);
+  A('bye', t, 91.7, 99, { rot: -3 });
+}
+
+const KEEPS = [[1.65, 10.65, 0.0], [11.05, 13.12, 9.0], [13.65, 19.9, 11.07], [22.35, 29.9, 17.32], [30.98, 34.0, 24.87], [36.6, 38.6, 27.89], [39.0, 41.6, 29.89], [43.9, 44.85, 32.49], [45.7, 47.4, 33.44], [49.95, 54.98, 35.14], [55.5, 59.25, 40.17], [59.82, 62.68, 43.92], [63.38, 65.78, 46.78], [66.3, 67.1, 49.18], [67.5, 69.08, 49.98], [69.66, 74.3, 51.56], [74.8, 80.1, 56.2], [80.4, 82.7, 61.5], [83.05, 94.0, 63.8]], CAPS = [[[0, "Hello", false], [1.05, "and", false], [1.9, "welcome.", false]], [[3.86, "Today,", false]], [[4.42, "with", false], [4.68, "Lougha", true], [5.07, "Online,", true]], [[5.68, "we", false], [5.97, "are", false], [6.41, "at", false]], [[6.83, "the", false], [7.14, "mall", true], [8.01, "in", false]], [[8.14, "a", false], [8.6, "slow", true], [9.22, "English", true]], [[9.76, "vlog.", true]], [[11.22, "Come", false], [11.36, "with", false], [11.62, "me", false]], [[11.88, "for", false], [12.32, "some", false], [12.6, "shopping.", true]], [[13, "I", false], [13.14, "will", false], [13.77, "go", false]], [[14.01, "through", false], [15.03, "these", false], [15.76, "automatic", true]], [[17.38, "doors.", true]], [[21.78, "The", false], [22.1, "women's", true], [23.6, "clothing", true]], [[23.72, "are", false], [24.04, "in", false], [24.33, "the", false]], [[24.57, "first", true], [25.12, "floor,", true]], [[25.86, "so", false], [26.18, "I", false], [26.2, "need", false]], [[26.64, "to", false], [26.85, "take", false], [27.25, "the", false]], [[27.63, "escalator", true], [28.6, "up", false], [28.75, "there.", false]], [[29.79, "I", false], [30.37, "found", false], [31.75, "a", false]], [[31.87, "pair", false], [32.26, "of", false], [33, "shoes,", true]], [[33.42, "slippers,", true]], [[36.77, "black", true], [38.44, "and", false], [39.44, "brown,", true]], [[42.07, "and", false], [44.12, "boots.", true]], [[47.24, "I", false], [47.48, "also", false], [49.14, "need", false]], [[49.42, "a", false], [49.79, "handbag", true], [51.35, "and", false]], [[52.1, "a", false], [52.32, "wallet.", true]], [[54.54, "A", false], [54.7, "brown", true], [55.51, "bag", true]], [[56, "and", false], [56.48, "a", false], [56.65, "black", true]], [[57.46, "wallet.", true]], [[58.96, "Trying", false], [60.3, "on", false], [60.87, "a", false]], [[60.97, "winter", true], [62.31, "hat.", true]], [[63.68, "This", false], [64.52, "is", false], [64.94, "a", false]], [[65.24, "scarf", true], [66.2, "and", false], [66.98, "gloves.", true]], [[68.74, "Winter", false], [70.18, "hat,", true]], [[70.67, "scarf", true], [71.55, "and", false], [72.72, "gloves.", true]], [[73.68, "I'm", false], [74.2, "looking", false], [75.58, "for", false]], [[75.97, "winter", true], [77.03, "clothes", true], [78.27, "and", false]], [[78.8, "this", false], [79.53, "is", false], [79.96, "a", false]], [[80.03, "winter", true], [81.09, "coat.", true]], [[82.4, "Thank", false], [83.34, "you", false], [83.9, "for", false]], [[84.86, "shopping", false], [84.96, "with", false], [85.12, "me", false]], [[85.4, "today.", false]], [[86.4, "If", false], [86.58, "you", false], [86.86, "want", false]], [[87.23, "more", false], [87.6, "slow", true], [88.3, "English", true]], [[88.62, "vlogs,", true]], [[89.27, "follow", false], [89.81, "Lougha", true], [90.26, "Online", true]], [[90.82, "for", false], [91.07, "more.", false]], [[91.76, "Goodbye", false], [92.51, "and", false], [92.83, "stay", false]], [[93.26, "safe.", false]]];
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0 || (ci + 1 < CAPS.length ? false : t > CAPS[ci][CAPS[ci].length - 1][0] + 2.5)) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci];
+  if (cap.dataset.i != ci) { cap.innerHTML = c.map(w => `<span class="cw ${w[2] ? 'ce' : ''}">${w[1]}</span>`).join(''); cap.dataset.i = ci; }
+  let cur = -1; c.forEach((w, j) => { if (t >= w[0] - .02) cur = j; });
+  [...cap.children].forEach((e, j) => { const p = B(t - c[j][0] + .02), q = S(t - c[j][0] + .02, 18);
+    e.style.opacity = cl(q * 2); e.style.transform = `translateY(${(1 - p) * 30}px) scale(${(.6 + .4 * p) * (j === cur ? 1.08 : 1)}) rotate(${j === cur ? -2 : 0}deg)`;
+    e.classList.toggle('cur', j === cur); });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+window.setT(0);
+</script></body></html>
