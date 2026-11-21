@@ -1,0 +1,205 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:M;src:url(fonts/montserrat-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-900-normal.woff2);font-weight:900}
+:root{--violet:#4B2A9E;--violet2:#7B4FE0;--gold:#FFCE00;--cream:#FFFBF2;--ink:#1E1430;--red:#E02B2B;--green:#2DBE6C}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:M,sans-serif;position:relative}
+.a{position:absolute;opacity:0;transform-origin:50% 50%}
+.card{background:var(--cream);border-radius:36px;box-shadow:0 22px 50px rgba(10,5,20,.45),0 0 0 5px rgba(255,255,255,.9) inset;box-sizing:border-box;overflow:hidden}
+.pill{display:flex;align-items:center;gap:16px;padding:0 36px;height:104px;border-radius:999px;font-weight:900;font-size:46px;white-space:nowrap;box-shadow:0 16px 36px rgba(10,5,20,.4);box-sizing:border-box}
+.shine{position:absolute;top:-40%;width:120px;height:180%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg)}
+.big{font-weight:900;color:var(--violet);text-shadow:0 6px 0 rgba(255,255,255,.9),0 12px 30px rgba(40,20,80,.35)}
+.ltr{display:inline-block}
+.ds{filter:drop-shadow(0 16px 24px rgba(10,5,20,.4))}
+#fx{position:absolute;left:0;top:0}
+#cap{position:absolute;left:30px;width:1020px;top:1490px;text-align:center}
+#cap .l1{font:800 62px M;color:#fff;line-height:1.14}
+#cap .l2{font:900 88px M;color:var(--gold);line-height:1.06;margin-top:2px}
+#cap .cw{display:inline-block;text-shadow:0 4px 18px rgba(10,5,20,.85),0 2px 3px rgba(10,5,20,.7);-webkit-text-stroke:2px rgba(20,10,40,.6);paint-order:stroke fill}
+#cap .ce{color:var(--gold);font-weight:900}
+</style></head><body>
+<canvas id="fx" width="1080" height="1920"></canvas>
+
+<!-- A. NOUVEAU + Lougha Online ? -->
+<div id="neu" class="a pill" style="left:330px;top:120px;background:var(--red);color:#fff;font-size:64px;height:130px">🚀 NOUVEAU</div>
+<div id="logoQ" class="a" style="left:80px;top:80px;width:920px;height:300px">
+  <div class="card" style="position:absolute;left:0;top:30px;width:920px;height:240px;display:flex;align-items:center;gap:28px;padding-left:30px">
+    <img src="icons/logo.png" width="180" height="180" style="border-radius:50%"><span style="font:900 78px M;color:var(--ink)">Lougha Online</span><i class="shine" id="sh0"></i></div>
+  <div id="qm" style="position:absolute;right:-10px;top:-10px;width:130px;height:130px;border-radius:50%;background:var(--gold);color:var(--ink);font:900 96px M;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.35)">?</div></div>
+
+<!-- B. FAST TRACK -->
+<svg id="speed" class="a" style="left:0;top:0" width="1080" height="520"><g id="lines" stroke="#7B4FE0" stroke-width="8" stroke-linecap="round" opacity=".7"></g></svg>
+<div id="ft" class="a" style="left:0;width:1080px;top:110px;text-align:center;font:900 150px M;font-style:italic;letter-spacing:-2px;white-space:nowrap"></div>
+<div id="ftBar" class="a" style="left:240px;top:300px;width:600px;height:22px;border-radius:11px;overflow:hidden;display:flex"><i style="flex:1;background:#111"></i><i style="flex:1;background:#DD0000"></i><i style="flex:1;background:#FFCE00"></i></div>
+<img id="rocket" class="a ds" src="icons/rocket.png" style="left:0;top:0;width:180px">
+
+<!-- C. niveaux sans interruption -->
+<div id="track" class="a card" style="left:50px;top:80px;width:980px;height:300px">
+  <div style="position:absolute;left:40px;top:24px;font:900 50px M;color:var(--violet)">Tous les niveaux</div>
+  <div style="position:absolute;left:60px;top:190px;width:860px;height:16px;border-radius:8px;background:#E6DDF8"></div>
+  <div id="trF" style="position:absolute;left:60px;top:190px;width:0;height:16px;border-radius:8px;background:var(--violet2)"></div>
+  <div id="n0" style="position:absolute;left:30px;top:140px;width:110px;height:110px;border-radius:50%;background:#C9B8F2;display:flex;align-items:center;justify-content:center;font:900 42px M;color:var(--violet)">A1</div>
+  <div id="n1" style="position:absolute;left:430px;top:140px;width:110px;height:110px;border-radius:50%;background:#C9B8F2;display:flex;align-items:center;justify-content:center;font:900 42px M;color:var(--violet)">A2</div>
+  <div id="n2" style="position:absolute;left:830px;top:140px;width:110px;height:110px;border-radius:50%;background:#C9B8F2;display:flex;align-items:center;justify-content:center;font:900 42px M;color:var(--violet)">B1</div>
+  <div id="nonstop" style="position:absolute;right:30px;top:26px;padding:6px 20px;border-radius:999px;background:var(--gold);font:900 36px M;color:var(--ink);opacity:0">NON-STOP ⏩</div></div>
+
+<!-- D. plus d'attente pour remplir un groupe -->
+<div id="wait" class="a card" style="left:60px;top:70px;width:960px;height:330px">
+  <img id="hg" src="icons/hourglass-done.png" style="position:absolute;left:40px;top:70px;width:170px">
+  <div style="position:absolute;left:250px;top:30px;font:900 44px M;color:var(--ink)">Groupe : <span id="gcount">2</span>/10</div>
+  <div id="seats" style="position:absolute;left:250px;top:110px;width:680px;display:flex;flex-wrap:wrap;gap:16px"></div></div>
+<div id="noWait" class="a" style="left:470px;top:300px;padding:10px 30px;border:8px solid var(--red);border-radius:18px;font:900 60px M;color:var(--red);background:rgba(255,255,255,.95)">PLUS D'ATTENTE</div>
+
+<!-- E. A1 + A2 en 2 mois -->
+<div id="bA1" class="a" style="left:70px;top:90px;width:250px;height:250px"><div style="position:absolute;left:25px;top:25px;width:200px;height:200px;border-radius:46px;transform:rotate(45deg);background:linear-gradient(145deg,#9E83EA,#4B2A9E);border:7px solid #fff;box-shadow:0 0 40px rgba(123,79,224,.6),0 16px 30px rgba(0,0,0,.35)"></div><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 96px M;color:#fff">A1</div></div>
+<div id="plus" class="a" style="left:330px;top:150px;font:900 110px M;color:var(--violet)">+</div>
+<div id="bA2" class="a" style="left:420px;top:90px;width:250px;height:250px"><div style="position:absolute;left:25px;top:25px;width:200px;height:200px;border-radius:46px;transform:rotate(45deg);background:linear-gradient(145deg,#FFE27A,#E3A41F);border:7px solid #fff;box-shadow:0 0 40px rgba(255,206,0,.6),0 16px 30px rgba(0,0,0,.35)"></div><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 96px M;color:var(--ink)">A2</div></div>
+<div id="cal" class="a card" style="left:720px;top:70px;width:300px;height:300px">
+  <div style="height:80px;background:var(--red);display:flex;align-items:center;justify-content:center;font:900 40px M;color:#fff">CALENDRIER</div>
+  <div style="text-align:center;font:900 130px M;color:var(--ink);line-height:1.2"><span id="mois">0</span></div>
+  <div style="text-align:center;font:900 44px M;color:var(--violet);margin-top:-14px">MOIS</div></div>
+
+<!-- F. le livre -->
+<svg id="ring" class="a" style="left:0;top:0" width="1080" height="1920"><circle id="ringc" cx="500" cy="1110" r="220" fill="none" stroke="#FFCE00" stroke-width="14" stroke-dasharray="1400" stroke-dashoffset="1400" stroke-linecap="round"/></svg>
+<div id="bookT" class="a pill" style="left:520px;top:840px;background:var(--gold);color:var(--ink);font-size:44px">📘 Tout est dedans</div>
+
+<!-- G. pas seul : avec le prof + exercices -->
+<div id="alone" class="a card" style="left:60px;top:80px;width:420px;height:300px;background:linear-gradient(160deg,#9A9AA8,#6B6B78)"><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><img src="icons/bust-in-silhouette.png" width="130"><span style="font:900 48px M;color:#fff">Seul(e)</span></div></div>
+<img id="aloneX" class="a" src="icons/cross.png" style="left:180px;top:110px;width:180px">
+<div id="prof" class="a card" style="left:560px;top:80px;width:460px;height:300px;background:linear-gradient(160deg,#9E83EA,#4B2A9E)"><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><div style="display:flex;gap:10px"><img src="icons/man-technologist.png" width="120"><img src="icons/graduation-cap.png" width="120"></div><span style="font:900 48px M;color:#fff">Avec le prof</span></div><i class="shine" id="sh1"></i></div>
+<div id="exo" class="a pill" style="left:560px;top:400px;background:var(--green);color:#fff;font-size:44px"><img src="icons/pencil.png" width="60">+ exercices ✓</div>
+
+<!-- I. testé à chaque niveau -->
+<div id="test" class="a card" style="left:130px;top:60px;width:820px;height:360px;padding:26px 40px">
+  <div style="font:900 50px M;color:var(--violet)">📝 Test à chaque niveau</div>
+  <div id="t0" style="font:900 60px M;color:var(--ink);margin-top:20px;opacity:0">A1 <span style="color:var(--green)">✓ validé</span></div>
+  <div id="t1" style="font:900 60px M;color:var(--ink);margin-top:10px;opacity:0">A2 <span style="color:var(--green)">✓ validé</span></div></div>
+<div id="stampT" class="a" style="left:640px;top:250px;padding:10px 28px;border:8px solid var(--green);border-radius:18px;font:900 62px M;color:var(--green);background:rgba(255,255,255,.95)">TESTÉ ✓</div>
+
+<!-- K. vidéos des résultats -->
+<div id="vids" class="a" style="left:40px;top:70px;width:1000px;height:360px"></div>
+<div id="resT" class="a pill" style="left:240px;top:430px;background:var(--violet2);color:#fff;font-size:44px"><img src="icons/chart-increasing.png" width="62">Résultats des étudiants</div>
+
+<!-- L. CTA -->
+<div id="clogo" class="a" style="left:430px;top:30px;width:220px;height:220px;border-radius:50%;box-shadow:0 0 0 10px #fff,0 0 60px 10px rgba(255,206,0,.55),0 24px 60px rgba(10,5,20,.45);overflow:hidden"><img src="icons/logo.png" width="220" height="220"></div>
+<div id="cname" class="a big" style="left:0;width:1080px;top:262px;text-align:center;font-size:80px">Lougha <span style="color:#E3A41F">Online</span></div>
+<div id="url" class="a" style="left:160px;top:1720px;width:760px;height:130px;border-radius:999px;background:var(--cream);display:flex;align-items:center;justify-content:center;gap:20px;box-shadow:0 20px 50px rgba(10,5,20,.5);border:6px solid var(--gold);box-sizing:border-box;overflow:hidden"><img src="icons/link.png" width="74"><span style="font:900 58px M;color:var(--ink)">Loughaonline.com</span><i class="shine" id="sh4"></i></div>
+<img id="cur" class="a ds" src="icons/cursor.png" style="left:0;top:0;width:120px">
+
+<div id="cap"></div>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => cl((t - a) / (b - a));
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+const B = x => x <= 0 ? 0 : 1 - Math.exp(-6.5 * x) * Math.cos(10 * x);
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  if (t < a || t >= b) { el.style.opacity = 0; return 0; }
+  const p = o.soft ? S(t - a, 11) : B(t - a), q = S(t - a, 12), out = cl((b - t) / .16), oq = 1 - out;
+  const s0 = o.s0 ?? .4, s = (s0 + (1 - s0) * p) * (o.sc ?? 1) * (1 - .25 * oq);
+  const x = (o.x || 0) + (o.dx || 0) * (1 - q), y = (o.y || 0) + (o.dy || 0) * (1 - q) + (o.oy ?? -40) * oq;
+  const r = (o.rot || 0) + (o.spin || 0) * (1 - q);
+  el.style.opacity = cl(q * 2) * out;
+  el.style.transform = `perspective(1200px) translate(${x}px,${y}px) scale(${s}) rotate(${r}deg) rotateY(${(o.ry || 0) * (1 - q)}deg) rotateX(${(o.rx || 0) * (1 - q)}deg)`;
+  return p;
+}
+const flo = (t, k = 1, ph = 0) => Math.sin(t * 2 + ph) * 7 * k;
+const shine = (id, t, a) => { const e = $(id); if (e) e.style.left = (-160 + 1300 * lin(t, a, a + .7)) + 'px'; };
+const fx = $('fx').getContext('2d'), BURSTS = [];
+const burst = (t0, x, y, n = 28, cols = ['#FFCE00', '#7B4FE0', '#E02B2B', '#2DBE6C'], sp = 900) => BURSTS.push([t0, x, y, n, cols, sp]);
+function drawFx(t) {
+  fx.clearRect(0, 0, 1080, 1920);
+  for (const [t0, x, y, n, cols, sp] of BURSTS) { const u = t - t0; if (u < 0 || u > 1.3) continue;
+    for (let i = 0; i < n; i++) { const a = (i / n) * 6.283 + (i % 3) * .37, v = sp * (.45 + ((i * 37) % 11) / 16);
+      const px = x + Math.cos(a) * v * u * Math.exp(-u * 1.6), py = y + Math.sin(a) * v * u * Math.exp(-u * 1.6) + 520 * u * u, sz = 10 + (i % 4) * 4;
+      fx.globalAlpha = cl((1 - u / 1.3) * 1.4); fx.fillStyle = cols[i % cols.length]; fx.save(); fx.translate(px, py); fx.rotate(u * 8 + i);
+      if (i % 2) fx.fillRect(-sz / 2, -sz / 4, sz, sz / 2); else { fx.beginPath(); fx.arc(0, 0, sz / 2.4, 0, 7); fx.fill(); } fx.restore(); } }
+  fx.globalAlpha = 1;
+}
+// builds
+$('ft').innerHTML = 'FAST TRACK'.split('').map((c, i) => `<span class="ltr" style="color:${i < 4 ? '#4B2A9E' : '#E3A41F'};text-shadow:0 8px 0 rgba(255,255,255,.95),0 14px 30px rgba(40,20,80,.35)">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+{ const g = $('lines'); for (let i = 0; i < 9; i++) g.innerHTML += `<line id="ln${i}" x1="0" y1="${120 + i * 26}" x2="0" y2="${120 + i * 26}"/>`; }
+$('seats').innerHTML = Array.from({ length: 10 }, (_, i) => `<div id="se${i}" style="width:120px;height:80px;border-radius:18px;background:#E6DDF8;display:flex;align-items:center;justify-content:center"><img src="icons/bust-in-silhouette.png" width="56" style="opacity:${i < 2 ? 1 : .15}"></div>`).join('');
+$('vids').innerHTML = [0, 1, 2].map(i => `<div id="vd${i}" style="position:absolute;left:${i * 335}px;top:0;width:315px;height:350px;border-radius:30px;background:linear-gradient(160deg,${['#9E83EA,#4B2A9E', '#FFE27A,#E3A41F', '#7EE2A8,#2DBE6C'][i]});box-shadow:0 18px 40px rgba(10,5,20,.4);border:6px solid #fff;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px"><div style="width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center"><img src="icons/play.png" width="70"></div><div style="font:900 40px M;color:#fff">${['A1 ✓', 'A2 ✓', 'B1 ✓'][i]}</div><div style="font-size:40px">⭐⭐⭐⭐⭐</div></div>`).join('');
+burst(1.0, 540, 190); burst(3.4, 900, 120, 22); burst(6.3, 540, 230, 40); burst(10.4, 885, 200); burst(13.4, 760, 330, 30, ['#E02B2B', '#fff']); burst(16.6, 360, 220, 34); burst(18.8, 870, 230, 30);
+burst(21.0, 500, 1110, 30); burst(26.9, 790, 230, 28); burst(35.6, 830, 300, 30, ['#2DBE6C', '#fff', '#FFCE00']); burst(41.6, 540, 250, 34); burst(44.6, 540, 200, 44); burst(46.6, 860, 1785, 36);
+
+function draw(t) {
+  // A. 0.6 - 5.3
+  A('neu', t, 0.8, 2.6, { s0: .2, rot: -6 + Math.sin(t * 6) * 3 });
+  A('logoQ', t, 2.7, 5.3, { ry: -110, s0: .7, y: flo(t) }); shine('sh0', t, 3.2);
+  $('qm').style.transform = `scale(${B(t - 3.3)}) rotate(${Math.sin(t * 5) * 12}deg)`;
+  // B. FAST TRACK 5.36 - 7.4
+  const BE = 7.45;
+  A('speed', t, 5.5, BE, { s0: 1, soft: 1, oy: 0 });
+  for (let i = 0; i < 9; i++) { const u = ((t - 5.5) * 2.2 + i * .37) % 1, x = 1100 - u * 1400; const e = $('ln' + i); e.setAttribute('x1', x); e.setAttribute('x2', x + 160 + (i % 3) * 60); }
+  A('ft', t, 5.5, BE, { s0: 1, soft: 1 });
+  [...$('ft').children].forEach((e, i) => { const p = B(t - 5.55 - i * .04); e.style.opacity = cl(S(t - 5.55 - i * .04) * 2); e.style.transform = `translateX(${(1 - p) * 700}px) skewX(${(1 - p) * -30}deg)`; });
+  A('ftBar', t, 6.1, BE, { s0: 1, soft: 1 }); $('ftBar').style.clipPath = `inset(0 ${100 - 100 * S(t - 6.1, 7)}% 0 0 round 11px)`;
+  { const u = lin(t, 5.5, 7.2); A('rocket', t, 5.5, 7.3, { s0: 1, soft: 1, x: -200 + 1400 * u * u, y: 380 - 260 * u, rot: 40, oy: 0 }); }
+  // C. 7.47 - 11.0
+  A('track', t, 7.5, 11.05, { rx: -80, s0: .8 });
+  { const u = lin(t, 8.0, 10.6); $('trF').style.width = (860 * u) + 'px';
+    [['n0', 0], ['n1', .5], ['n2', 1]].forEach(([id, at]) => { const on = u >= at - .02; const e = $(id); e.style.background = on ? '#7B4FE0' : '#C9B8F2'; e.style.color = on ? '#fff' : '#4B2A9E'; e.style.transform = `scale(${on ? 1.08 + .04 * Math.sin(t * 6) : 1})`; });
+    $('nonstop').style.opacity = cl(S(t - 9.0) * 2); }
+  // D. 11.4 - 14.4
+  A('wait', t, 11.4, 14.45, { ry: 90, s0: .8 });
+  $('hg').style.transform = `rotate(${Math.floor((t - 11.4) / .8) * 180 + 180 * S(((t - 11.4) % .8), 14)}deg)`;
+  $('gcount').textContent = t < 13.3 ? (2 + Math.floor(lin(t, 11.6, 13.2) * 1.99)) : '…';
+  A('noWait', t, 13.3, 14.45, { s0: 2.6, rot: -8 });
+  // E. 14.83 - 19.6
+  const EE = 19.6;
+  A('bA1', t, 15.0, EE, { s0: .2, spin: -180, y: flo(t) });
+  A('plus', t, 15.6, EE, { s0: .2 });
+  A('bA2', t, 16.2, EE, { s0: .2, spin: 180, y: flo(t, 1, 1) });
+  A('cal', t, 17.0, EE, { ry: -100, s0: .7, rot: 3 }); $('mois').textContent = t > 17.3 ? (t > 18.0 ? 2 : 1) : 0;
+  $('mois').style.display = 'inline-block'; $('mois').style.transform = `rotateX(${t > 17.3 && t < 18.2 ? (1 - S(((t - 17.3) % .7), 14)) * 90 : 0}deg)`;
+  // F. 20.48 - 23.3
+  A('ring', t, 20.6, 23.32, { s0: 1, soft: 1, oy: 0 }); $('ringc').style.strokeDashoffset = 1400 * (1 - S(t - 20.6, 7)); $('ringc').setAttribute('r', 220 + 8 * Math.sin(t * 7));
+  A('bookT', t, 21.0, 23.32, { s0: .2, rot: 5, y: flo(t) });
+  // G. 23.57 - 31.0
+  const GE = 31.02;
+  A('alone', t, 23.6, GE, { ry: -100, s0: .8, rot: -3 }); A('aloneX', t, 24.6, GE, { s0: 2.4, rot: -8 });
+  A('prof', t, 26.3, GE, { ry: 100, s0: .8, rot: 3, y: flo(t) }); shine('sh1', t, 26.8);
+  A('exo', t, 27.2, GE, { dx: 300 });
+  // I. 31.5 - 37.6 (held through the next phrase)
+  const IE = 40.05;
+  A('test', t, 31.6, IE, { rx: 80, s0: .8 });
+  [['t0', 33.4], ['t1', 34.6]].forEach(([id, at]) => { const p = B(t - at); $(id).style.opacity = cl(S(t - at) * 2); $(id).style.transform = `translateX(${(1 - p) * -100}px)`; });
+  A('stampT', t, 35.5, IE, { s0: 2.4, rot: -8 });
+  // K. 40.3 - 44.1
+  A('vids', t, 40.3, 44.15, { s0: 1, soft: 1 });
+  for (let i = 0; i < 3; i++) { const p = B(t - 40.5 - i * .25); const e = $('vd' + i); e.style.opacity = cl(S(t - 40.5 - i * .25) * 2); e.style.transform = `perspective(1000px) rotateY(${(1 - p) * 90}deg) translateY(${Math.sin(t * 2 + i) * 8}px) rotate(${(i - 1) * 3}deg)`; }
+  A('resT', t, 41.6, 44.15, { dy: 80 });
+  // L. CTA 44.47 - end
+  A('clogo', t, 44.5, 99, { s0: .1, spin: -200, y: flo(t) });
+  // name line removed: it overlapped her hair (the logo already carries the name)
+  const press = t > 46.5 ? 1 - .07 * Math.sin(cl((t - 46.5) / .22) * Math.PI) : 1;
+  A('url', t, 45.0, 99, { dy: 220, sc: press }); shine('sh4', t, 45.5);
+  { const p = S(t - 45.8, 7); A('cur', t, 45.8, 99, { s0: 1, soft: 1, x: 1000 + (840 - 1000) * p, y: 1920 + (1800 - 1920) * p, sc: t > 46.5 && t < 46.66 ? .85 : 1, oy: 0 }); }
+  drawFx(t);
+}
+
+const KEEPS = [[0.6, 11.06, 0.0], [11.3, 14.45, 10.46], [14.73, 19.62, 13.61], [20.36, 23.3, 18.5], [23.47, 27.87, 21.44], [28.36, 31.0, 25.84], [31.5, 40.03, 28.48], [40.2, 44.12, 37.01], [44.47, 45.91, 40.93], [46.28, 47.2, 42.37]], CAPS = [[[0.6, "", false]], [[2.65, "Tu", false], [2.904, "ne", false], [3.158, "connais", false], [3.412, "pas", false], [3.666, "encore", false], [3.92, "Lougha", true], [4.174, "Online", true], [4.428, "?", true]], [[5.36, "Ou", false], [5.558, "notre", false], [5.756, "nouveau", false], [5.953, "programme", false], [6.151, ":", false], [6.349, "Fast", true], [6.547, "Track", true], [6.745, "?", true]], [[7.47, "Il", false], [7.699, "te", false], [7.928, "permet", false], [8.156, "d'enchaîner", false], [8.385, "les", false], [8.614, "niveaux", false]], [[9.3, "sans", true], [9.62, "interruption.", true]], [[11.4, "Plus", false], [11.625, "besoin", false], [11.85, "d'attendre", false], [12.075, "qu'un", false], [12.3, "groupe", false]], [[12.9, "se", true], [13.22, "remplisse.", true]], [[14.83, "Avec", false], [15.066, "Fast", false], [15.301, "Track,", false], [15.537, "tu", false], [15.772, "fais", false]], [[16.4, "l'A1", true], [16.72, "et", true], [17.04, "l'A2", true], [17.36, "en", true], [17.68, "2", true], [18.0, "mois.", true]], [[19.55, "", false]], [[20.48, "Et", false], [20.693, "tu", false], [20.906, "as", false], [21.119, "ce", true], [21.332, "livre,", true]], [[21.9, "avec", false], [22.181, "tous", true], [22.462, "les", true], [22.744, "détails.", true]], [[23.57, "Ce", false], [23.825, "livre,", false], [24.08, "tu", false], [24.335, "ne", false], [24.59, "l'étudies", false], [24.845, "pas", true], [25.1, "seul", true], [25.355, ":", true]], [[26.29, "tu", false], [26.396, "l'étudies", false], [26.503, "avec", true], [26.61, "le", true], [26.716, "prof", true]], [[27.0, "et", false], [27.1, "tu", false], [27.2, "y", false], [27.3, "fais", false], [27.4, "les", true], [27.5, "exercices.", true]], [[27.8, "", false]], [[31.5, "Chez", false], [31.82, "Lougha", false], [32.14, "Online,", false]], [[33.2, "on", false], [33.52, "teste", false], [33.84, "les", false], [34.16, "étudiants", false], [34.48, "à", true], [34.8, "chaque", true], [35.12, "niveau.", true]], [[37.6, "", false]], [[40.29, "Il", false], [40.504, "y", false], [40.718, "a", false], [40.931, "plein", false], [41.145, "de", false], [41.359, "vidéos", false]], [[42.0, "avec", false], [42.25, "les", true], [42.5, "résultats", true], [42.75, "de", false], [43.0, "nos", false], [43.25, "étudiants.", false]], [[44.0, "", false]]];
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0 || !CAPS[ci][0][1]) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci];
+  if (cap.dataset.i != ci) {
+    let k = c.length; while (k > 0 && c[k - 1][2]) k--; if (k === 0) k = c.length;
+    const span = (w, cls) => `<span class="cw ${cls}">${w[1]}</span>`;
+    cap.innerHTML = `<div class="l1">${c.slice(0, k).map(w => span(w, w[2] ? 'ce' : '')).join(' ')}</div>` + (k < c.length ? `<div class="l2">${c.slice(k).map(w => span(w, 'cb')).join(' ')}</div>` : '');
+    cap.dataset.i = ci;
+  }
+  [...cap.querySelectorAll('.cw')].forEach((e, j) => { const p = B(t - c[j][0] + .03), q = S(t - c[j][0] + .03, 16);
+    e.style.opacity = Math.min(1, q * 1.5); e.style.transform = `translateY(${(1 - p) * 26}px) scale(${.75 + .25 * p})`; });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+window.setT(0);
+</script></body></html>
