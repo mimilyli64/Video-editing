@@ -1,4 +1,4 @@
-// Lougha Online - slow English vlog at the mall. Vlog style: natural pace, jump cuts with quick punch-ins, zooms onto each item,
+// Lougha Online - slow English vlog at the mall. Vlog style: natural pace, soft glides on jump cuts (max 6 %, no zoom on items: they cut her face),
 // English captions word by word (current word on a pink pill), NEW WORD stickers with the French translation, light synth music.
 // assets/source.mp4 = the take with long gaps cut + camera moves (source/camera-zoom-expr.txt); mg.html maps cut time -> take time (keeps.json).
 window.SPEC = {
