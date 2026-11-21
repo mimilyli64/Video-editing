@@ -27,7 +27,7 @@ FR = [
  (42.00, "avec *les résultats* de nos étudiants."),
  (44.00, ""),
 ]
-END = 47.2
+END = 47.1
 def parse(s):
     out, emph = [], False
     for tok in s.split(' '):

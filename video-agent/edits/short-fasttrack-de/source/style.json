@@ -49,9 +49,7 @@
     }
   },
   "visual": "motion",
-  "music": {
-    "mute": true
-  },
+  "music": {},
   "grade": "eq=contrast=1.04:saturation=1.06",
   "sfx": {
     "accents": 0

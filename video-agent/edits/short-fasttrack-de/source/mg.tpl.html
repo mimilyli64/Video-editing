@@ -22,6 +22,7 @@ body{font-family:M,sans-serif;position:relative}
 #cap .ce{color:var(--gold);font-weight:900}
 </style></head><body>
 <canvas id="fx" width="1080" height="1920"></canvas>
+<div class="g" style="position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 20px;transform:scale(.8)">
 
 <!-- A. NOUVEAU + Lougha Online ? -->
 <div id="neu" class="a pill" style="left:330px;top:120px;background:var(--red);color:#fff;font-size:64px;height:130px">🚀 NOUVEAU</div>
@@ -62,10 +63,13 @@ body{font-family:M,sans-serif;position:relative}
   <div style="text-align:center;font:900 130px M;color:var(--ink);line-height:1.2"><span id="mois">0</span></div>
   <div style="text-align:center;font:900 44px M;color:var(--violet);margin-top:-14px">MOIS</div></div>
 
+</div>
 <!-- F. le livre -->
-<svg id="ring" class="a" style="left:0;top:0" width="1080" height="1920"><circle id="ringc" cx="500" cy="1110" r="220" fill="none" stroke="#FFCE00" stroke-width="14" stroke-dasharray="1400" stroke-dashoffset="1400" stroke-linecap="round"/></svg>
-<div id="bookT" class="a pill" style="left:520px;top:840px;background:var(--gold);color:var(--ink);font-size:44px">📘 Tout est dedans</div>
+<svg id="ring" class="a" style="left:0;top:0" width="1080" height="1920"><circle id="ringc" cx="456" cy="930" r="175" fill="none" stroke="#FFCE00" stroke-width="14" stroke-dasharray="1400" stroke-dashoffset="1400" stroke-linecap="round"/></svg>
+<div id="bookT" class="a pill" style="left:560px;top:690px;font-size:40px;background:var(--gold);color:var(--ink);font-size:44px">📘 Tout est dedans</div>
 
+
+<div class="g" style="position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 20px;transform:scale(.8)">
 <!-- G. pas seul : avec le prof + exercices -->
 <div id="alone" class="a card" style="left:60px;top:80px;width:420px;height:300px;background:linear-gradient(160deg,#9A9AA8,#6B6B78)"><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><img src="icons/bust-in-silhouette.png" width="130"><span style="font:900 48px M;color:#fff">Seul(e)</span></div></div>
 <img id="aloneX" class="a" src="icons/cross.png" style="left:180px;top:110px;width:180px">
@@ -86,6 +90,8 @@ body{font-family:M,sans-serif;position:relative}
 <!-- L. CTA -->
 <div id="clogo" class="a" style="left:430px;top:30px;width:220px;height:220px;border-radius:50%;box-shadow:0 0 0 10px #fff,0 0 60px 10px rgba(255,206,0,.55),0 24px 60px rgba(10,5,20,.45);overflow:hidden"><img src="icons/logo.png" width="220" height="220"></div>
 <div id="cname" class="a big" style="left:0;width:1080px;top:262px;text-align:center;font-size:80px">Lougha <span style="color:#E3A41F">Online</span></div>
+</div>
+<div id="cta" class="a pill" style="left:170px;top:1555px;background:#E02B2B;color:#fff;font-size:58px;height:124px;border:6px solid #fff">Inscris-toi maintenant 👉</div>
 <div id="url" class="a" style="left:160px;top:1720px;width:760px;height:130px;border-radius:999px;background:var(--cream);display:flex;align-items:center;justify-content:center;gap:20px;box-shadow:0 20px 50px rgba(10,5,20,.5);border:6px solid var(--gold);box-sizing:border-box;overflow:hidden"><img src="icons/link.png" width="74"><span style="font:900 58px M;color:var(--ink)">Loughaonline.com</span><i class="shine" id="sh4"></i></div>
 <img id="cur" class="a ds" src="icons/cursor.png" style="left:0;top:0;width:120px">
 
@@ -126,7 +132,7 @@ $('ft').innerHTML = 'FAST TRACK'.split('').map((c, i) => `<span class="ltr" styl
 $('seats').innerHTML = Array.from({ length: 10 }, (_, i) => `<div id="se${i}" style="width:120px;height:80px;border-radius:18px;background:#E6DDF8;display:flex;align-items:center;justify-content:center"><img src="icons/bust-in-silhouette.png" width="56" style="opacity:${i < 2 ? 1 : .15}"></div>`).join('');
 $('vids').innerHTML = [0, 1, 2].map(i => `<div id="vd${i}" style="position:absolute;left:${i * 335}px;top:0;width:315px;height:350px;border-radius:30px;background:linear-gradient(160deg,${['#9E83EA,#4B2A9E', '#FFE27A,#E3A41F', '#7EE2A8,#2DBE6C'][i]});box-shadow:0 18px 40px rgba(10,5,20,.4);border:6px solid #fff;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px"><div style="width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center"><img src="icons/play.png" width="70"></div><div style="font:900 40px M;color:#fff">${['A1 ✓', 'A2 ✓', 'B1 ✓'][i]}</div><div style="font-size:40px">⭐⭐⭐⭐⭐</div></div>`).join('');
 burst(1.0, 540, 190); burst(3.4, 900, 120, 22); burst(6.3, 540, 230, 40); burst(10.4, 885, 200); burst(13.4, 760, 330, 30, ['#E02B2B', '#fff']); burst(16.6, 360, 220, 34); burst(18.8, 870, 230, 30);
-burst(21.0, 500, 1110, 30); burst(26.9, 790, 230, 28); burst(35.6, 830, 300, 30, ['#2DBE6C', '#fff', '#FFCE00']); burst(41.6, 540, 250, 34); burst(44.6, 540, 200, 44); burst(46.6, 860, 1785, 36);
+burst(21.0, 456, 930, 30); burst(26.9, 790, 230, 28); burst(35.6, 830, 300, 30, ['#2DBE6C', '#fff', '#FFCE00']); burst(41.6, 540, 250, 34); burst(44.6, 540, 200, 44); burst(46.6, 860, 1785, 36);
 
 function draw(t) {
   // A. 0.6 - 5.3
@@ -159,7 +165,7 @@ function draw(t) {
   A('cal', t, 17.0, EE, { ry: -100, s0: .7, rot: 3 }); $('mois').textContent = t > 17.3 ? (t > 18.0 ? 2 : 1) : 0;
   $('mois').style.display = 'inline-block'; $('mois').style.transform = `rotateX(${t > 17.3 && t < 18.2 ? (1 - S(((t - 17.3) % .7), 14)) * 90 : 0}deg)`;
   // F. 20.48 - 23.3
-  A('ring', t, 20.6, 23.32, { s0: 1, soft: 1, oy: 0 }); $('ringc').style.strokeDashoffset = 1400 * (1 - S(t - 20.6, 7)); $('ringc').setAttribute('r', 220 + 8 * Math.sin(t * 7));
+  A('ring', t, 20.6, 23.32, { s0: 1, soft: 1, oy: 0 }); $('ringc').style.strokeDashoffset = 1400 * (1 - S(t - 20.6, 7)); $('ringc').setAttribute('r', 175 + 7 * Math.sin(t * 7));
   A('bookT', t, 21.0, 23.32, { s0: .2, rot: 5, y: flo(t) });
   // G. 23.57 - 31.0
   const GE = 31.02;
@@ -179,6 +185,7 @@ function draw(t) {
   A('clogo', t, 44.5, 99, { s0: .1, spin: -200, y: flo(t) });
   // name line removed: it overlapped her hair (the logo already carries the name)
   const press = t > 46.5 ? 1 - .07 * Math.sin(cl((t - 46.5) / .22) * Math.PI) : 1;
+  A('cta', t, 44.85, 99, { s0: .3, sc: 1 + .04 * Math.sin(t * 6), rot: Math.sin(t * 3) * 1.5 });
   A('url', t, 45.0, 99, { dy: 220, sc: press }); shine('sh4', t, 45.5);
   { const p = S(t - 45.8, 7); A('cur', t, 45.8, 99, { s0: 1, soft: 1, x: 1000 + (840 - 1000) * p, y: 1920 + (1800 - 1920) * p, sc: t > 46.5 && t < 46.66 ? .85 : 1, oy: 0 }); }
   drawFx(t);

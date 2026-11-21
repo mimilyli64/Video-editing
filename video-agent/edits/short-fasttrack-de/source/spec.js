@@ -1,5 +1,7 @@
 // Lougha Online - Fast Track (allemand A1+A2 en 2 mois). Darija voice, French captions only on the phrases we understood.
-// assets/source.mp4 = the take with silences cut + camera moves (source/camera-zoom-expr.txt); mg.html maps cut time -> take time (keeps.json).
+// v2 (creator: « trop de cuts, zooms qui coupent le visage, ajoute une musique ») : fixed framing (no zoom at all), cuts only where the take
+// already changes, each one a 0.2 s dissolve; graphics kept above her head (scaled .8); motivating music bed; « Inscris-toi maintenant » CTA.
+// assets/source.mp4 = cut + dissolved take; mg.html maps cut time -> take time (keeps.json).
 window.SPEC = {
   title: 'Lougha Online - Fast Track',
   media: { mg: { src: 'assets/mg.mov', width: 1080, alpha: true } },
@@ -10,9 +12,9 @@ window.SPEC = {
   zoom: { keys: [[0, 1]] },
   actors: [],
   scenes: [{ type: 'overlay', media: 'mg', from: 0, to: 70, layer: 'over' }],
-  music: { breaks: [] },
-  mix: { ceil: -2.2 },
+  music: { src: 'assets/music/fasttrack-bed.wav', offset: 0, breaks: [] },
+  mix: { music: -26, duck: .5, ceil: -2.2 },
   grade: false,
-  sfx: { swish: 0, accents: 0, extra: [[0.4, 'pop', 0.1], [2.8, 'pop', 0.08], [5.7, 'thud', 0.45], [9.8, 'pop', 0.08], [12.51, 'thud', 0.45], [15.48, 'pop', 0.1], [17.68, 'bell', 0.1], [19.14, 'pop', 0.1], [22.57, 'thud', 0.35], [24.87, 'pop', 0.08], [32.48, 'thud', 0.45], [38.41, 'pop', 0.1], [41.06, 'pop', 0.1], [42.59, 'tap', 0.12]] },   // short times
+  sfx: { swish: 0, accents: 0, extra: [[0.4, 'pop', 0.1], [2.8, 'pop', 0.08], [5.7, 'thud', 0.4], [9.8, 'pop', 0.08], [12.75, 'thud', 0.4], [15.52, 'pop', 0.1], [17.72, 'bell', 0.1], [18.98, 'pop', 0.1], [22.21, 'thud', 0.3], [24.51, 'pop', 0.08], [31.72, 'thud', 0.4], [37.45, 'pop', 0.1], [40.2, 'pop', 0.1], [41.8, 'tap', 0.12]] },   // short times
   captions: { hide: [[0, 99]] },
 };
