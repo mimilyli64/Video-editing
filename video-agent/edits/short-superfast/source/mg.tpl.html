@@ -1,0 +1,159 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:M;src:url(fonts/montserrat-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:M;src:url(fonts/montserrat-latin-900-normal.woff2);font-weight:900}
+@font-face{font-family:MI;src:url(fonts/montserrat-latin-800-italic.woff2);font-weight:800}
+@font-face{font-family:MI;src:url(fonts/montserrat-latin-900-italic.woff2);font-weight:900}
+:root{--gold:#FFD34D;--lav:#C9B3FF;--violet:#7B4FE0;--deep:#3B1F86;--mint:#7CF0B8;--pink:#FF8FC8}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:M,sans-serif;position:relative}
+.a{position:absolute;opacity:0;transform-origin:50% 50%}
+.stack{position:absolute;left:0;width:1080px;text-align:center}
+.stack div{opacity:0;line-height:.95;white-space:nowrap}
+.sm{font:800 58px M;color:#fff;text-shadow:0 4px 16px rgba(0,0,0,.55)}
+.bg{font:900 132px MI;letter-spacing:-3px;text-shadow:0 6px 0 rgba(0,0,0,.18),0 10px 30px rgba(0,0,0,.45)}
+.tile{position:absolute;width:150px;height:150px;opacity:0}
+.tile .d{position:absolute;inset:14px;border-radius:30px;transform:rotate(45deg);border:5px solid rgba(255,255,255,.85);box-shadow:inset 0 10px 18px rgba(255,255,255,.45),inset 0 -12px 18px rgba(0,0,0,.25),0 14px 26px rgba(0,0,0,.4)}
+.tile .ic{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 48px MI;color:#fff;text-shadow:0 3px 8px rgba(0,0,0,.4)}
+.tile img{width:70px}
+.chip{display:flex;align-items:center;gap:14px;padding:0 30px;height:90px;border-radius:999px;font:800 42px M;white-space:nowrap;box-shadow:0 14px 30px rgba(0,0,0,.4);box-sizing:border-box}
+#fx{position:absolute;left:0;top:0}
+#flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,#fff 0%,#FFE3F1 45%,#FFC7E2 100%);opacity:0}
+#cap{position:absolute;left:30px;width:1020px;top:1320px;text-align:center}
+#cap .cw{display:inline-block;font:900 92px MI;color:#fff;letter-spacing:-2px;margin:0 16px;text-shadow:0 5px 0 rgba(0,0,0,.22),0 8px 26px rgba(0,0,0,.6)}
+#cap .ce{color:var(--gold)}
+</style></head><body>
+<canvas id="fx" width="1080" height="1920"></canvas>
+
+<!-- T1 -->
+<div id="s1" class="stack" style="top:120px"><div class="sm">Le programme</div><div class="bg" style="color:var(--gold)">le + rapide</div><div class="sm">et le + intense</div><div class="bg" style="color:var(--lav);font-size:96px">en allemand 🇩🇪</div></div>
+<!-- T3 slow vs fast -->
+<div id="slowBar" class="a" style="left:120px;top:200px;width:840px;height:200px">
+  <div style="position:absolute;left:0;top:120px;width:840px;height:22px;border-radius:11px;background:rgba(255,255,255,.35)"></div>
+  <div id="slowF" style="position:absolute;left:0;top:120px;height:22px;border-radius:11px;background:#fff;width:0"></div>
+  <div id="snail" style="position:absolute;left:0;top:40px;font-size:80px">🐌</div>
+  <div id="slowT" style="position:absolute;left:0;width:840px;top:-40px;text-align:center" class="sm">petit à petit…</div></div>
+<!-- T4 A1 + A2 en 2 mois -->
+<div id="tA1" class="tile" style="left:300px;top:110px"><div class="d" style="background:linear-gradient(145deg,#A98BFF,#5B32C9)"></div><div class="ic">A1</div></div>
+<div id="tA2" class="tile" style="left:630px;top:110px"><div class="d" style="background:linear-gradient(145deg,#FFE48A,#E3A41F)"></div><div class="ic" style="color:#3B1F86;text-shadow:none">A2</div></div>
+<div id="s4" class="stack" style="top:290px"><div class="sm">en seulement</div><div class="bg" style="color:var(--gold);font-size:160px">2 MOIS</div></div>
+<!-- T5 SUPER FAST TRACK -->
+<div id="s5" class="stack" style="top:110px"><div class="sm">le système</div><div class="bg" style="color:#fff;font-size:118px">SUPER</div><div class="bg" style="color:var(--gold);font-size:140px">FAST TRACK</div></div>
+<div id="tRk" class="tile" style="left:860px;top:90px"><div class="d" style="background:linear-gradient(145deg,#FF9AD1,#D33C8C)"></div><div class="ic"><img src="icons/rocket.png"></div></div>
+<div id="lgChip" class="a chip" style="left:290px;top:520px;background:#fff;color:#2B1A55"><img src="icons/logo.png" width="62" style="border-radius:50%">Lougha Online</div>
+<!-- T6 objectif A2 avant la fin de l'année -->
+<div id="s6" class="stack" style="top:140px"><div class="sm">objectif</div><div class="bg" style="color:var(--lav);font-size:150px">A2</div><div class="sm">avant la fin de l'année</div></div>
+<div id="tTr" class="tile" style="left:110px;top:140px"><div class="d" style="background:linear-gradient(145deg,#FFE48A,#E3A41F)"></div><div class="ic"><img src="icons/trophy.png"></div></div>
+<!-- T7 5x par semaine -->
+<div id="s7" class="stack" style="top:110px"><div class="bg" style="color:var(--gold);font-size:200px">5×</div><div class="sm">par semaine</div></div>
+<div id="old" class="a" style="left:640px;top:210px;font:900 70px MI;color:rgba(255,255,255,.75)">2-3×<svg width="220" height="100" style="position:absolute;left:-20px;top:-6px"><path id="oldX" d="M10 70 L200 20" stroke="#FF5A5A" stroke-width="12" stroke-linecap="round" fill="none" stroke-dasharray="210" stroke-dashoffset="210"/></svg></div>
+<!-- T8 le livre + contenu -->
+<svg id="ring" class="a" style="left:0;top:0" width="1080" height="1920"><circle id="ringc" cx="540" cy="985" r="190" fill="none" stroke="#FFD34D" stroke-width="13" stroke-dasharray="1400" stroke-dashoffset="1400" stroke-linecap="round"/></svg>
+<div id="tBk" class="tile" style="left:240px;top:160px"><div class="d" style="background:linear-gradient(145deg,#A98BFF,#5B32C9)"></div><div class="ic"><img src="icons/books.png"></div></div>
+<div id="tEx" class="tile" style="left:465px;top:110px"><div class="d" style="background:linear-gradient(145deg,#7CF0B8,#1E9E66)"></div><div class="ic"><img src="icons/pencil.png"></div></div>
+<div id="tVo" class="tile" style="left:690px;top:160px"><div class="d" style="background:linear-gradient(145deg,#FFE48A,#E3A41F)"></div><div class="ic"><img src="icons/memo.png"></div></div>
+<div id="lb8" class="stack" style="top:340px"><div class="sm" style="font-size:50px">livre · exercices · vocabulaire</div></div>
+<!-- T9 offre spéciale + Allemagne -->
+<div id="tGf" class="tile" style="left:110px;top:120px"><div class="d" style="background:linear-gradient(145deg,#FF9AD1,#D33C8C)"></div><div class="ic"><img src="icons/gift.png"></div></div>
+<div id="s9" class="stack" style="top:120px"><div class="sm">offre spéciale</div><div class="sm" style="font-size:52px">pour étudier</div><div class="bg" style="color:var(--gold);font-size:110px">en Allemagne</div></div>
+<div id="tPl" class="tile" style="left:840px;top:120px"><div class="d" style="background:linear-gradient(145deg,#A98BFF,#5B32C9)"></div><div class="ic"><img src="icons/airplane.png"></div></div>
+<!-- T10 B1 + B2 -->
+<div id="tB1" class="tile" style="left:300px;top:110px"><div class="d" style="background:linear-gradient(145deg,#7CF0B8,#1E9E66)"></div><div class="ic">B1</div></div>
+<div id="tB2" class="tile" style="left:630px;top:110px"><div class="d" style="background:linear-gradient(145deg,#FF9AD1,#D33C8C)"></div><div class="ic">B2</div></div>
+<div id="s10" class="stack" style="top:300px"><div class="sm">directement</div><div class="bg" style="color:var(--lav);font-size:92px">en Allemagne 🇩🇪</div></div>
+<!-- T11 CTA -->
+<div id="s11" class="stack" style="top:110px"><div class="sm">lien d'inscription</div><div class="bg" style="color:var(--gold);font-size:150px">dans la BIO</div></div>
+<div id="stars" class="a" style="left:0;width:1080px;top:340px;text-align:center;font-size:70px;letter-spacing:6px">⭐⭐⭐⭐⭐</div>
+<div id="logoE" class="a" style="left:820px;top:430px;width:200px;height:200px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 8px #fff,0 16px 40px rgba(0,0,0,.45)"><img src="icons/logo.png" width="200" height="200"></div>
+<div id="url" class="a chip" style="left:190px;top:1690px;width:700px;height:120px;justify-content:center;background:#fff;color:#2B1A55;font-size:56px;font-weight:900;border:6px solid var(--gold)"><img src="icons/link.png" width="70">Loughaonline.com</div>
+<img id="cur" class="a" src="icons/cursor.png" style="left:0;top:0;width:115px">
+<div id="flash"></div>
+
+<div id="cap"></div>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => cl((t - a) / (b - a));
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+const B = x => x <= 0 ? 0 : 1 - Math.exp(-6.5 * x) * Math.cos(10 * x);
+function A(id, t, a, b, o = {}) {
+  const el = typeof id === 'string' ? $(id) : id;
+  if (t < a || t >= b) { el.style.opacity = 0; return 0; }
+  const p = o.soft ? S(t - a, 12) : B(t - a), q = S(t - a, 14), out = cl((b - t) / .14);
+  const s = ((o.s0 ?? .3) + (1 - (o.s0 ?? .3)) * p) * (o.sc ?? 1) * (.7 + .3 * out);
+  el.style.opacity = cl(q * 2) * out;
+  el.style.transform = `translate(${(o.x || 0) + (o.dx || 0) * (1 - q)}px,${(o.y || 0) + (o.dy || 0) * (1 - q) - 30 * (1 - out)}px) scale(${s}) rotate(${(o.rot || 0) + (o.spin || 0) * (1 - q)}deg)`;
+  return p;
+}
+// stacked headline: each line pops at its own time, the stack leaves together
+function ST(id, t, times, end) {
+  const lines = [...$(id).children], out = cl((end - t) / .14);
+  lines.forEach((e, i) => { const a = times[i]; if (t < a || t >= end) { e.style.opacity = 0; return; }
+    const p = B(t - a), q = S(t - a, 16); e.style.opacity = cl(q * 2) * out;
+    e.style.transform = `translateY(${(1 - p) * 40 - 30 * (1 - out)}px) scale(${(.55 + .45 * p) * (.8 + .2 * out)}) skewX(${(1 - q) * -12}deg)`; });
+}
+const T = (id, t, a, b, ph = 0) => A(id, t, a, b, { s0: .1, spin: -120, y: Math.sin(t * 2 + ph) * 6 });
+// particles
+const fx = $('fx').getContext('2d'), BURSTS = [];
+const burst = (t0, x, y, n = 26, cols = ['#FFD34D', '#C9B3FF', '#fff', '#FF8FC8'], sp = 850) => BURSTS.push([t0, x, y, n, cols, sp]);
+function drawFx(t) { fx.clearRect(0, 0, 1080, 1920);
+  for (const [t0, x, y, n, cols, sp] of BURSTS) { const u = t - t0; if (u < 0 || u > 1.2) continue;
+    for (let i = 0; i < n; i++) { const a = i / n * 6.283 + (i % 3) * .4, v = sp * (.45 + ((i * 37) % 11) / 16);
+      const px = x + Math.cos(a) * v * u * Math.exp(-u * 1.7), py = y + Math.sin(a) * v * u * Math.exp(-u * 1.7) + 480 * u * u;
+      fx.globalAlpha = cl((1 - u / 1.2) * 1.4); fx.fillStyle = cols[i % cols.length]; fx.save(); fx.translate(px, py); fx.rotate(u * 8 + i); fx.fillRect(-8, -4, 16, 8); fx.restore(); } }
+  fx.globalAlpha = 1; }
+burst(2.9, 540, 420); burst(16.9, 540, 360); burst(19.6, 540, 330); burst(26.1, 540, 220); burst(30.6, 540, 985, 30); burst(40.9, 540, 330); burst(44.0, 540, 200); burst(49.5, 540, 260, 34);
+
+function draw(t) {
+  // T1 1.19 - 3.78
+  ST('s1', t, [1.25, 1.55, 2.05, 2.75], 3.78);
+  // T3 9.06 - 13.1 slow progress
+  A('slowBar', t, 9.1, 11.95, { s0: 1, soft: 1 });
+  { const u = lin(t, 9.2, 11.9) * .22; $('slowF').style.width = (840 * u) + 'px'; $('snail').style.left = (840 * u - 40) + 'px'; }
+  // T4 13.38 - 18.0
+  T('tA1', t, 14.0, 18.0); T('tA2', t, 15.2, 18.0, 1);
+  ST('s4', t, [16.3, 16.7], 18.0);
+  // T5 18.6 - 21.6
+  ST('s5', t, [18.75, 19.3, 19.6], 21.7); T('tRk', t, 19.7, 21.7);
+  A('lgChip', t, 20.3, 21.7, { dy: 40 });
+  // T6 21.87 - 25.4
+  ST('s6', t, [22.0, 23.6, 24.2], 25.5); T('tTr', t, 23.7, 25.5);
+  // T7 25.7 - 28.98
+  ST('s7', t, [26.0, 26.5], 28.98); A('old', t, 27.3, 28.98, { s0: .6 }); $('oldX').style.strokeDashoffset = 210 * (1 - S(t - 27.6, 10));
+  // T8 29.62 - 36.93
+  A('ring', t, 30.2, 33.0, { s0: 1, soft: 1 }); $('ringc').style.strokeDashoffset = 1400 * (1 - S(t - 30.2, 7)); $('ringc').setAttribute('r', 190 + 7 * Math.sin(t * 7));
+  T('tBk', t, 30.4, 36.93); T('tEx', t, 33.3, 36.93, 1); T('tVo', t, 34.8, 36.93, 2);
+  ST('lb8', t, [35.2], 36.93);
+  // T9 37.43 - 42.32
+  ST('s9', t, [37.7, 40.5, 41.0], 42.32); T('tGf', t, 38.6, 42.32); T('tPl', t, 41.0, 42.32, 1);
+  // T10 43.05 - 47.46
+  T('tB1', t, 43.3, 47.46); T('tB2', t, 43.8, 47.46, 1); ST('s10', t, [45.2, 45.6], 47.46);
+  // flash transition on the last cut (47.46 -> 48.28 in the take)
+  { const u = t >= 48.28 ? (t - 48.28) : 9; $('flash').style.opacity = (u < .45 ? (1 - u / .45) * .85 : 0) + (t >= 47.3 && t < 47.46 ? (t - 47.3) / .16 * .85 : 0); }
+  // T11 48.28 - end
+  ST('s11', t, [48.5, 49.3], 99); A('stars', t, 51.3, 99, { s0: .4 }); A('logoE', t, 52.2, 99, { s0: .1, spin: -180 });
+  const press = t > 53.0 ? 1 - .07 * Math.sin(cl((t - 53.0) / .22) * Math.PI) : 1;
+  A('url', t, 50.0, 99, { dy: 200, sc: press });
+  { const p = S(t - 52.3, 7); A('cur', t, 52.3, 99, { s0: 1, soft: 1, x: 1000 + (820 - 1000) * p, y: 1920 + (1770 - 1920) * p, sc: t > 53.0 && t < 53.16 ? .85 : 1 }); }
+  drawFx(t);
+}
+
+const KEEPS = /*KEEPS*/, CAPS = /*CAPS*/;
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0 || !CAPS[ci][0][1]) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci].filter(w => /[\p{L}\p{N}]/u.test(w[1]));
+  // show at most 2 words at a time (reference look): the window slides with the spoken word
+  let cur = 0; c.forEach((w, j) => { if (t >= w[0] - .02) cur = j; });
+  const from = Math.floor(cur / 2) * 2, win = c.slice(from, from + 2), key = ci + ':' + from;
+  if (cap.dataset.i != key) { cap.innerHTML = win.map(w => `<span class="cw ${w[2] ? 'ce' : ''}">${w[1]}</span>`).join(''); cap.dataset.i = key; }
+  [...cap.children].forEach((e, j) => { const w = win[j], p = B(t - w[0] + .02), q = S(t - w[0] + .02, 18);
+    e.style.opacity = cl(q * 2); e.style.transform = `translateY(${(1 - p) * 30}px) scale(${.6 + .4 * p}) skewX(${(1 - q) * -10}deg)`; });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+window.setT(0);
+</script></body></html>
