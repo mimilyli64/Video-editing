@@ -29,6 +29,10 @@ body{font-family:M,sans-serif;position:relative}
 
 <!-- T1 -->
 <div id="s1" class="stack" style="top:120px"><div class="sm">Le programme</div><div class="bg" style="color:var(--gold)">le + rapide</div><div class="sm">et le + intense</div><div class="bg" style="color:var(--lav);font-size:96px">en allemand 🇩🇪</div></div>
+<!-- T2 très intensif -->
+<div id="s2" class="stack" style="top:120px"><div class="sm">attention</div><div class="bg" style="color:#FF7A7A;font-size:104px">TRÈS INTENSIF</div><div class="sm">pas pour tout le monde</div></div>
+<div id="tBo" class="tile" style="left:40px;top:300px"><div class="d" style="background:linear-gradient(145deg,#FFE48A,#E3A41F)"></div><div class="ic"><img src="icons/bolt.png"></div></div>
+<div id="tBo2" class="tile" style="left:890px;top:300px"><div class="d" style="background:linear-gradient(145deg,#FF9AD1,#D33C8C)"></div><div class="ic"><img src="icons/bolt.png"></div></div>
 <!-- T3 slow vs fast -->
 <div id="slowBar" class="a" style="left:120px;top:200px;width:840px;height:200px">
   <div style="position:absolute;left:0;top:120px;width:840px;height:22px;border-radius:11px;background:rgba(255,255,255,.35)"></div>
@@ -104,11 +108,13 @@ function drawFx(t) { fx.clearRect(0, 0, 1080, 1920);
       const px = x + Math.cos(a) * v * u * Math.exp(-u * 1.7), py = y + Math.sin(a) * v * u * Math.exp(-u * 1.7) + 480 * u * u;
       fx.globalAlpha = cl((1 - u / 1.2) * 1.4); fx.fillStyle = cols[i % cols.length]; fx.save(); fx.translate(px, py); fx.rotate(u * 8 + i); fx.fillRect(-8, -4, 16, 8); fx.restore(); } }
   fx.globalAlpha = 1; }
-burst(2.9, 540, 420); burst(16.9, 540, 360); burst(19.6, 540, 330); burst(26.1, 540, 220); burst(30.6, 540, 985, 30); burst(40.9, 540, 330); burst(44.0, 540, 200); burst(49.5, 540, 260, 34);
+burst(2.9, 540, 420); burst(5.5, 540, 260); burst(16.9, 540, 360); burst(19.6, 540, 330); burst(26.1, 540, 220); burst(30.6, 540, 985, 30); burst(40.9, 540, 330); burst(44.0, 540, 200); burst(49.5, 540, 260, 34);
 
 function draw(t) {
   // T1 1.19 - 3.78
   ST('s1', t, [1.25, 1.55, 2.05, 2.75], 3.78);
+  // T2 4.62 - 8.63
+  ST('s2', t, [4.75, 5.4, 6.9], 8.63); T('tBo', t, 5.5, 8.63); T('tBo2', t, 5.7, 8.63, 1);
   // T3 9.06 - 13.1 slow progress
   A('slowBar', t, 9.1, 11.95, { s0: 1, soft: 1 });
   { const u = lin(t, 9.2, 11.9) * .22; $('slowF').style.width = (840 * u) + 'px'; $('snail').style.left = (840 * u - 40) + 'px'; }

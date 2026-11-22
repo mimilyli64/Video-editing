@@ -1,91 +1,99 @@
 1
-00:00:00,040 --> 00:00:01,400
+00:00:01,190 --> 00:00:02,550
 Le programme le plus rapide et le plus intense
 
 2
-00:00:01,400 --> 00:00:02,550
+00:00:02,550 --> 00:00:03,700
 pour apprendre l'allemand au monde.
 
 3
-00:00:06,740 --> 00:00:08,770
-Au lieu d'avancer petit à petit,
+00:00:03,860 --> 00:00:05,760
+Ce programme est très intensif :
 
 4
-00:00:08,770 --> 00:00:10,280
-ce programme te fait passer
+00:00:05,760 --> 00:00:07,760
+tout le monde ne pourra pas le suivre.
 
 5
-00:00:10,280 --> 00:00:10,780
-deux niveaux en seulement deux mois.
+00:00:07,890 --> 00:00:09,920
+Au lieu d'avancer petit à petit,
 
 6
-00:00:10,780 --> 00:00:15,350
-Tu fais l'A1 et l'A2 en 2 mois.
+00:00:09,920 --> 00:00:11,430
+ce programme te fait passer
 
 7
-00:00:15,510 --> 00:00:17,200
-C'est le Super Fast Track
+00:00:11,430 --> 00:00:11,930
+deux niveaux en seulement deux mois.
 
 8
-00:00:17,200 --> 00:00:18,670
-de Lougha Online.
+00:00:11,930 --> 00:00:16,500
+Tu fais l'A1 et l'A2 en 2 mois.
 
 9
-00:00:18,670 --> 00:00:20,200
-Spécialement pour ceux qui veulent
+00:00:16,660 --> 00:00:18,350
+C'est le Super Fast Track
 
 10
-00:00:20,200 --> 00:00:22,510
-l'A2 avant la fin de l'année.
+00:00:18,350 --> 00:00:19,820
+de Lougha Online.
 
 11
-00:00:22,510 --> 00:00:24,000
-5 séances par semaine,
+00:00:19,820 --> 00:00:21,350
+Spécialement pour ceux qui veulent
 
 12
-00:00:24,000 --> 00:00:25,700
-au lieu de 2 ou 3.
+00:00:21,350 --> 00:00:23,660
+l'A2 avant la fin de l'année.
 
 13
-00:00:25,900 --> 00:00:27,460
-Et tu reçois ce livre
+00:00:23,660 --> 00:00:25,150
+5 séances par semaine,
 
 14
-00:00:27,460 --> 00:00:29,220
-à suivre avec le programme,
+00:00:25,150 --> 00:00:26,850
+au lieu de 2 ou 3.
 
 15
-00:00:29,220 --> 00:00:30,760
-avec des exercices
+00:00:27,050 --> 00:00:28,610
+Et tu reçois ce livre
 
 16
-00:00:30,760 --> 00:00:33,010
-et de la place pour écrire ton vocabulaire.
+00:00:28,610 --> 00:00:30,370
+à suivre avec le programme,
 
 17
-00:00:33,190 --> 00:00:36,130
-Et nos étudiants auront une offre spéciale
+00:00:30,370 --> 00:00:31,910
+avec des exercices
 
 18
-00:00:36,130 --> 00:00:37,910
-pour étudier en Allemagne :
+00:00:31,910 --> 00:00:34,160
+et de la place pour écrire ton vocabulaire.
 
 19
-00:00:38,090 --> 00:00:39,330
-le B1 et le B2,
+00:00:34,340 --> 00:00:37,280
+Et nos étudiants auront une offre spéciale
 
 20
-00:00:39,330 --> 00:00:40,330
-si tu suis toutes les étapes,
+00:00:37,280 --> 00:00:39,060
+pour étudier en Allemagne :
 
 21
-00:00:40,330 --> 00:00:42,330
-tu les feras en Allemagne.
+00:00:39,240 --> 00:00:40,480
+le B1 et le B2,
 
 22
-00:00:42,500 --> 00:00:45,330
-Si ça t'intéresse, le lien est dans la bio.
+00:00:40,480 --> 00:00:41,480
+si tu suis toutes les étapes,
 
 23
-00:00:45,330 --> 00:00:47,810
+00:00:41,480 --> 00:00:43,480
+tu les feras en Allemagne.
+
+24
+00:00:43,650 --> 00:00:46,480
+Si ça t'intéresse, le lien est dans la bio.
+
+25
+00:00:46,480 --> 00:00:48,960
 Tu y trouveras les avis et les résultats.
