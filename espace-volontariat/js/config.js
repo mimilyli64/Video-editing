@@ -9,6 +9,6 @@ export const SUPABASE_URL = "";        // ex. "https://abcdxyz.supabase.co"
 export const SUPABASE_ANON_KEY = "";   // clé "anon public" (Project Settings → API)
 
 export const NOM_ORGANISATION = "Lougha Online";
-export const LIEN_PLATEFORME = "https://lougha.online"; // ← mettre l'adresse exacte de ta plateforme de cours
-export const EMAIL_CONTACT = "contact@lougha.online";   // ← ton email de contact
+export const LIEN_PLATEFORME = "https://loughaonline.com/fr";
+export const EMAIL_CONTACT = "contact@loughaonline.com";   // ← ton email de contact
 export const WHATSAPP = "";                              // ex. "33612345678" (optionnel)

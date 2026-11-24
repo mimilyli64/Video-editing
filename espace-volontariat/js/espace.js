@@ -183,7 +183,7 @@ function renderDashboard() {
         ${dates.length ? `<div class="dates">${dates.map(([k, v]) => `<div class="d"><strong>${k}</strong>${v}</div>`).join("")}</div>` : ""}
       </div>
       <div style="text-align:center;min-width:130px">
-        <div style="font-size:2rem;font-weight:800;color:var(--navy)">${okCount}/${required.length}</div>
+        <div class="count">${okCount}/${required.length}</div>
         <div class="hint">documents validés</div>
       </div>
     </div>
