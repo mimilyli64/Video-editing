@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion · Lougha Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="flag"></div>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="logo">L</span><span>Lougha Online<small>Volontariat en Allemagne</small></span></a>
+    </div>
+  </header>
+
+  <main class="auth">
+    <div class="card">
+      <!-- connexion / inscription -->
+      <div id="v-main">
+        <div class="tabs">
+          <button type="button" data-tab="connexion" class="on">Connexion</button>
+          <button type="button" data-tab="inscription">Créer un compte</button>
+        </div>
+        <form id="f-auth" novalidate>
+          <div class="field" id="w-name" hidden>
+            <label for="name">Nom et prénom</label>
+            <input id="name" autocomplete="name" placeholder="Ex. Amina Benali">
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" required placeholder="ton@email.com">
+          </div>
+          <div class="field">
+            <label for="pw">Mot de passe</label>
+            <input id="pw" type="password" autocomplete="current-password" required minlength="6" placeholder="6 caractères minimum">
+          </div>
+          <button class="btn btn-primary btn-block" id="b-submit">Se connecter</button>
+          <p style="text-align:center;margin:14px 0 0"><a href="#" id="l-forgot" class="hint">Mot de passe oublié ?</a></p>
+        </form>
+      </div>
+
+      <!-- mot de passe oublié -->
+      <form id="v-forgot" hidden novalidate>
+        <h2 style="font-size:1.3rem">Mot de passe oublié</h2>
+        <p class="hint">Entre ton email : tu recevras un lien pour choisir un nouveau mot de passe.</p>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" required></div>
+        <button class="btn btn-primary btn-block">Envoyer le lien</button>
+        <p style="text-align:center;margin:14px 0 0"><a href="#" data-back class="hint">← Retour</a></p>
+      </form>
+
+      <!-- nouveau mot de passe (après lien email) -->
+      <form id="v-reset" hidden novalidate>
+        <h2 style="font-size:1.3rem">Nouveau mot de passe</h2>
+        <div class="field"><label for="n-pw">Nouveau mot de passe</label><input id="n-pw" type="password" minlength="6" required autocomplete="new-password"></div>
+        <button class="btn btn-primary btn-block">Enregistrer</button>
+      </form>
+
+      <!-- email de confirmation envoyé -->
+      <div id="v-sent" hidden style="text-align:center">
+        <h2 style="font-size:1.3rem">Vérifie tes emails 📬</h2>
+        <p class="hint">On t'a envoyé un lien de confirmation. Clique dessus pour activer ton espace (pense à regarder dans les spams).</p>
+        <a href="#" data-back class="btn btn-ghost">Retour à la connexion</a>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { api } from "./js/api.js";
+    import { $, $$, toast, errMsg, demoBanner } from "./js/ui.js";
+    demoBanner();
+
+    const params = new URLSearchParams(location.search);
+    let mode = params.get("mode") === "inscription" ? "inscription" : "connexion";
+    const show = (id) => ["v-main", "v-forgot", "v-reset", "v-sent"].forEach((v) => ($("#" + v).hidden = v !== id));
+
+    function setMode(m) {
+      mode = m;
+      $$("[data-tab]").forEach((b) => b.classList.toggle("on", b.dataset.tab === m));
+      $("#w-name").hidden = m !== "inscription";
+      $("#b-submit").textContent = m === "inscription" ? "Créer mon espace" : "Se connecter";
+      $("#pw").autocomplete = m === "inscription" ? "new-password" : "current-password";
+      $("#l-forgot").hidden = m === "inscription";
+    }
+    $$("[data-tab]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.tab)));
+    $$("[data-back]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); show("v-main"); }));
+    $("#l-forgot").addEventListener("click", (e) => { e.preventDefault(); $("#f-email").value = $("#email").value; show("v-forgot"); });
+    setMode(mode);
+
+    const recovering = params.get("reset") === "1" || location.hash.includes("type=recovery");
+    if (recovering) show("v-reset");
+    api.onAuth((evt) => { if (evt === "PASSWORD_RECOVERY") show("v-reset"); });
+    if (!recovering && await api.getUser()) location.replace("espace.html");
+
+    async function busy(btn, fn) {
+      btn.disabled = true;
+      try { await fn(); } catch (e) { toast(errMsg(e), "err"); } finally { btn.disabled = false; }
+    }
+
+    $("#f-auth").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = $("#email").value.trim(), pw = $("#pw").value, name = $("#name").value.trim();
+      if (!/^\S+@\S+\.\S+$/.test(email)) return toast("Entre un email valide.", "err");
+      if (pw.length < 6) return toast("Le mot de passe doit faire au moins 6 caractères.", "err");
+      if (mode === "inscription" && name.length < 3) return toast("Entre ton nom et prénom.", "err");
+      busy($("#b-submit"), async () => {
+        if (mode === "inscription") {
+          const r = await api.signUp(email, pw, name);
+          if (!r.session) return show("v-sent"); // confirmation par email activée
+        } else {
+          await api.signIn(email, pw);
+        }
+        location.replace("espace.html");
+      });
+    });
+
+    $("#v-forgot").addEventListener("submit", (e) => {
+      e.preventDefault();
+      busy(e.submitter, async () => {
+        await api.resetPassword($("#f-email").value.trim());
+        toast("Lien envoyé, regarde tes emails.");
+        show("v-main");
+      });
+    });
+
+    $("#v-reset").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const pw = $("#n-pw").value;
+      if (pw.length < 6) return toast("6 caractères minimum.", "err");
+      busy(e.submitter, async () => {
+        await api.updatePassword(pw);
+        toast("Mot de passe modifié.");
+        location.replace("espace.html");
+      });
+    });
+  </script>
+</body>
+</html>

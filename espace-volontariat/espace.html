@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon espace · Lougha Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="flag"></div>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="logo">L</span><span>Lougha Online<small>Volontariat en Allemagne</small></span></a>
+      <nav>
+        <a class="link" id="l-admin" href="admin.html" hidden>Espace équipe</a>
+        <a class="link hide-sm" data-plateforme href="#">Mes cours</a>
+        <button class="btn btn-ghost btn-sm" id="b-logout">Déconnexion</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="wrap" id="app"><p class="empty">Chargement…</p></div>
+  </main>
+
+  <div class="modal" id="modal" hidden>
+    <div class="box">
+      <header><strong>Mon contrat signé</strong>
+        <span style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" id="b-print">Télécharger (PDF)</button><button class="btn btn-ghost btn-sm" data-close>Fermer</button></span>
+      </header>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/espace.js"></script>
+</body>
+</html>

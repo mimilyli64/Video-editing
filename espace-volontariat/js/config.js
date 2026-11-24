@@ -1,0 +1,14 @@
+// ─────────────────────────────────────────────────────────────
+//  CONFIGURATION — à remplir une seule fois
+// ─────────────────────────────────────────────────────────────
+// Tant que SUPABASE_URL et SUPABASE_ANON_KEY sont vides, le site tourne
+// en MODE DÉMO : tout est stocké dans le navigateur (rien n'est envoyé).
+// Pour passer en vrai : voir README.md (étape "Supabase").
+
+export const SUPABASE_URL = "";        // ex. "https://abcdxyz.supabase.co"
+export const SUPABASE_ANON_KEY = "";   // clé "anon public" (Project Settings → API)
+
+export const NOM_ORGANISATION = "Lougha Online";
+export const LIEN_PLATEFORME = "https://lougha.online"; // ← mettre l'adresse exacte de ta plateforme de cours
+export const EMAIL_CONTACT = "contact@lougha.online";   // ← ton email de contact
+export const WHATSAPP = "";                              // ex. "33612345678" (optionnel)
