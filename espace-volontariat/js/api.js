@@ -146,7 +146,27 @@ function makeDemoApi() {
         d.profiles.push({ id: u.id, email: u.email, full_name: "Équipe Lougha", role: "admin", stage: 0,
           admin_message: "", created_at: new Date().toISOString() });
       }
+      // garde le compte candidat en cours pour pouvoir y revenir
+      const cur = d.profiles.find((x) => x.id === d.session);
+      if (cur && cur.role !== "admin") d.demoCandidate = cur.id;
       d.session = u.id; save(d);
+    },
+    // Démo : revenir au dernier compte candidat utilisé.
+    async demoBack() {
+      const d = db();
+      if (!d.demoCandidate || !d.users.some((x) => x.id === d.demoCandidate)) return false;
+      d.session = d.demoCandidate; save(d); return true;
+    },
+    demoHasCandidate() { const d = db(); return !!d.demoCandidate; },
+    // Démo : faire comme si l'équipe avait validé le paiement du candidat connecté.
+    async demoValidatePayment() {
+      const d = db(); const p = d.profiles.find((x) => x.id === me());
+      const c = d.contracts.find((x) => x.user_id === me());
+      d.documents.filter((x) => x.user_id === me() && x.doc_type === "recu_paiement" && x.status === "en_attente")
+        .forEach((x) => Object.assign(x, { status: "valide", reviewed_at: new Date().toISOString() }));
+      Object.assign(p, { paid_at: new Date().toISOString(), paid_amount: c.contract_type === "court" ? 1200 : 1500,
+        payment_method: c.payment_method, payment_ref: "Validé (démo)" });
+      save(d);
     },
     async resetPassword() { throw new Error("Mode démo : la réinitialisation par email n'est pas disponible."); },
     async updatePassword() {},

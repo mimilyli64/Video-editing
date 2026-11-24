@@ -42,12 +42,17 @@ export function demoBanner() {
   const b = document.createElement("div");
   b.className = "demo-banner";
   b.innerHTML = `<strong>Mode démo</strong> · les données restent dans ce navigateur.
-    <button type="button" class="demo-btn" id="demo-admin">Ouvrir l'espace équipe</button>`;
+    <button type="button" class="demo-btn" id="demo-admin">Ouvrir l'espace équipe</button>
+    <button type="button" class="demo-btn" id="demo-back" hidden>Revenir au compte candidat</button>`;
   document.body.prepend(b);
-  b.querySelector("#demo-admin").addEventListener("click", async () => {
-    const { api } = await import("./api.js");
-    await api.demoAdmin();
-    location.href = "admin.html";
+  const onAdmin = /admin\.html$/.test(location.pathname);
+  import("./api.js").then(({ api }) => {
+    b.querySelector("#demo-admin").hidden = onAdmin;
+    b.querySelector("#demo-back").hidden = !(onAdmin && api.demoHasCandidate());
+    b.querySelector("#demo-admin").addEventListener("click", async () => { await api.demoAdmin(); location.href = "admin.html"; });
+    b.querySelector("#demo-back").addEventListener("click", async () => {
+      if (await api.demoBack()) location.href = "espace.html";
+    });
   });
 }
 

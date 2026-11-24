@@ -220,8 +220,20 @@ async function renderPayment() {
         </ol>
       </div>
 
+      ${api.DEMO_MODE ? `<div class="demo-box">
+        <p style="margin:0"><strong>Démo uniquement.</strong> Sur le vrai site, c'est ton équipe qui valide le paiement depuis l'espace équipe.</p>
+        <button type="button" class="demo-btn" id="demo-pay">Démo : valider le paiement comme l'équipe</button>
+      </div>` : ""}
+
       <p class="hint" style="text-align:center;margin-top:20px"><a href="#" id="l-contract">Revoir mon contrat signé</a></p>
     </div>`;
+
+  $("#demo-pay")?.addEventListener("click", async () => {
+    await api.demoValidatePayment();
+    toast("Paiement validé ✔ Le dossier est ouvert.");
+    window.scrollTo(0, 0);
+    await load();
+  });
 
   $("#l-contract").addEventListener("click", (e) => { e.preventDefault(); openContract(); });
   $$("input[type=file]", app).forEach((inp) => inp.addEventListener("change", () => upload(inp)));
