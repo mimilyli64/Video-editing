@@ -1,8 +1,8 @@
 import { api } from "./api.js";
 import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256, whatsappFab } from "./ui.js";
-import { ETAPES, DOCUMENTS, STATUTS_DOC } from "./etapes.js";
+import { ETAPES, DOCUMENTS, STATUTS_DOC, etapesPour } from "./etapes.js";
 import { CONTRATS } from "./contrat.js";
-import { renderContract, signedContractHtml, contratDe, formuleLabel, euros } from "./contrat-view.js";
+import { renderContract, signedContractHtml, contratDe, formuleLabel, euros, MENTION, mentionOk } from "./contrat-view.js";
 import { LIEN_PLATEFORME, EMAIL_CONTACT } from "./config.js";
 import { METHODES, TYPE_RECU, whatsappLink, WA_ICON } from "./paiement.js";
 
@@ -40,7 +40,7 @@ function renderSign() {
   app.innerHTML = `
     <div class="narrow" style="margin:0 auto">
       <div class="hello"><div>
-        <span class="badge badge-navy">Étape 1 sur 6</span>
+        <span class="badge badge-navy">Étape 1 · Contrat</span>
         <h1 style="margin-top:10px">Bienvenue ${esc(first)} 👋</h1>
         <p class="hint" style="margin:6px 0 0">Avant de commencer tes démarches, complète tes informations et signe ton contrat.</p>
       </div></div>
@@ -89,7 +89,11 @@ function renderSign() {
         <div class="contract-text" id="c-text"></div>
 
         <h2 style="font-size:1.15rem;margin-top:24px">4. Signe</h2>
-        <p class="hint">Dessine ta signature avec ton doigt ou ta souris.</p>
+        <div class="field" style="max-width:360px">
+          <label for="i-mention">Écris la mention « ${MENTION} »</label>
+          <input id="i-mention" data-mention autocomplete="off" placeholder="${MENTION}">
+        </div>
+        <p class="hint">Puis dessine ta signature avec ton doigt ou ta souris.</p>
         <div class="sigpad" id="sigpad"><canvas></canvas><div class="ph-text">Signe ici</div></div>
         <p style="text-align:right;margin:8px 0 18px"><button type="button" class="btn btn-ghost btn-sm" id="b-clear">Effacer</button></p>
 
@@ -134,6 +138,7 @@ function renderSign() {
     }
     const missing = $$("input[name]:not([type=radio])", form).filter((i) => !i.value.trim());
     if (missing.length) { missing[0].focus(); return toast("Complète tous les champs.", "err"); }
+    if (!mentionOk($("[data-mention]").value)) { $("[data-mention]").focus(); return toast(`Écris la mention « ${MENTION} » avant de signer.`, "err"); }
     if (pad.isEmpty()) return toast("Ajoute ta signature.", "err");
     if (!$("#agree").checked) return toast("Coche la case pour accepter le contrat.", "err");
 
@@ -146,6 +151,7 @@ function renderSign() {
         contract_version: contratDe(v.contract_type).version,
         contract_hash: await sha256(accepted),
         signature_data: pad.toDataURL(),
+        mention: $("[data-mention]").value.trim(),
         user_agent: navigator.userAgent.slice(0, 300),
       });
       toast("Contrat signé ✔");
@@ -258,9 +264,14 @@ function signaturePad(wrap) {
 // ═════════════════════ 2. TABLEAU DE BORD ═════════════════════
 function renderDashboard() {
   const stage = Math.max(1, profile.stage || 1);
-  const et = ETAPES[stage];
   const first = contract.first_name || (profile.full_name || "").split(" ")[0];
-  const required = DOCUMENTS.filter((d) => d.requis && d.etape <= stage);
+  // Étapes de la formule du candidat (ex. pas de test d'allemand pour la formule 3 mois)
+  const visibles = etapesPour(contract.contract_type);
+  const ids = visibles.map((e) => e.id);
+  const fini = stage === 5;
+  const rang = Math.max(0, visibles.findIndex((e) => e.id >= stage));
+  const et = visibles[rang];
+  const required = DOCUMENTS.filter((d) => d.requis && d.etape <= stage && ids.includes(d.etape));
   const okCount = required.filter((d) => docs.some((x) => x.doc_type === d.type && x.status === "valide")).length;
 
   const dates = [
@@ -277,15 +288,15 @@ function renderDashboard() {
     </div>
 
     <div class="card">
-      <div class="stepper">
-        ${ETAPES.map((e) => `<div class="s ${e.id < stage || stage === 5 ? "done" : e.id === stage ? "cur" : ""}">
-          <div class="dot">${e.id < stage || stage === 5 ? "✓" : e.id + 1}</div><span class="lbl">${e.court}</span></div>`).join("")}
+      <div class="stepper" style="grid-template-columns:repeat(${visibles.length},1fr)">
+        ${visibles.map((e, i) => `<div class="s ${e.id < stage || fini ? "done" : i === rang ? "cur" : ""}">
+          <div class="dot">${e.id < stage || fini ? "✓" : i + 1}</div><span class="lbl">${e.court}</span></div>`).join("")}
       </div>
     </div>
 
     <div class="card current">
       <div>
-        <span class="badge badge-navy">Étape ${stage + 1} sur 6</span>
+        <span class="badge badge-navy">Étape ${rang + 1} sur ${visibles.length}</span>
         <h2 style="margin-top:10px">${esc(et.titre)}</h2>
         <p style="margin:0">${esc(et.desc)}</p>
         ${profile.admin_message ? `<div class="msg"><strong>Message de ton conseiller :</strong><br>${esc(profile.admin_message)}</div>` : ""}
@@ -299,8 +310,9 @@ function renderDashboard() {
 
     <div class="card docgroup">
       <h2 style="font-size:1.2rem">Mes documents</h2>
-      <p class="hint">PDF, JPG ou PNG — 10 Mo maximum par fichier. Une photo nette prise au téléphone suffit.</p>
-      ${ETAPES.slice(1).map((e) => docGroup(e, stage)).join("")}
+      <p class="hint">PDF, JPG ou PNG — 10 Mo maximum par fichier. Une photo nette prise au téléphone suffit.
+        <strong>Tous les documents doivent être traduits en allemand.</strong></p>
+      ${visibles.slice(1).map((e) => docGroup(e, stage)).join("")}
     </div>
 
     <p class="hint" style="text-align:center;margin-top:24px">Une question ? Écris-nous à <a href="mailto:${esc(EMAIL_CONTACT)}">${esc(EMAIL_CONTACT)}</a></p>`;

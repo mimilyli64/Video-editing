@@ -1,6 +1,6 @@
 import { api } from "./api.js";
 import { $, $$, esc, toast, errMsg, fmtDate, demoBanner } from "./ui.js";
-import { ETAPES, DOCUMENTS, STATUTS_DOC } from "./etapes.js";
+import { ETAPES, DOCUMENTS, STATUTS_DOC, etapesPour } from "./etapes.js";
 import { signedContractHtml, formuleLabel, contratDe, euros } from "./contrat-view.js";
 import { CONTRATS } from "./contrat.js";
 import { METHODES, TYPE_RECU } from "./paiement.js";
@@ -124,7 +124,7 @@ function renderDetail(p, c, docs) {
       <h2 style="font-size:1.1rem">Suivi du dossier</h2>
       <div class="grid-2">
         <div class="field"><label>Étape actuelle</label>
-          <select name="stage" ${c ? "" : "disabled"}>${ETAPES.map((e) => `<option value="${e.id}" ${e.id === (p.stage || 0) ? "selected" : ""} ${e.id === 0 && c ? "disabled" : ""}>${e.id + 1}. ${e.titre}</option>`).join("")}</select></div>
+          <select name="stage" ${c ? "" : "disabled"}>${etapesPour(c?.contract_type || "long").map((e) => `<option value="${e.id}" ${e.id === (p.stage || 0) ? "selected" : ""} ${e.id === 0 && c ? "disabled" : ""}>${e.id + 1}. ${e.titre}</option>`).join("")}</select></div>
         <div class="field"><label>Date du test d'allemand</label><input type="date" name="test_date" value="${esc(p.test_date || "")}"></div>
         <div class="field"><label>Résultat du test</label><input name="test_result" placeholder="Ex. B1 Goethe — réussi" value="${esc(p.test_result || "")}"></div>
         <div class="field"><label>Date d'entretien</label><input type="datetime-local" name="interview_date" value="${toLocalInput(p.interview_date)}"></div>
@@ -138,7 +138,7 @@ function renderDetail(p, c, docs) {
     <div class="card docgroup">
       <h2 style="font-size:1.1rem">Documents (${docs.length})</h2>
       ${[{ titre: "Paiement", types: [{ type: TYPE_RECU, label: `Reçu de paiement — ${c ? euros(contratDe(c.contract_type).prix) + " par " + (METHODES[c.payment_method]?.label || "") : ""}` }] },
-         ...ETAPES.slice(1).map((e) => ({ titre: e.titre, types: DOCUMENTS.filter((d) => d.etape === e.id) }))].map((g) => {
+         ...etapesPour(c?.contract_type || "long").slice(1).map((e) => ({ titre: e.titre, types: DOCUMENTS.filter((d) => d.etape === e.id) }))].map((g) => {
         const types = g.types;
         if (!types.length) return "";
         return `<h3>${esc(g.titre)}</h3>` + types.map((t) => {

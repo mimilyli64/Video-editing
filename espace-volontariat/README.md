@@ -9,9 +9,10 @@ Site pour les candidats au volontariat en Allemagne :
 | `espace.html` | candidats | 1ʳᵉ connexion : choix de la formule et de la méthode de paiement (PayPal ou carte Visa) + infos + **signature du contrat**, puis contact WhatsApp et **dépôt du reçu de paiement**. Une fois le reçu validé : suivi des 6 étapes, envoi des documents, messages et dates |
 | `admin.html` | ton équipe | Liste des candidats, contrat signé (PDF), validation des reçus de paiement, validation/refus des documents, changement d'étape, dates (test, entretien, visa), message au candidat |
 
-Formules : **1 an → 1 500 €** · **moins de 3 mois → 1 200 €**.
+Formules : **1 an → 1 500 €** · **3 mois maximum → 1 200 €**. Les prix ne sont affichés qu'aux candidats
+connectés (article 7 du contrat : confidentialité des tarifs).
 
-Les 6 étapes : Contrat → Dossier → Test d'allemand → Entretiens → Visa → Départ.
+Les étapes : Contrat → Dossier → Test d'allemand A2 (formule 1 an seulement) → Entretiens → Visa → Départ.
 
 ## Tester tout de suite (mode démo)
 
@@ -62,12 +63,15 @@ Ensuite, relie un sous-domaine, par exemple `volontariat.loughaonline.com`, et a
 
 ## Personnaliser
 
-- **Les prix** → à changer à 2 endroits : `js/contrat.js` (`prix`) et la section « Nos formules » de `index.html`.
+- **Les contrats** → `js/contrat.js`. Ce sont les textes officiels « Contrat d'accompagnement – Programme de
+  volontariat en Allemagne » : `long` (1 an, 1 500 €) et `court` (3 mois maximum, 1 200 €). Le tronc commun est
+  écrit une seule fois ; les différences (durée, test A2, prix, montant remboursé) sont en bas du fichier.
+  Les champs `{{prenom}}`, `{{nom}}`, `{{date_naissance}}`, `{{passeport}}`, `{{email}}`, `{{date}}` sont remplis
+  automatiquement. **Change `version` à chaque modification d'un texte.**
+- **Les prix** → `prix` dans `js/contrat.js` (et les montants écrits dans le texte du contrat).
+- **Signature du Prestataire** sur les contrats signés → `SIGNATURE_PRESTATAIRE` dans `js/config.js`
+  (image de ta signature, ex. `img/signature-prestataire.png`). Sinon le nom « Lougha Online » s'affiche.
 - **Les méthodes de paiement** et leurs explications → `js/paiement.js`.
-- **Les contrats** → `js/contrat.js`. Il y a deux contrats : `long` (1 an) et `court` (moins de 3 mois).
-  Le candidat choisit sa formule avant de signer, et le bon contrat s'affiche. Remplace les textes provisoires par tes
-  vrais contrats. Les champs `{{prenom}}`, `{{nom}}`, `{{passeport}}`, `{{duree}}`… sont remplis automatiquement.
-  **Change `version` à chaque modification d'un texte.**
 - **Les étapes et la liste des documents** → `js/etapes.js`.
 - **Liens, email de contact** → `js/config.js`.
 - **Couleurs** → haut de `css/style.css`.

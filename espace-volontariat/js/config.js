@@ -11,6 +11,10 @@ export const SUPABASE_ANON_KEY = "";   // clé "anon public" (Project Settings �
 export const NOM_ORGANISATION = "Lougha Online";
 export const LIEN_PLATEFORME = "https://loughaonline.com/fr";
 export const EMAIL_CONTACT = "contact@loughaonline.com";   // ← ton email de contact
+// Signature du Prestataire affichée sur les contrats signés (image PNG sur fond
+// transparent ou blanc, ex. "img/signature-prestataire.png"). Vide = nom de l'organisation.
+export const SIGNATURE_PRESTATAIRE = "";
+
 // Numéro WhatsApp du support (format international, chiffres seulement).
 // Il sert au bouton "Support WhatsApp" et à l'étape de paiement.
 export const WHATSAPP = "";                              // ex. "213555123456" ou "33612345678"

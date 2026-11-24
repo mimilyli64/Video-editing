@@ -42,6 +42,7 @@ create table if not exists public.contracts (
   contract_version text not null,
   contract_hash    text not null,
   signature_data   text not null,          -- image PNG de la signature (data URL)
+  mention          text not null,          -- « Lu et approuvé » écrit par le candidat
   user_agent       text,
   signed_at        timestamptz not null default now()
 );

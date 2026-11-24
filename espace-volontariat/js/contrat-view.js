@@ -1,6 +1,6 @@
 import { CONTRATS } from "./contrat.js";
-import { METHODES } from "./paiement.js";
 import { esc, fmtDate } from "./ui.js";
+import { SIGNATURE_PRESTATAIRE, NOM_ORGANISATION } from "./config.js";
 
 export const contratDe = (type) => CONTRATS[type] || CONTRATS.long;
 
@@ -8,16 +8,19 @@ export const euros = (n) =>
   new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 })
     .format(n).replace(/ /g, " "); // espace insécable classique (affichée par toutes les polices)
 
+// Mention exigée par le contrat avant la signature du Bénéficiaire.
+export const MENTION = "Lu et approuvé";
+export const mentionOk = (s) =>
+  String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim().toLowerCase()
+  === "lu et approuve";
+
 // Remplit le contrat (selon f.contract_type) avec les infos du candidat.
 // `highlight` met en évidence les champs pendant la saisie.
 export function renderContract(f, highlight = false) {
   const vals = {
     prenom: f.first_name, nom: f.last_name,
     date_naissance: f.birth_date ? fmtDate(f.birth_date) : "",
-    lieu_naissance: f.birth_place, nationalite: f.nationality, adresse: f.address,
-    telephone: f.phone, passeport: f.passport_number, email: f.email, duree: f.duration,
-    prix: f.contract_type ? euros(contratDe(f.contract_type).prix) : "",
-    paiement: METHODES[f.payment_method]?.label || "",
+    passeport: f.passport_number, email: f.email,
     date: fmtDate(f.signed_at || new Date()),
   };
   return contratDe(f.contract_type).texte.replace(/\{\{(\w+)\}\}/g, (_, k) => {
@@ -26,20 +29,28 @@ export function renderContract(f, highlight = false) {
   });
 }
 
-// Bloc complet "contrat signé" (texte + signature + preuve).
+function signaturePrestataire() {
+  return SIGNATURE_PRESTATAIRE
+    ? `<img class="sig-img" src="${esc(SIGNATURE_PRESTATAIRE)}" alt="Signature du Prestataire">`
+    : `<p class="sig-text">${esc(NOM_ORGANISATION)}</p>`;
+}
+
+// Bloc complet "contrat signé" (texte + deux signatures + preuve).
 export function signedContractHtml(c) {
   return `
     <h2 style="font-size:1.25rem">${esc(contratDe(c.contract_type).titre)}</h2>
     <div class="contract-text">${renderContract(c)}
-      <div style="margin-top:24px">
-        <p style="margin-bottom:6px"><strong>Signature du candidat :</strong></p>
-        <img class="sig-img" src="${esc(c.signature_data)}" alt="Signature">
-        <p style="margin-top:8px">${esc(c.first_name)} ${esc(c.last_name)} — signé le ${fmtDate(c.signed_at, true)}</p>
-        <p class="proof">Version du contrat : ${esc(c.contract_version)}<br>Empreinte SHA-256 du texte accepté : ${esc(c.contract_hash)}</p>
+      <div class="sig-grid">
+        <div><p class="sig-label">Signature du Prestataire</p>${signaturePrestataire()}</div>
+        <div><p class="sig-label">Signature du Bénéficiaire<br><small>(précédée de la mention « ${MENTION} »)</small></p>
+          <p class="sig-mention">${esc(c.mention || MENTION)}</p>
+          <img class="sig-img" src="${esc(c.signature_data)}" alt="Signature du Bénéficiaire">
+          <p style="margin:6px 0 0">${esc(c.first_name)} ${esc(c.last_name)} — signé le ${fmtDate(c.signed_at, true)}</p></div>
       </div>
+      <p class="proof" style="margin-top:18px">Signature électronique. Version du contrat : ${esc(c.contract_version)}<br>Empreinte SHA-256 du texte accepté : ${esc(c.contract_hash)}</p>
     </div>`;
 }
 
-// Libellé court, ex. "Volontariat long · 1 an"
+// Libellé court, ex. "Volontariat 1 an"
 export const formuleLabel = (type, duration) =>
-  type ? `${contratDe(type).nom}${duration && !contratDe(type).nom.includes(duration) ? " · " + duration : ""}` : "";
+  type ? `${contratDe(type).nom}${duration && !contratDe(type).nom.includes(duration) && !duration.includes("3 mois") ? " · " + duration : ""}` : "";
