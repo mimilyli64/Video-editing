@@ -1,8 +1,8 @@
 import { api } from "./api.js";
-import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256, whatsappFab } from "./ui.js";
+import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256, whatsappFab, signaturePad, downloadPdf } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC, etapesPour } from "./etapes.js";
 import { CONTRATS } from "./contrat.js";
-import { renderContract, signedContractHtml, contratDe, formuleLabel, euros, MENTION, mentionOk } from "./contrat-view.js";
+import { renderContract, signedContractHtml, contratDe, formuleLabel, euros, MENTION, mentionOk, signeParLesDeux, nomFichierContrat } from "./contrat-view.js";
 import { LIEN_PLATEFORME, EMAIL_CONTACT } from "./config.js";
 import { METHODES, TYPE_RECU, whatsappLink, WA_ICON } from "./paiement.js";
 
@@ -232,34 +232,6 @@ function field(name, label, value = "", ac = "off", type = "text") {
     <input id="i-${name}" name="${name}" type="${type}" value="${esc(value)}" autocomplete="${ac}" required></div>`;
 }
 
-function signaturePad(wrap) {
-  const c = $("canvas", wrap), ctx = c.getContext("2d");
-  let drawing = false, empty = true, last = null;
-  function size() {
-    const r = c.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-    const prev = empty ? null : c.toDataURL();
-    c.width = r.width * dpr; c.height = r.height * dpr;
-    ctx.scale(dpr, dpr);
-    ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#16233f";
-    if (prev) { const img = new Image(); img.onload = () => ctx.drawImage(img, 0, 0, r.width, r.height); img.src = prev; }
-  }
-  const pos = (e) => { const r = c.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
-  c.addEventListener("pointerdown", (e) => { drawing = true; last = pos(e); c.setPointerCapture(e.pointerId); });
-  c.addEventListener("pointermove", (e) => {
-    if (!drawing) return;
-    const p = pos(e);
-    ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke();
-    last = p; if (empty) { empty = false; wrap.classList.add("has"); }
-  });
-  ["pointerup", "pointercancel"].forEach((ev) => c.addEventListener(ev, () => (drawing = false)));
-  window.addEventListener("resize", size);
-  size();
-  return {
-    isEmpty: () => empty,
-    clear: () => { ctx.clearRect(0, 0, c.width, c.height); empty = true; wrap.classList.remove("has"); },
-    toDataURL: () => c.toDataURL("image/png"),
-  };
-}
 
 // ═════════════════════ 2. TABLEAU DE BORD ═════════════════════
 function renderDashboard() {
@@ -284,7 +256,7 @@ function renderDashboard() {
   app.innerHTML = `
     <div class="hello">
       <div><p class="hint" style="margin:0">Mon dossier · <span class="badge badge-navy">${esc(formuleLabel(contract.contract_type, contract.duration))}</span></p><h1 style="margin-top:6px">Hallo ${esc(first)} !</h1></div>
-      <button class="btn btn-ghost btn-sm" id="b-contract">📄 Mon contrat signé</button>
+      <button class="btn btn-ghost btn-sm" id="b-contract">📄 Mon contrat ${signeParLesDeux(contract) ? "signé" : "· en attente de signature Lougha"}</button>
     </div>
 
     <div class="card">
@@ -384,14 +356,18 @@ async function removeDoc(id) {
 
 // ═════════════════════ CONTRAT SIGNÉ (modal) ═════════════════════
 function openContract() {
-  $("#modal-body").innerHTML = signedContractHtml({ ...contract, email: user.email });
+  $("#modal-title").textContent = signeParLesDeux(contract) ? "Mon contrat signé par les deux parties" : "Mon contrat";
+  $("#modal-body").innerHTML = signedContractHtml({ ...contract, email: user.email })
+    + (signeParLesDeux(contract) ? "" : `<p class="hint" style="margin-top:14px">Ton contrat sera signé par Lougha Online très bientôt. Tu recevras alors ta copie par email.</p>`);
   $("#modal").hidden = false;
 }
 $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal" || e.target.matches("[data-close]")) $("#modal").hidden = true; });
-$("#b-print").addEventListener("click", () => {
-  document.body.classList.add("printing");
-  window.print();
-  document.body.classList.remove("printing");
+$("#b-print").addEventListener("click", async (e) => {
+  e.target.disabled = true;
+  const c = { ...contract, email: user.email };
+  try { await downloadPdf(signedContractHtml(c), nomFichierContrat(c)); }
+  catch (err) { toast(errMsg(err), "err"); }
+  e.target.disabled = false;
 });
 
 load();

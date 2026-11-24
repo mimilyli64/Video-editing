@@ -44,7 +44,12 @@ create table if not exists public.contracts (
   signature_data   text not null,          -- image PNG de la signature (data URL)
   mention          text not null,          -- « Lu et approuvé » écrit par le candidat
   user_agent       text,
-  signed_at        timestamptz not null default now()
+  signed_at        timestamptz not null default now(),
+  -- signature du Prestataire (Lougha Online), faite depuis l'espace équipe
+  provider_signature_data text,
+  provider_signer         text,            -- nom de la personne qui signe pour Lougha Online
+  provider_signed_at      timestamptz,
+  emailed_at              timestamptz      -- date d'envoi de la copie par email au candidat
 );
 
 -- ── Documents envoyés ───────────────────────────────────────────────
@@ -110,7 +115,34 @@ create policy "profil: équipe modifie" on public.profiles for update using (pub
 drop policy if exists "contrat: lecture" on public.contracts;
 create policy "contrat: lecture" on public.contracts for select using (user_id = auth.uid() or public.is_admin());
 drop policy if exists "contrat: signature" on public.contracts;
-create policy "contrat: signature" on public.contracts for insert with check (user_id = auth.uid());
+create policy "contrat: signature" on public.contracts for insert
+  with check (user_id = auth.uid() and provider_signature_data is null and emailed_at is null);
+-- l'équipe ajoute la signature du Prestataire (le reste du contrat est verrouillé par le trigger ci-dessous)
+drop policy if exists "contrat: signature prestataire" on public.contracts;
+create policy "contrat: signature prestataire" on public.contracts for update
+  using (public.is_admin()) with check (public.is_admin());
+
+create or replace function public.protect_contract() returns trigger
+language plpgsql as $$
+begin
+  if (new.user_id, new.contract_type, new.duration, new.first_name, new.last_name, new.birth_date,
+      new.passport_number, new.contract_version, new.contract_hash, new.signature_data, new.mention, new.signed_at)
+     is distinct from
+     (old.user_id, old.contract_type, old.duration, old.first_name, old.last_name, old.birth_date,
+      old.passport_number, old.contract_version, old.contract_hash, old.signature_data, old.mention, old.signed_at) then
+    raise exception 'La partie signée par le candidat ne peut pas être modifiée.';
+  end if;
+  if old.provider_signature_data is not null and new.provider_signature_data is distinct from old.provider_signature_data then
+    raise exception 'Le contrat est déjà signé par le Prestataire.';
+  end if;
+  if old.provider_signature_data is null and new.provider_signature_data is not null then
+    new.provider_signed_at := now();   -- heure du serveur
+  end if;
+  return new;
+end $$;
+drop trigger if exists on_contract_update on public.contracts;
+create trigger on_contract_update before update on public.contracts
+  for each row execute function public.protect_contract();
 
 -- documents : le candidat ajoute/supprime les siens (tant qu'ils ne sont pas vérifiés) ; l'équipe valide
 drop policy if exists "doc: lecture" on public.documents;

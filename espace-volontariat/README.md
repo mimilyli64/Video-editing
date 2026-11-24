@@ -56,6 +56,30 @@ Si le reçu a été envoyé directement sur WhatsApp, le bouton **Marquer comme 
 👉 Mets ton numéro WhatsApp dans `js/config.js` (`WHATSAPP`, format international, chiffres seulement).
 Il sert aussi au bouton flottant **« Support WhatsApp »** affiché sur toutes les pages.
 
+### 1 ter. Signature des deux parties et envoi de la copie par email
+1. Le candidat signe en premier, depuis son espace (avec la mention « Lu et approuvé »).
+2. Dans `admin.html`, le candidat apparaît avec **✍️ À signer**. Ouvre sa fiche → **Signer le contrat** →
+   relis le contrat, indique ton nom, signe au doigt ou à la souris → **Signer et envoyer la copie au candidat**.
+3. Le site génère le PDF du contrat signé par les deux parties et l'envoie automatiquement à l'email du candidat,
+   avec une copie à `lougha.online3@gmail.com`. Le bouton **Renvoyer la copie par email** permet de le renvoyer.
+4. Le candidat peut aussi télécharger son contrat en PDF à tout moment depuis son espace.
+
+L'envoi des emails passe par **[Resend](https://resend.com)** (gratuit jusqu'à 3 000 emails/mois) :
+1. Crée un compte Resend → **Domains → Add domain** → `loughaonline.com` → ajoute chez ton hébergeur de domaine
+   les enregistrements DNS indiqués (quelques minutes). C'est ce qui permet d'envoyer depuis
+   `contrats@loughaonline.com` sans finir en spam.
+2. **API Keys → Create API key** et copie la clé.
+3. Installe la [CLI Supabase](https://supabase.com/docs/guides/cli), puis depuis le dossier `espace-volontariat` :
+   ```bash
+   supabase login
+   supabase link --project-ref TON_ID_DE_PROJET
+   supabase secrets set RESEND_API_KEY=re_xxx EMAIL_FROM="Lougha Online <contrats@loughaonline.com>" EMAIL_COPIE=lougha.online3@gmail.com
+   supabase functions deploy envoyer-contrat
+   ```
+
+Tant que Resend n'est pas configuré, la signature fonctionne quand même : l'équipe voit un message d'erreur
+pour l'email et peut télécharger le PDF pour l'envoyer à la main.
+
 ### 2. Hébergement
 Ce sont des fichiers statiques : n'importe quel hébergeur marche.
 Le plus simple : [Netlify](https://app.netlify.com/drop) → glisser-déposer le dossier `espace-volontariat`.
@@ -69,8 +93,6 @@ Ensuite, relie un sous-domaine, par exemple `volontariat.loughaonline.com`, et a
   Les champs `{{prenom}}`, `{{nom}}`, `{{date_naissance}}`, `{{passeport}}`, `{{email}}`, `{{date}}` sont remplis
   automatiquement. **Change `version` à chaque modification d'un texte.**
 - **Les prix** → `prix` dans `js/contrat.js` (et les montants écrits dans le texte du contrat).
-- **Signature du Prestataire** sur les contrats signés → `SIGNATURE_PRESTATAIRE` dans `js/config.js`
-  (image de ta signature, ex. `img/signature-prestataire.png`). Sinon le nom « Lougha Online » s'affiche.
 - **Les méthodes de paiement** et leurs explications → `js/paiement.js`.
 - **Les étapes et la liste des documents** → `js/etapes.js`.
 - **Liens, email de contact** → `js/config.js`.

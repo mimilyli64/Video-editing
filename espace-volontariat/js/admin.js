@@ -1,7 +1,7 @@
 import { api } from "./api.js";
-import { $, $$, esc, toast, errMsg, fmtDate, demoBanner } from "./ui.js";
+import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, signaturePad, downloadPdf, pdfBase64 } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC, etapesPour } from "./etapes.js";
-import { signedContractHtml, formuleLabel, contratDe, euros } from "./contrat-view.js";
+import { signedContractHtml, formuleLabel, contratDe, euros, signeParLesDeux, nomFichierContrat } from "./contrat-view.js";
 import { CONTRATS } from "./contrat.js";
 import { METHODES, TYPE_RECU } from "./paiement.js";
 
@@ -29,7 +29,7 @@ function renderShell() {
   app.innerHTML = `
     <div class="stats">
       <div class="stat"><b>${candidates.length}</b><span>candidats</span></div>
-      <div class="stat"><b>${n((c) => !c.paid_at)}</b><span>pas encore signé ou payé</span></div>
+      <div class="stat"><b>${n((c) => c.to_sign)}</b><span>contrats à signer par Lougha</span></div>
       <div class="stat"><b>${candidates.reduce((s, c) => s + c.docs_pending, 0)}</b><span>documents à vérifier</span></div>
       <div class="stat"><b>${n((c) => c.stage === 5)}</b><span>visas obtenus</span></div>
     </div>
@@ -71,6 +71,7 @@ function renderList() {
       <div class="meta">
         <span class="badge badge-navy">${(c.stage || 0) + 1}. ${ETAPES[c.stage || 0].court}</span>
         ${c.contract_type ? `<span class="badge badge-none">${esc(formuleLabel(c.contract_type, c.duration))}</span>` : ""}
+        ${c.to_sign ? `<span class="badge badge-wait">✍️ À signer</span>` : ""}
         ${c.contract_type && !c.paid_at ? `<span class="badge badge-wait">Non payé</span>` : ""}
         ${c.docs_pending ? `<span class="badge badge-wait">${c.docs_pending} à vérifier</span>` : ""}
       </div>
@@ -99,8 +100,18 @@ function renderDetail(p, c, docs) {
       <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:start">
         <div><h2 style="font-size:1.35rem;margin:0">${esc(p.full_name || p.email)}</h2>
           <p class="hint" style="margin:4px 0 0">${esc(p.email)} · inscrit le ${fmtDate(p.created_at)}</p></div>
-        ${c ? `<button class="btn btn-ghost btn-sm" id="b-c">📄 Voir le contrat signé</button>` : `<span class="badge badge-wait">Contrat pas encore signé</span>`}
+        ${c ? `<button class="btn btn-ghost btn-sm" id="b-c">📄 Voir le contrat</button>` : `<span class="badge badge-wait">Contrat pas encore signé</span>`}
       </div>
+      ${c ? `<div class="sign-box ${signeParLesDeux(c) ? "ok" : "todo"}">
+        ${signeParLesDeux(c)
+          ? `<div><strong>✓ Contrat signé par les deux parties</strong>
+               <p class="hint" style="margin:2px 0 0">Signé pour Lougha Online${c.provider_signer ? ` par ${esc(c.provider_signer)}` : ""} le ${fmtDate(c.provider_signed_at, true)}
+               · ${c.emailed_at ? `copie envoyée à ${esc(p.email)} le ${fmtDate(c.emailed_at, true)}` : "copie pas encore envoyée"}</p></div>
+             <button class="btn btn-ghost btn-sm" id="b-mail">📧 ${c.emailed_at ? "Renvoyer" : "Envoyer"} la copie par email</button>`
+          : `<div><strong>✍️ À signer par Lougha Online</strong>
+               <p class="hint" style="margin:2px 0 0">Le candidat a signé le ${fmtDate(c.signed_at)}. Signe à ton tour : la copie lui sera envoyée par email automatiquement.</p></div>
+             <button class="btn btn-primary btn-sm" id="b-sign">Signer le contrat</button>`}
+      </div>` : ""}
       ${c ? `<dl class="kv" style="margin-top:18px">
         <dt>Formule</dt><dd>${esc(formuleLabel(c.contract_type, c.duration))}</dd>
         <dt>Nom complet</dt><dd>${esc(c.first_name)} ${esc(c.last_name)}</dd>
@@ -160,9 +171,12 @@ function renderDetail(p, c, docs) {
       }).join("")}
     </div>`;
 
-  $("#b-c")?.addEventListener("click", () => {
-    $("#modal-body").innerHTML = signedContractHtml({ ...c, email: p.email });
-    $("#modal").hidden = false;
+  $("#b-c")?.addEventListener("click", () => openModal({ ...c, email: p.email }));
+  $("#b-sign")?.addEventListener("click", () => openProviderSign({ ...c, email: p.email }));
+  $("#b-mail")?.addEventListener("click", async (e) => {
+    e.target.disabled = true;
+    try { await emailCopy({ ...c, email: p.email }); await refresh(); }
+    catch (err) { toast(errMsg(err), "err"); e.target.disabled = false; }
   });
 
   $("#b-paid")?.addEventListener("click", async () => {
@@ -231,6 +245,62 @@ async function refresh() {
 }
 
 $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal" || e.target.matches("[data-close]")) $("#modal").hidden = true; });
-$("#b-print").addEventListener("click", () => { document.body.classList.add("printing"); window.print(); document.body.classList.remove("printing"); });
+// ── Contrat : affichage, signature du Prestataire, envoi par email ──
+let modalContract = null;
+function openModal(c, extraHtml = "") {
+  modalContract = c;
+  $("#modal-title").textContent = signeParLesDeux(c) ? "Contrat signé par les deux parties" : "Contrat";
+  $("#modal-body").innerHTML = signedContractHtml(c) + extraHtml;
+  $("#modal").hidden = false;
+}
+$("#b-print").addEventListener("click", async (e) => {
+  if (!modalContract) return;
+  e.target.disabled = true;
+  try { await downloadPdf(signedContractHtml(modalContract), nomFichierContrat(modalContract)); }
+  catch (err) { toast(errMsg(err), "err"); }
+  e.target.disabled = false;
+});
+
+function openProviderSign(c) {
+  openModal(c, `
+    <form id="f-psign" class="card" style="margin-top:20px" novalidate>
+      <h3 style="font-size:1.1rem;margin:0 0 6px">Signature de Lougha Online (Prestataire)</h3>
+      <p class="hint">Vérifie le contrat ci-dessus, puis signe. Une copie PDF sera envoyée automatiquement à <strong>${esc(c.email)}</strong>.</p>
+      <div class="field" style="max-width:360px"><label for="p-name">Signé par (nom et prénom)</label>
+        <input id="p-name" value="${esc(me.full_name || "")}" autocomplete="name"></div>
+      <div class="sigpad" id="p-sigpad"><canvas></canvas><div class="ph-text">Signe ici</div></div>
+      <p style="text-align:right;margin:8px 0 14px"><button type="button" class="btn btn-ghost btn-sm" id="p-clear">Effacer</button></p>
+      <button class="btn btn-primary btn-block" id="p-submit">Signer et envoyer la copie au candidat</button>
+    </form>`);
+  const pad = signaturePad($("#p-sigpad"));
+  $("#p-clear").addEventListener("click", pad.clear);
+  $("#f-psign").scrollIntoView({ behavior: "smooth", block: "start" });
+  setTimeout(pad.resize, 400);
+  $("#f-psign").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = $("#p-name").value.trim();
+    if (name.length < 3) { $("#p-name").focus(); return toast("Indique le nom de la personne qui signe.", "err"); }
+    if (pad.isEmpty()) return toast("Ajoute ta signature.", "err");
+    const btn = $("#p-submit"); btn.disabled = true; btn.textContent = "Signature…";
+    try {
+      const signed = await api.signAsProvider(c.user_id, { provider_signature_data: pad.toDataURL(), provider_signer: name });
+      btn.textContent = "Envoi de la copie par email…";
+      let mailed = false;
+      try { await emailCopy({ ...signed, email: c.email }); mailed = true; }
+      catch (err) { toast("Contrat signé ✔ mais l'email n'est pas parti : " + errMsg(err), "err"); }
+      $("#modal").hidden = true;
+      if (mailed) toast("Contrat signé ✔ Copie envoyée au candidat.");
+      await refresh();
+    } catch (err) {
+      toast(errMsg(err), "err"); btn.disabled = false; btn.textContent = "Signer et envoyer la copie au candidat";
+    }
+  });
+}
+
+async function emailCopy(c) {
+  const b64 = await pdfBase64(signedContractHtml(c), nomFichierContrat(c));
+  const r = await api.sendContractEmail(c.user_id, b64, nomFichierContrat(c));
+  toast(r?.demo ? "Mode démo : l'email n'est pas réellement envoyé." : `Copie envoyée à ${c.email} ✔`);
+}
 
 loadList().catch((e) => (app.innerHTML = `<div class="card empty">${esc(errMsg(e))}</div>`));

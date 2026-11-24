@@ -69,14 +69,30 @@ async function makeSupabaseApi() {
       const profiles = must(await sb.from("profiles").select("*").eq("role", "candidat")
         .order("created_at", { ascending: false }));
       const docs = must(await sb.from("documents").select("user_id,status"));
+      const contracts = must(await sb.from("contracts").select("user_id,provider_signed_at"));
       return profiles.map((p) => ({
         ...p,
+        to_sign: contracts.some((c) => c.user_id === p.id && !c.provider_signed_at),
         docs_total: docs.filter((d) => d.user_id === p.id).length,
         docs_pending: docs.filter((d) => d.user_id === p.id && d.status === "en_attente").length,
       }));
     },
     async updateProfile(id, patch) {
       return must(await sb.from("profiles").update(patch).eq("id", id).select().single());
+    },
+    async signAsProvider(userId, { provider_signature_data, provider_signer }) {
+      return must(await sb.from("contracts").update({ provider_signature_data, provider_signer })
+        .eq("user_id", userId).select().single());
+    },
+    // Envoie la copie du contrat signé au candidat (fonction serveur supabase/functions/envoyer-contrat).
+    async sendContractEmail(userId, pdfBase64, filename) {
+      const { data, error } = await sb.functions.invoke("envoyer-contrat", { body: { user_id: userId, pdf: pdfBase64, filename } });
+      if (error) {
+        let msg = "L'email n'a pas pu être envoyé.";
+        try { msg = (await error.context.json()).error || msg; } catch {}
+        throw new Error(msg);
+      }
+      return data;
     },
     async reviewDocument(id, status, comment) {
       return must(await sb.from("documents")
@@ -159,10 +175,23 @@ function makeDemoApi() {
         ...p,
         docs_total: d.documents.filter((x) => x.user_id === p.id).length,
         docs_pending: d.documents.filter((x) => x.user_id === p.id && x.status === "en_attente").length,
+        to_sign: d.contracts.some((c) => c.user_id === p.id && !c.provider_signed_at),
       }));
     },
     async updateProfile(id, patch) {
       const d = db(); const p = d.profiles.find((x) => x.id === id); Object.assign(p, patch); save(d); return p;
+    },
+    async signAsProvider(userId, { provider_signature_data, provider_signer }) {
+      const d = db(); const c = d.contracts.find((x) => x.user_id === userId);
+      if (c.provider_signature_data) throw new Error("Le contrat est déjà signé par le Prestataire.");
+      Object.assign(c, { provider_signature_data, provider_signer, provider_signed_at: new Date().toISOString() });
+      save(d); return c;
+    },
+    async sendContractEmail(userId) {
+      // Mode démo : aucun email n'est réellement envoyé.
+      const d = db(); const c = d.contracts.find((x) => x.user_id === userId);
+      c.emailed_at = new Date().toISOString(); save(d);
+      return { demo: true };
     },
     async reviewDocument(id, status, comment) {
       const d = db(); const x = d.documents.find((y) => y.id === id);

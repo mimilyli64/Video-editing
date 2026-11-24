@@ -251,7 +251,18 @@ footer.foot .wrap { display: flex; justify-content: space-between; flex-wrap: wr
 .sig-label { font-weight: 700; margin-bottom: 8px; }
 .sig-label small { font-weight: 400; color: #6b7280; }
 .sig-mention { font-family: "Segoe Script", "Brush Script MT", cursive; font-size: 1.15rem; margin: 0 0 4px; color: #1e3a8a; }
-.sig-text { font-family: "Segoe Script", "Brush Script MT", cursive; font-size: 1.4rem; color: #1e3a8a; margin: 18px 0 0; }
+.sign-box { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; padding: 14px 16px; border-radius: 12px; }
+.sign-box.todo { background: rgba(250,204,21,.12); border: 1px solid rgba(250,204,21,.35); }
+.sign-box.ok { background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.3); }
+.sig-wait { color: #92400e; background: #fef3c7; border-radius: 8px; padding: 10px 12px; font-size: .9rem; }
+.c-title { font-size: 1.25rem; }
+
+/* rendu PDF (html2pdf) : page blanche, texte noir */
+.pdf-page { background: #fff; color: #111827; font-family: var(--font); font-size: 10.5pt; line-height: 1.5; width: 186mm; }
+.pdf-page .c-title { color: #111827; text-align: center; font-size: 15pt; margin: 0 0 14px; }
+.pdf-page .contract-text { max-height: none; overflow: visible; padding: 0; background: #fff; }
+.pdf-page .contract-text .ph { background: none; color: inherit; padding: 0; }
+.pdf-page .sig-grid { grid-template-columns: 1fr 1fr; }
 @media (max-width: 640px) { .sig-grid { grid-template-columns: 1fr; } }
 .proof { font-size: .78rem; color: var(--muted); word-break: break-all; }
 

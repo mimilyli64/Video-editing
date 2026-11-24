@@ -58,6 +58,72 @@ export async function whatsappFab(message = "Bonjour, j'ai une question sur le v
 
 export function setTitle(page) { document.title = `${page} · ${NOM_ORGANISATION}`; }
 
+// Zone de signature au doigt / à la souris (dans un élément .sigpad contenant un <canvas>).
+export function signaturePad(wrap) {
+  const c = $("canvas", wrap), ctx = c.getContext("2d");
+  let drawing = false, empty = true, last = null;
+  function size() {
+    const r = c.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    if (!r.width) return;
+    const prev = empty ? null : c.toDataURL();
+    c.width = r.width * dpr; c.height = r.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#16233f";
+    if (prev) { const img = new Image(); img.onload = () => ctx.drawImage(img, 0, 0, r.width, r.height); img.src = prev; }
+  }
+  const pos = (e) => { const r = c.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  c.addEventListener("pointerdown", (e) => { if (!c.width) size(); drawing = true; last = pos(e); c.setPointerCapture(e.pointerId); });
+  c.addEventListener("pointermove", (e) => {
+    if (!drawing) return;
+    const p = pos(e);
+    ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+    last = p; if (empty) { empty = false; wrap.classList.add("has"); }
+  });
+  ["pointerup", "pointercancel"].forEach((ev) => c.addEventListener(ev, () => (drawing = false)));
+  window.addEventListener("resize", size);
+  size();
+  return {
+    isEmpty: () => empty,
+    clear: () => { ctx.clearRect(0, 0, c.width, c.height); empty = true; wrap.classList.remove("has"); },
+    toDataURL: () => c.toDataURL("image/png"),
+    resize: size,
+  };
+}
+
+// ── PDF du contrat (généré dans le navigateur avec html2pdf.js) ──
+const HTML2PDF = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+function loadHtml2pdf() {
+  if (window.html2pdf) return Promise.resolve();
+  return new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = HTML2PDF; s.onload = res; s.onerror = () => rej(new Error("Impossible de générer le PDF (connexion)."));
+    document.head.append(s);
+  });
+}
+function pdfWorker(html, filename) {
+  const el = document.createElement("div");
+  el.className = "pdf-page";
+  el.innerHTML = html;
+  return window.html2pdf().set({
+    margin: [12, 12, 14, 12], filename,
+    image: { type: "jpeg", quality: 0.92 },
+    html2canvas: { scale: 2, backgroundColor: "#ffffff" },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    pagebreak: { mode: ["css", "legacy"], avoid: ["li", "p", ".sig-grid"] },
+  }).from(el);
+}
+// Télécharge le PDF.
+export async function downloadPdf(html, filename) {
+  await loadHtml2pdf();
+  await pdfWorker(html, filename).save();
+}
+// Renvoie le PDF encodé en base64 (pour l'envoyer par email).
+export async function pdfBase64(html, filename) {
+  await loadHtml2pdf();
+  const uri = await pdfWorker(html, filename).outputPdf("datauristring");
+  return uri.slice(uri.indexOf(",") + 1);
+}
+
 export async function sha256(text) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");

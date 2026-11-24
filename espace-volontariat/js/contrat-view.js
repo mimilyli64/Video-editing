@@ -1,6 +1,9 @@
 import { CONTRATS } from "./contrat.js";
 import { esc, fmtDate } from "./ui.js";
-import { SIGNATURE_PRESTATAIRE, NOM_ORGANISATION } from "./config.js";
+import { NOM_ORGANISATION } from "./config.js";
+
+export const nomFichierContrat = (c) =>
+  `Contrat-volontariat-${(c.last_name || "").toUpperCase()}-${c.first_name || ""}.pdf`.replace(/[^\w.-]+/g, "_");
 
 export const contratDe = (type) => CONTRATS[type] || CONTRATS.long;
 
@@ -29,19 +32,23 @@ export function renderContract(f, highlight = false) {
   });
 }
 
-function signaturePrestataire() {
-  return SIGNATURE_PRESTATAIRE
-    ? `<img class="sig-img" src="${esc(SIGNATURE_PRESTATAIRE)}" alt="Signature du Prestataire">`
-    : `<p class="sig-text">${esc(NOM_ORGANISATION)}</p>`;
+export const signeParLesDeux = (c) => !!(c?.signature_data && c?.provider_signature_data);
+
+function signaturePrestataire(c) {
+  return c.provider_signature_data
+    ? `<p style="margin:0 0 4px">Pour ${esc(NOM_ORGANISATION)}${c.provider_signer ? ` : ${esc(c.provider_signer)}` : ""}</p>
+       <img class="sig-img" src="${esc(c.provider_signature_data)}" alt="Signature du Prestataire">
+       <p style="margin:6px 0 0">Signé le ${fmtDate(c.provider_signed_at, true)}</p>`
+    : `<p class="sig-wait">En attente de la signature de ${esc(NOM_ORGANISATION)}</p>`;
 }
 
 // Bloc complet "contrat signé" (texte + deux signatures + preuve).
 export function signedContractHtml(c) {
   return `
-    <h2 style="font-size:1.25rem">${esc(contratDe(c.contract_type).titre)}</h2>
+    <h2 class="c-title">${esc(contratDe(c.contract_type).titre)}</h2>
     <div class="contract-text">${renderContract(c)}
       <div class="sig-grid">
-        <div><p class="sig-label">Signature du Prestataire</p>${signaturePrestataire()}</div>
+        <div><p class="sig-label">Signature du Prestataire</p>${signaturePrestataire(c)}</div>
         <div><p class="sig-label">Signature du Bénéficiaire<br><small>(précédée de la mention « ${MENTION} »)</small></p>
           <p class="sig-mention">${esc(c.mention || MENTION)}</p>
           <img class="sig-img" src="${esc(c.signature_data)}" alt="Signature du Bénéficiaire">
