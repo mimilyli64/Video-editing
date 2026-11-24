@@ -1,5 +1,5 @@
 import { api } from "./api.js";
-import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, signaturePad, downloadPdf, pdfBase64 } from "./ui.js";
+import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, signaturePad, downloadPdf, pdfBase64, ask, showDoc } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC, etapesPour } from "./etapes.js";
 import { signedContractHtml, formuleLabel, contratDe, euros, signeParLesDeux, nomFichierContrat } from "./contrat-view.js";
 import { CONTRATS } from "./contrat.js";
@@ -180,11 +180,13 @@ function renderDetail(p, c, docs) {
   });
 
   $("#b-paid")?.addEventListener("click", async () => {
-    const note = prompt(`Paiement de ${euros(contratDe(c.contract_type).prix)} reçu sans reçu sur le site.\nNote (ex. « reçu envoyé sur WhatsApp le 12/01 ») :`);
+    const note = await ask({ title: "Marquer comme payé",
+      message: `Paiement de ${euros(contratDe(c.contract_type).prix)} reçu en dehors du site. Le dossier du candidat s'ouvrira.`,
+      input: "Note (ex. reçu envoyé sur WhatsApp le 12/01)", ok: "Marquer comme payé" });
     if (note === null) return;
     try {
       await api.updateProfile(p.id, { paid_at: new Date().toISOString(), paid_amount: contratDe(c.contract_type).prix,
-        payment_method: c.payment_method, payment_ref: note.trim() || "Validé par l'équipe" });
+        payment_method: c.payment_method, payment_ref: note || "Validé par l'équipe" });
       toast("Paiement enregistré ✔"); await refresh();
     } catch (err) { toast(errMsg(err), "err"); }
   });
@@ -206,16 +208,14 @@ function renderDetail(p, c, docs) {
 
   $$("[data-open]", det).forEach((a) => a.addEventListener("click", async (e) => {
     e.preventDefault();
-    const w = window.open("", "_blank");
-    try {
-      const url = await api.docUrl(docs.find((x) => x.id === a.dataset.open));
-      if (w) { if (url.startsWith("data:")) w.document.write(`<iframe src="${url}" style="border:0;width:100%;height:100%"></iframe>`); else w.location = url; }
-    } catch (err) { w?.close(); toast(errMsg(err), "err"); }
+    const doc = docs.find((x) => x.id === a.dataset.open);
+    try { showDoc(await api.docUrl(doc), doc.file_name); }
+    catch (err) { toast(errMsg(err), "err"); }
   }));
   $$("[data-ok]", det).forEach((b) => b.addEventListener("click", async () => {
     const doc = docs.find((x) => x.id === b.dataset.ok);
     if (doc.doc_type === TYPE_RECU && c && !p.paid_at) {
-      if (!confirm(`Valider ce reçu de ${euros(contratDe(c.contract_type).prix)} ?\nLe dossier du candidat s'ouvrira.`)) return;
+      if (!await ask({ title: "Valider ce reçu ?", message: `Paiement de ${euros(contratDe(c.contract_type).prix)}. Le dossier du candidat s'ouvrira.`, ok: "Valider le reçu" })) return;
       try {
         await api.reviewDocument(doc.id, "valide");
         await api.updateProfile(p.id, { paid_at: new Date().toISOString(), paid_amount: contratDe(c.contract_type).prix,
@@ -226,8 +226,9 @@ function renderDetail(p, c, docs) {
     }
     review(doc.id, "valide");
   }));
-  $$("[data-ko]", det).forEach((b) => b.addEventListener("click", () => {
-    const why = prompt("Que doit corriger le candidat ? (ce message lui sera affiché)");
+  $$("[data-ko]", det).forEach((b) => b.addEventListener("click", async () => {
+    const why = await ask({ title: "Demander de refaire ce document", message: "Ce message sera affiché au candidat.",
+      input: "Ex. Photo floue, merci de la reprendre", ok: "Envoyer la demande" });
     if (why !== null) review(b.dataset.ko, "refuse", why);
   }));
 }

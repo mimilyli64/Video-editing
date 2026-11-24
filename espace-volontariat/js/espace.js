@@ -1,5 +1,5 @@
 import { api } from "./api.js";
-import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256, whatsappFab, signaturePad, downloadPdf } from "./ui.js";
+import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256, whatsappFab, signaturePad, downloadPdf, ask, showDoc } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC, etapesPour } from "./etapes.js";
 import { CONTRATS } from "./contrat.js";
 import { renderContract, signedContractHtml, contratDe, formuleLabel, euros, MENTION, mentionOk, signeParLesDeux, nomFichierContrat } from "./contrat-view.js";
@@ -341,15 +341,13 @@ async function upload(inp) {
 }
 
 async function openDoc(id) {
-  const w = window.open("", "_blank");
-  try {
-    const url = await api.docUrl(docs.find((x) => x.id === id));
-    if (w) { if (url.startsWith("data:")) w.document.write(`<iframe src="${url}" style="border:0;width:100%;height:100%"></iframe>`); else w.location = url; }
-  } catch (e) { w?.close(); toast(errMsg(e), "err"); }
+  const doc = docs.find((x) => x.id === id);
+  try { showDoc(await api.docUrl(doc), doc.file_name); }
+  catch (e) { toast(errMsg(e), "err"); }
 }
 
 async function removeDoc(id) {
-  if (!confirm("Supprimer ce fichier ?")) return;
+  if (!await ask({ title: "Supprimer ce fichier ?", ok: "Supprimer" })) return;
   try { await api.deleteDocument(docs.find((x) => x.id === id)); await load(); }
   catch (e) { toast(errMsg(e), "err"); }
 }

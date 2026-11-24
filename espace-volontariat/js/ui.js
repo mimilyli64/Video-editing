@@ -58,6 +58,47 @@ export async function whatsappFab(message = "Bonjour, j'ai une question sur le v
 
 export function setTitle(page) { document.title = `${page} · ${NOM_ORGANISATION}`; }
 
+// Fenêtre de confirmation intégrée à la page (remplace confirm() / prompt()).
+// ask({ title, message, input: "placeholder" | undefined, ok }) → true / texte saisi, ou null si annulé.
+export function ask({ title, message = "", input, ok = "Confirmer", value = "" }) {
+  return new Promise((resolve) => {
+    const d = document.createElement("div");
+    d.className = "modal ask";
+    d.innerHTML = `<form class="box" style="max-width:460px" novalidate>
+      <h3 style="margin:0 0 8px;font-size:1.15rem">${esc(title)}</h3>
+      ${message ? `<p class="hint" style="white-space:pre-line">${esc(message)}</p>` : ""}
+      ${input !== undefined ? `<div class="field"><input id="ask-input" value="${esc(value)}" placeholder="${esc(input)}" autocomplete="off"></div>` : ""}
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+        <button type="button" class="btn btn-ghost btn-sm" data-no>Annuler</button>
+        <button class="btn btn-primary btn-sm">${esc(ok)}</button>
+      </div></form>`;
+    const close = (v) => { d.remove(); resolve(v); };
+    d.addEventListener("click", (e) => { if (e.target === d || e.target.matches("[data-no]")) close(null); });
+    d.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      close(input !== undefined ? d.querySelector("#ask-input").value.trim() : true);
+    });
+    document.body.append(d);
+    (d.querySelector("#ask-input") || d.querySelector(".btn-primary")).focus();
+  });
+}
+
+// Visionneuse de document dans la page (image ou PDF), avec lien d'ouverture dans un onglet.
+export function showDoc(url, name = "") {
+  const isImg = /\.(jpe?g|png|webp|gif|heic)$/i.test(name) || url.startsWith("data:image");
+  const d = document.createElement("div");
+  d.className = "modal";
+  d.innerHTML = `<div class="box" style="width:min(900px,100%)">
+    <header><strong style="overflow-wrap:anywhere">${esc(name)}</strong>
+      <span style="display:flex;gap:8px">${url.startsWith("data:") ? "" : `<a class="btn btn-ghost btn-sm" href="${esc(url)}" target="_blank" rel="noopener">Ouvrir dans un onglet</a>`}
+      <button class="btn btn-ghost btn-sm" data-no>Fermer</button></span></header>
+    ${isImg ? `<img src="${esc(url)}" alt="${esc(name)}" style="display:block;margin:0 auto;border-radius:8px">`
+            : `<iframe src="${esc(url)}" title="${esc(name)}" style="width:100%;height:70vh;border:0;border-radius:8px;background:#fff"></iframe>`}
+  </div>`;
+  d.addEventListener("click", (e) => { if (e.target === d || e.target.matches("[data-no]")) d.remove(); });
+  document.body.append(d);
+}
+
 // Zone de signature au doigt / à la souris (dans un élément .sigpad contenant un <canvas>).
 export function signaturePad(wrap) {
   const c = $("canvas", wrap), ctx = c.getContext("2d");
