@@ -3,6 +3,7 @@ import { $, $$, esc, toast, errMsg, fmtDate, demoBanner } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC } from "./etapes.js";
 import { signedContractHtml, formuleLabel, contratDe, euros } from "./contrat-view.js";
 import { CONTRATS } from "./contrat.js";
+import { METHODES, TYPE_RECU } from "./paiement.js";
 
 demoBanner();
 const app = $("#app");
@@ -109,11 +110,13 @@ function renderDetail(p, c, docs) {
         <dt>Téléphone</dt><dd><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a></dd>
         <dt>Adresse</dt><dd>${esc(c.address)}</dd>
         <dt>Contrat signé le</dt><dd>${fmtDate(c.signed_at, true)} (version ${esc(c.contract_version)})</dd>
-        <dt>Paiement</dt><dd>${p.paid_at
-          ? `<span class="badge badge-ok">Payé</span> ${euros(p.paid_amount)} le ${fmtDate(p.paid_at)} · ${esc({ paypal: "PayPal", carte: "carte bancaire", manuel: "enregistré par l'équipe" }[p.payment_method] || p.payment_method || "")}
-             ${p.payment_ref ? `<br><span class="hint">Réf. ${esc(p.payment_ref)}</span>` : ""}`
-          : `<span class="badge badge-wait">En attente · ${euros(contratDe(c.contract_type).prix)}</span>
-             <button class="btn btn-ok btn-sm" id="b-paid" style="margin-left:6px">Marquer comme payé</button>`}</dd>
+        <dt>Paiement</dt><dd>${euros(contratDe(c.contract_type).prix)} par ${esc(METHODES[c.payment_method]?.label || "—")} ·
+          ${p.paid_at
+          ? `<span class="badge badge-ok">Payé</span> le ${fmtDate(p.paid_at)}${p.payment_ref ? ` <span class="hint">(${esc(p.payment_ref)})</span>` : ""}`
+          : docs.some((x) => x.doc_type === TYPE_RECU && x.status === "en_attente")
+            ? `<span class="badge badge-wait">Reçu à vérifier ↓</span>`
+            : `<span class="badge badge-none">En attente du reçu</span>
+               <button class="btn btn-ok btn-sm" id="b-paid" style="margin-left:6px">Marquer comme payé</button>`}</dd>
       </dl>` : ""}
     </div>
 
@@ -134,10 +137,11 @@ function renderDetail(p, c, docs) {
 
     <div class="card docgroup">
       <h2 style="font-size:1.1rem">Documents (${docs.length})</h2>
-      ${ETAPES.slice(1).map((e) => {
-        const types = DOCUMENTS.filter((d) => d.etape === e.id);
+      ${[{ titre: "Paiement", types: [{ type: TYPE_RECU, label: `Reçu de paiement — ${c ? euros(contratDe(c.contract_type).prix) + " par " + (METHODES[c.payment_method]?.label || "") : ""}` }] },
+         ...ETAPES.slice(1).map((e) => ({ titre: e.titre, types: DOCUMENTS.filter((d) => d.etape === e.id) }))].map((g) => {
+        const types = g.types;
         if (!types.length) return "";
-        return `<h3>${esc(e.titre)}</h3>` + types.map((t) => {
+        return `<h3>${esc(g.titre)}</h3>` + types.map((t) => {
           const files = docs.filter((x) => x.doc_type === t.type);
           return `<div class="doc"><div>
             <div class="name">${esc(t.label)}</div>
@@ -162,11 +166,11 @@ function renderDetail(p, c, docs) {
   });
 
   $("#b-paid")?.addEventListener("click", async () => {
-    const note = prompt(`Paiement de ${euros(contratDe(c.contract_type).prix)} reçu hors ligne.\nNote (ex. « espèces 12/01 », « virement ») :`);
+    const note = prompt(`Paiement de ${euros(contratDe(c.contract_type).prix)} reçu sans reçu sur le site.\nNote (ex. « reçu envoyé sur WhatsApp le 12/01 ») :`);
     if (note === null) return;
     try {
       await api.updateProfile(p.id, { paid_at: new Date().toISOString(), paid_amount: contratDe(c.contract_type).prix,
-        payment_method: "manuel", payment_ref: note.trim() || null });
+        payment_method: c.payment_method, payment_ref: note.trim() || "Validé par l'équipe" });
       toast("Paiement enregistré ✔"); await refresh();
     } catch (err) { toast(errMsg(err), "err"); }
   });
@@ -194,7 +198,20 @@ function renderDetail(p, c, docs) {
       if (w) { if (url.startsWith("data:")) w.document.write(`<iframe src="${url}" style="border:0;width:100%;height:100%"></iframe>`); else w.location = url; }
     } catch (err) { w?.close(); toast(errMsg(err), "err"); }
   }));
-  $$("[data-ok]", det).forEach((b) => b.addEventListener("click", () => review(b.dataset.ok, "valide")));
+  $$("[data-ok]", det).forEach((b) => b.addEventListener("click", async () => {
+    const doc = docs.find((x) => x.id === b.dataset.ok);
+    if (doc.doc_type === TYPE_RECU && c && !p.paid_at) {
+      if (!confirm(`Valider ce reçu de ${euros(contratDe(c.contract_type).prix)} ?\nLe dossier du candidat s'ouvrira.`)) return;
+      try {
+        await api.reviewDocument(doc.id, "valide");
+        await api.updateProfile(p.id, { paid_at: new Date().toISOString(), paid_amount: contratDe(c.contract_type).prix,
+          payment_method: c.payment_method, payment_ref: "Reçu validé" });
+        toast("Paiement validé ✔ Le dossier du candidat est ouvert."); await refresh();
+      } catch (err) { toast(errMsg(err), "err"); }
+      return;
+    }
+    review(doc.id, "valide");
+  }));
   $$("[data-ko]", det).forEach((b) => b.addEventListener("click", () => {
     const why = prompt("Que doit corriger le candidat ? (ce message lui sera affiché)");
     if (why !== null) review(b.dataset.ko, "refuse", why);

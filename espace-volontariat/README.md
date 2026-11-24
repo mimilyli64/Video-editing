@@ -6,8 +6,8 @@ Site pour les candidats au volontariat en Allemagne :
 |---|---|---|
 | `index.html` | public | Page de présentation + boutons « Créer mon espace » / « Se connecter » |
 | `connexion.html` | candidats | Inscription, connexion, mot de passe oublié |
-| `espace.html` | candidats | 1ʳᵉ connexion : choix de la formule + infos + **signature du contrat**, puis **paiement** (PayPal ou carte). Ensuite : suivi des 6 étapes, envoi des documents, messages et dates |
-| `admin.html` | ton équipe | Liste des candidats, contrat signé (PDF), paiements, validation/refus des documents, changement d'étape, dates (test, entretien, visa), message au candidat |
+| `espace.html` | candidats | 1ʳᵉ connexion : choix de la formule et de la méthode de paiement (PayPal ou carte Visa) + infos + **signature du contrat**, puis contact WhatsApp et **dépôt du reçu de paiement**. Une fois le reçu validé : suivi des 6 étapes, envoi des documents, messages et dates |
+| `admin.html` | ton équipe | Liste des candidats, contrat signé (PDF), validation des reçus de paiement, validation/refus des documents, changement d'étape, dates (test, entretien, visa), message au candidat |
 
 Formules : **1 an → 1 500 €** · **moins de 3 mois → 1 200 €**.
 
@@ -34,43 +34,36 @@ commence par `admin` (ex. `admin@test.com`) et ouvre `admin.html` pour voir l'es
 2. **SQL Editor → New query** : colle tout le contenu de `supabase/schema.sql` → **Run**.
 3. **Project Settings → API** : copie *Project URL* et la clé *anon public* dans `js/config.js`.
 4. **Authentication → URL Configuration** : mets l'adresse de ton site dans *Site URL*
-   (ex. `https://volontariat.lougha.online`) et ajoute-la aussi dans *Redirect URLs*.
+   (ex. `https://volontariat.loughaonline.com`) et ajoute-la aussi dans *Redirect URLs*.
 5. Inscris-toi sur le site avec ton email, puis dans **SQL Editor** :
    ```sql
    update public.profiles set role = 'admin' where email = 'ton@email.com';
    ```
    Tu as maintenant accès à `admin.html`. Fais pareil pour chaque membre de l'équipe.
 
-### 1 bis. PayPal (paiement par PayPal ou carte Visa / Mastercard)
-Un seul compte suffit : PayPal gère les deux boutons (« PayPal » et « Carte bancaire »). Le candidat n'a
-**pas besoin** de compte PayPal pour payer par carte.
-1. Crée (ou utilise) un compte **PayPal Business**.
-2. Va sur [developer.paypal.com](https://developer.paypal.com) → **Apps & Credentials** → onglet **Live** →
-   **Create App**. Copie le *Client ID* et le *Secret*.
-   (Pour tester sans vrai argent, fais pareil dans l'onglet **Sandbox**.)
-3. Colle le *Client ID* dans `js/config.js` (`PAYPAL_CLIENT_ID`).
-4. Installe la [CLI Supabase](https://supabase.com/docs/guides/cli), puis depuis le dossier `espace-volontariat` :
-   ```bash
-   supabase login
-   supabase link --project-ref TON_ID_DE_PROJET
-   supabase secrets set PAYPAL_CLIENT_ID=... PAYPAL_SECRET=... PAYPAL_ENV=live
-   supabase functions deploy paiement
-   ```
-   (`PAYPAL_ENV=sandbox` pour les tests.)
+### 1 bis. WhatsApp et paiement
+Le paiement ne se fait **pas** sur le site :
+1. Au moment de signer, le candidat choisit sa méthode : **PayPal** ou **carte Visa**.
+2. Après la signature, il clique sur **« Nous écrire sur WhatsApp »** (message pré-rempli avec son nom, sa formule,
+   le montant et la méthode choisie). Vous lui envoyez les informations pour payer.
+3. Il dépose son **reçu de paiement** dans son espace.
+4. Dans `admin.html`, vous cliquez sur **✓ Valider** sur le reçu : le candidat est marqué « payé » et son dossier
+   s'ouvre (envoi des documents, suivi des étapes).
 
-Comment c'est sécurisé : le prix est fixé par le serveur selon le contrat signé (pas par le navigateur), et le
-dossier n'est marqué « payé » qu'après confirmation de PayPal. Si un candidat paie autrement (espèces, virement),
-l'équipe clique sur **Marquer comme payé** dans `admin.html`.
+Si le reçu a été envoyé directement sur WhatsApp, le bouton **Marquer comme payé** fait la même chose.
+
+👉 Mets ton numéro WhatsApp dans `js/config.js` (`WHATSAPP`, format international, chiffres seulement).
+Il sert aussi au bouton flottant **« Support WhatsApp »** affiché sur toutes les pages.
 
 ### 2. Hébergement
 Ce sont des fichiers statiques : n'importe quel hébergeur marche.
 Le plus simple : [Netlify](https://app.netlify.com/drop) → glisser-déposer le dossier `espace-volontariat`.
-Ensuite, relie un sous-domaine, par exemple `volontariat.lougha.online`, et ajoute un lien depuis Lougha Online.
+Ensuite, relie un sous-domaine, par exemple `volontariat.loughaonline.com`, et ajoute un lien depuis Lougha Online.
 
 ## Personnaliser
 
-- **Les prix** → à changer à 3 endroits : `js/contrat.js` (`prix`), `supabase/functions/paiement/index.ts` (`PRIX`,
-  puis redéployer la fonction) et la section « Nos formules » de `index.html`.
+- **Les prix** → à changer à 2 endroits : `js/contrat.js` (`prix`) et la section « Nos formules » de `index.html`.
+- **Les méthodes de paiement** et leurs explications → `js/paiement.js`.
 - **Les contrats** → `js/contrat.js`. Il y a deux contrats : `long` (1 an) et `court` (moins de 3 mois).
   Le candidat choisit sa formule avant de signer, et le bon contrat s'affiche. Remplace les textes provisoires par tes
   vrais contrats. Les champs `{{prenom}}`, `{{nom}}`, `{{passeport}}`, `{{duree}}`… sont remplis automatiquement.

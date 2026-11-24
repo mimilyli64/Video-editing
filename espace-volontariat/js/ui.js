@@ -45,6 +45,17 @@ export function demoBanner() {
   document.body.prepend(b);
 }
 
+// Bouton WhatsApp flottant (support). Rien ne s'affiche si aucun numéro n'est configuré.
+export async function whatsappFab(message = "Bonjour, j'ai une question sur le volontariat en Allemagne.") {
+  const { whatsappLink, WA_ICON } = await import("./paiement.js");
+  const href = whatsappLink(message);
+  if (!href || document.querySelector(".wa-fab")) return;
+  const a = document.createElement("a");
+  a.className = "wa-fab"; a.href = href; a.target = "_blank"; a.rel = "noopener";
+  a.innerHTML = `${WA_ICON}<span>Support WhatsApp</span>`;
+  document.body.append(a);
+}
+
 export function setTitle(page) { document.title = `${page} · ${NOM_ORGANISATION}`; }
 
 export async function sha256(text) {

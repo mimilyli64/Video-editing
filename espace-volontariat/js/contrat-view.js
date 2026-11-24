@@ -1,4 +1,5 @@
 import { CONTRATS } from "./contrat.js";
+import { METHODES } from "./paiement.js";
 import { esc, fmtDate } from "./ui.js";
 
 export const contratDe = (type) => CONTRATS[type] || CONTRATS.long;
@@ -16,6 +17,7 @@ export function renderContract(f, highlight = false) {
     lieu_naissance: f.birth_place, nationalite: f.nationality, adresse: f.address,
     telephone: f.phone, passeport: f.passport_number, email: f.email, duree: f.duration,
     prix: f.contract_type ? euros(contratDe(f.contract_type).prix) : "",
+    paiement: METHODES[f.payment_method]?.label || "",
     date: fmtDate(f.signed_at || new Date()),
   };
   return contratDe(f.contract_type).texte.replace(/\{\{(\w+)\}\}/g, (_, k) => {
@@ -40,4 +42,4 @@ export function signedContractHtml(c) {
 
 // Libellé court, ex. "Volontariat long · 1 an"
 export const formuleLabel = (type, duration) =>
-  type ? `${contratDe(type).nom}${duration ? " · " + duration : ""}` : "";
+  type ? `${contratDe(type).nom}${duration && !contratDe(type).nom.includes(duration) ? " · " + duration : ""}` : "";

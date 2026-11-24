@@ -12,10 +12,10 @@ create table if not exists public.profiles (
   stage            int  not null default 0 check (stage between 0 and 5),
   contract_type    text check (contract_type in ('long', 'court')),  -- copié du contrat signé
   duration         text,
-  paid_at          timestamptz,                -- rempli par la fonction "paiement" (ou par l'équipe)
+  paid_at          timestamptz,                -- rempli par l'équipe quand le reçu est validé
   paid_amount      numeric(10, 2),
-  payment_method   text,                       -- 'paypal', 'carte' ou 'manuel'
-  payment_ref      text,                       -- n° de transaction PayPal ou note de l'équipe
+  payment_method   text,                       -- 'paypal' ou 'carte' (choisi au contrat)
+  payment_ref      text,                       -- note de l'équipe
   admin_message    text default '',
   test_date        date,
   test_result      text default '',
@@ -30,6 +30,7 @@ create table if not exists public.contracts (
   user_id          uuid not null unique references public.profiles(id) on delete cascade,
   contract_type    text not null check (contract_type in ('long', 'court')),  -- long = 1 an (1 500 €), court = moins de 3 mois (1 200 €)
   duration         text not null,
+  payment_method   text not null check (payment_method in ('paypal', 'carte')),  -- choisi par le candidat
   first_name       text not null,
   last_name        text not null,
   birth_date       date not null,
@@ -84,7 +85,8 @@ language plpgsql security definer set search_path = public as $$
 begin
   new.signed_at := now();  -- l'heure de signature vient du serveur, pas du navigateur
   update public.profiles
-     set stage = greatest(stage, 1), contract_type = new.contract_type, duration = new.duration
+     set stage = greatest(stage, 1), contract_type = new.contract_type, duration = new.duration,
+         payment_method = new.payment_method
    where id = new.user_id;
   return new;
 end $$;
@@ -115,7 +117,12 @@ create policy "doc: lecture" on public.documents for select using (user_id = aut
 drop policy if exists "doc: envoi" on public.documents;
 create policy "doc: envoi" on public.documents for insert
   with check (user_id = auth.uid() and status = 'en_attente' and comment is null
-              and exists (select 1 from public.profiles p where p.id = auth.uid() and p.paid_at is not null));
+              and (
+                -- le reçu de paiement peut être envoyé dès que le contrat est signé
+                (doc_type = 'recu_paiement' and exists (select 1 from public.contracts c where c.user_id = auth.uid()))
+                -- les autres documents : une fois le paiement validé par l'équipe
+                or exists (select 1 from public.profiles p where p.id = auth.uid() and p.paid_at is not null)
+              ));
 drop policy if exists "doc: suppression" on public.documents;
 create policy "doc: suppression" on public.documents for delete
   using ((user_id = auth.uid() and status = 'en_attente') or public.is_admin());

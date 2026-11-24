@@ -1,11 +1,13 @@
 import { api } from "./api.js";
-import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256 } from "./ui.js";
+import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256, whatsappFab } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC } from "./etapes.js";
 import { CONTRATS } from "./contrat.js";
 import { renderContract, signedContractHtml, contratDe, formuleLabel, euros } from "./contrat-view.js";
-import { LIEN_PLATEFORME, EMAIL_CONTACT, PAYPAL_CLIENT_ID } from "./config.js";
+import { LIEN_PLATEFORME, EMAIL_CONTACT } from "./config.js";
+import { METHODES, TYPE_RECU, whatsappLink, WA_ICON } from "./paiement.js";
 
 demoBanner();
+whatsappFab("Bonjour, j'ai une question sur mon dossier de volontariat.");
 $$("[data-plateforme]").forEach((a) => (a.href = LIEN_PLATEFORME));
 
 const user = await api.getUser();
@@ -22,7 +24,7 @@ async function load() {
     if (!profile) throw new Error("Profil introuvable. Déconnecte-toi puis reconnecte-toi.");
     $("#l-admin").hidden = profile.role !== "admin";
     if (!contract) return renderSign();
-    if (!profile.paid_at) return renderPayment();
+    if (!profile.paid_at) return await renderPayment();
     docs = await api.listDocuments();
     renderDashboard();
   } catch (e) {
@@ -44,7 +46,7 @@ function renderSign() {
       </div></div>
 
       <form id="f-sign" class="card" novalidate>
-        <h2 style="font-size:1.15rem">1. Choisis ta formule</h2>
+        <h2 style="font-size:1.15rem">1. Choisis ta formule et ton paiement</h2>
         <p class="hint">Le contrat affiché plus bas correspond à la formule choisie.</p>
         <div class="formules">
           ${Object.entries(CONTRATS).flatMap(([type, c]) => c.durees.map((d) => `
@@ -56,6 +58,18 @@ function renderSign() {
                 <span class="hint">${esc(c.description)}</span></span>
             </label>`)).join("")}
         </div>
+
+        <h3 style="font-size:1rem;margin:18px 0 10px">Comment souhaites-tu payer ?</h3>
+        <div class="formules methodes">
+          ${Object.entries(METHODES).map(([k, m]) => `
+            <label class="formule">
+              <input type="radio" name="paiement" value="${k}">
+              <span class="fm-box fm-row">${k === "paypal"
+                ? `<span class="pl" style="color:#003087"><i>Pay</i><i style="color:#009cde">Pal</i></span>`
+                : `<span class="pl" style="color:#1a1f71">VISA</span>`}<b style="font-size:1.05rem">${esc(m.label.charAt(0).toUpperCase() + m.label.slice(1))}</b></span>
+            </label>`).join("")}
+        </div>
+        <p class="hint" style="margin-top:8px">Après la signature, tu nous contactes sur WhatsApp pour payer, puis tu déposes ton reçu ici.</p>
 
         <h2 style="font-size:1.15rem;margin-top:22px">2. Tes informations</h2>
         <p class="hint">Exactement comme sur ton passeport.</p>
@@ -91,6 +105,7 @@ function renderSign() {
     const [type, duree] = ($("input[name=formule]:checked", form)?.value || "").split("|");
     o.contract_type = type || null;
     o.duration = duree || "";
+    o.payment_method = $("input[name=paiement]:checked", form)?.value || null;
     return o;
   };
   const refresh = () => {
@@ -111,7 +126,11 @@ function renderSign() {
     const v = values();
     if (!v.contract_type) {
       $(".formules").scrollIntoView({ behavior: "smooth", block: "center" });
-      return toast("Choisis ta formule : 6 mois, 1 an ou moins de 3 mois.", "err");
+      return toast("Choisis ta formule : 1 an ou moins de 3 mois.", "err");
+    }
+    if (!v.payment_method) {
+      $(".methodes").scrollIntoView({ behavior: "smooth", block: "center" });
+      return toast("Choisis ta méthode de paiement : PayPal ou carte Visa.", "err");
     }
     const missing = $$("input[name]:not([type=radio])", form).filter((i) => !i.value.trim());
     if (missing.length) { missing[0].focus(); return toast("Complète tous les champs.", "err"); }
@@ -139,95 +158,67 @@ function renderSign() {
   });
 }
 
-// ═════════════════════ 1 bis. PAIEMENT ═════════════════════
-function renderPayment() {
+// ═════════════════════ 1 bis. PAIEMENT (hors site) + REÇU ═════════════════════
+// Le candidat paie avec la méthode choisie (on lui envoie les infos sur WhatsApp),
+// puis dépose son reçu. L'équipe valide le reçu → le dossier s'ouvre.
+async function renderPayment() {
   const c = contratDe(contract.contract_type);
+  const m = METHODES[contract.payment_method] || METHODES.paypal;
+  docs = await api.listDocuments();
+  const recus = docs.filter((x) => x.doc_type === TYPE_RECU);
+  const last = recus[0];
+  const name = `${contract.first_name} ${contract.last_name}`;
+  const wa = whatsappLink(`Bonjour, je suis ${name} (${user.email}). J'ai signé mon contrat « ${c.nom} » (${euros(c.prix)}) et je souhaite payer par ${m.label}.`);
+
+  const etat = !last
+    ? `<span class="badge badge-none">Reçu pas encore envoyé</span>`
+    : `<span class="badge ${STATUTS_DOC[last.status].cls}">${last.status === "en_attente" ? "Reçu en vérification" : STATUTS_DOC[last.status].label}</span>`;
+
   app.innerHTML = `
     <div class="narrow" style="margin:0 auto">
       <div class="hello"><div>
         <span class="badge badge-ok">✓ Contrat signé</span>
         <h1 style="margin-top:10px">Dernière étape : le paiement</h1>
-        <p class="hint" style="margin:6px 0 0">Dès que ton paiement est confirmé, ton espace s'ouvre et tu peux commencer tes démarches.</p>
+        <p class="hint" style="margin:6px 0 0">Dès que ton reçu est validé par notre équipe, ton espace s'ouvre et tu peux commencer tes démarches.</p>
       </div></div>
 
       <div class="card">
         <div class="pay-sum">
           <div><p class="hint" style="margin:0">Ta formule</p>
             <h2 style="margin:4px 0 2px;font-size:1.3rem">${esc(c.nom)}</h2>
-            <p class="hint" style="margin:0">${esc(c.titre)}</p></div>
+            <p class="hint" style="margin:0">Paiement par <strong>${esc(m.label)}</strong></p></div>
           <div class="pay-amount">${euros(c.prix)}</div>
         </div>
 
-        <h3 style="font-size:1rem;margin:26px 0 12px">Choisis ton moyen de paiement</h3>
-        <div id="pay-buttons" class="pay-buttons"><p class="hint">Chargement du paiement sécurisé…</p></div>
-        <p class="pay-note">🔒 Paiement sécurisé par PayPal. <strong>Pas besoin de compte PayPal</strong> pour payer par carte (Visa, Mastercard).</p>
+        <ol class="pay-steps">
+          <li><div><strong>Contacte-nous sur WhatsApp</strong>
+            <p class="hint">On t'envoie les informations pour payer par ${esc(m.label)} et on répond à tes questions.</p>
+            ${wa ? `<a class="btn btn-wa" href="${wa}" target="_blank" rel="noopener">${WA_ICON} Nous écrire sur WhatsApp</a>`
+                 : `<a class="btn btn-ghost" href="mailto:${esc(EMAIL_CONTACT)}">Nous écrire : ${esc(EMAIL_CONTACT)}</a>`}
+          </div></li>
+          <li><div><strong>Effectue le paiement de ${euros(c.prix)}</strong>
+            <p class="hint">${esc(m.aide)}</p></div></li>
+          <li><div><strong>Envoie ton reçu de paiement ici</strong> ${etat}
+            <p class="hint">Capture d'écran ou PDF du reçu (PDF, JPG, PNG — 10 Mo max).</p>
+            ${recus.length ? `<div class="doc" style="border:0;padding:4px 0 10px"><div class="files">${recus.map((x) => `<div class="f">
+                <a data-open="${x.id}">${esc(x.file_name)}</a>
+                <span class="badge ${STATUTS_DOC[x.status].cls}">${STATUTS_DOC[x.status].label}</span>
+                ${x.status === "en_attente" ? `<button class="linkbtn" data-del="${x.id}">supprimer</button>` : ""}
+              </div>${x.status === "refuse" && x.comment ? `<div class="comment">↳ ${esc(x.comment)}</div>` : ""}`).join("")}</div></div>` : ""}
+            ${last?.status === "en_attente" ? `<p class="msg" style="margin-top:6px">Merci ! Ton reçu est en cours de vérification. Tu recevras l'accès à ton dossier très vite.</p>` : ""}
+            <label class="btn btn-primary upload-btn" style="margin-top:6px">${recus.length ? "Envoyer un autre reçu" : "Envoyer mon reçu"}
+              <input type="file" accept=".pdf,.jpg,.jpeg,.png,.heic,.webp" data-type="${TYPE_RECU}"></label>
+          </div></li>
+        </ol>
       </div>
 
-      <p class="hint" style="text-align:center;margin-top:20px">
-        <a href="#" id="l-contract">Revoir mon contrat signé</a> ·
-        Un problème pour payer ? <a href="mailto:${esc(EMAIL_CONTACT)}">${esc(EMAIL_CONTACT)}</a></p>
+      <p class="hint" style="text-align:center;margin-top:20px"><a href="#" id="l-contract">Revoir mon contrat signé</a></p>
     </div>`;
+
   $("#l-contract").addEventListener("click", (e) => { e.preventDefault(); openContract(); });
-  mountPaymentButtons($("#pay-buttons"));
-}
-
-async function paid(method) {
-  toast("Paiement confirmé ✔ Merci ! Ton dossier est ouvert.");
-  window.scrollTo(0, 0);
-  await load();
-}
-
-async function mountPaymentButtons(box) {
-  // Mode démo : boutons simulés (aucun argent n'est prélevé).
-  if (api.DEMO_MODE) {
-    box.innerHTML = `
-      <button class="btn pay-btn pay-paypal" data-m="paypal"><b>Pay</b><i>Pal</i></button>
-      <button class="btn pay-btn pay-card" data-m="carte">💳 Carte bancaire · Visa / Mastercard</button>
-      <p class="hint" style="margin:4px 0 0;text-align:center">Mode démo : le paiement est simulé.</p>`;
-    $$("[data-m]", box).forEach((b) => b.addEventListener("click", async () => {
-      b.disabled = true;
-      try { await api.capturePayment("DEMO-" + Date.now(), b.dataset.m); await paid(); }
-      catch (e) { toast(errMsg(e), "err"); b.disabled = false; }
-    }));
-    return;
-  }
-  if (!PAYPAL_CLIENT_ID) {
-    box.innerHTML = `<p class="msg">Le paiement en ligne sera bientôt disponible. Contacte-nous à
-      <a href="mailto:${esc(EMAIL_CONTACT)}">${esc(EMAIL_CONTACT)}</a> pour régler ton accompagnement.</p>`;
-    return;
-  }
-  try {
-    await loadScript(`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=EUR&intent=capture&components=buttons&locale=fr_FR`);
-  } catch {
-    box.innerHTML = `<p class="msg">Impossible de charger PayPal. Vérifie ta connexion puis recharge la page.</p>`;
-    return;
-  }
-  box.innerHTML = "";
-  const paypal = window.paypal;
-  let rendered = 0;
-  for (const source of [paypal.FUNDING.PAYPAL, paypal.FUNDING.CARD]) {
-    const btn = paypal.Buttons({
-      fundingSource: source,
-      style: { shape: "pill", height: 48, ...(source === paypal.FUNDING.PAYPAL ? { color: "gold" } : {}) },
-      createOrder: () => api.createPaymentOrder(),                 // montant fixé côté serveur
-      onApprove: async (data) => {
-        try { await api.capturePayment(data.orderID); await paid(); }
-        catch (e) { toast(errMsg(e), "err"); }
-      },
-      onError: () => toast("Le paiement n'a pas abouti. Réessaie ou contacte-nous.", "err"),
-    });
-    if (btn.isEligible()) { const d = document.createElement("div"); box.append(d); btn.render(d); rendered++; }
-  }
-  if (!rendered) box.innerHTML = `<p class="msg">Le paiement en ligne n'est pas disponible depuis ton pays. Contacte-nous à <a href="mailto:${esc(EMAIL_CONTACT)}">${esc(EMAIL_CONTACT)}</a>.</p>`;
-}
-
-function loadScript(src) {
-  return new Promise((res, rej) => {
-    if (window.paypal) return res();
-    const s = document.createElement("script");
-    s.src = src; s.onload = res; s.onerror = rej;
-    document.head.append(s);
-  });
+  $$("input[type=file]", app).forEach((inp) => inp.addEventListener("change", () => upload(inp)));
+  $$("[data-open]", app).forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); openDoc(a.dataset.open); }));
+  $$("[data-del]", app).forEach((b) => b.addEventListener("click", () => removeDoc(b.dataset.del)));
 }
 
 function field(name, label, value = "", ac = "off", type = "text") {
@@ -361,8 +352,8 @@ async function upload(inp) {
   try {
     await api.uploadDocument(inp.dataset.type, file);
     toast("Document envoyé ✔ Nous allons le vérifier.");
-    docs = await api.listDocuments(); renderDashboard();
-  } catch (e) { toast(errMsg(e), "err"); renderDashboard(); }
+    await load();
+  } catch (e) { toast(errMsg(e), "err"); await load(); }
 }
 
 async function openDoc(id) {
@@ -375,7 +366,7 @@ async function openDoc(id) {
 
 async function removeDoc(id) {
   if (!confirm("Supprimer ce fichier ?")) return;
-  try { await api.deleteDocument(docs.find((x) => x.id === id)); docs = await api.listDocuments(); renderDashboard(); }
+  try { await api.deleteDocument(docs.find((x) => x.id === id)); await load(); }
   catch (e) { toast(errMsg(e), "err"); }
 }
 

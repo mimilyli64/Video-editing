@@ -8,7 +8,7 @@
 // ⚠️  Textes PROVISOIRES : remplace-les par tes vrais contrats.
 // Les champs entre {{ }} sont remplis automatiquement :
 //   {{prenom}} {{nom}} {{date_naissance}} {{lieu_naissance}} {{nationalite}}
-//   {{adresse}} {{telephone}} {{passeport}} {{email}} {{duree}} {{prix}} {{date}}
+//   {{adresse}} {{telephone}} {{passeport}} {{email}} {{duree}} {{prix}} {{paiement}} {{date}}
 //
 // Change "version" à chaque modification d'un texte : chaque contrat signé
 // garde la version et une empreinte (hash) du texte exact accepté.
@@ -22,7 +22,7 @@ email {{email}}, passeport n° {{passeport}}, ci-après « le candidat ».</p>`;
 export const CONTRATS = {
   // ── Contrat 1 : volontariat long ─────────────────────────────
   long: {
-    version: "long-2026-11-v2",
+    version: "long-2026-11-v3",
     nom: "Volontariat 1 an",
     sousTitre: "1 an",
     description: "Service volontaire (BFD / FSJ) d'un an dans une structure d'accueil en Allemagne.",
@@ -44,7 +44,7 @@ préparation aux entretiens et accompagnement dans les démarches de visa.</p>
 communiqués et à informer l'accompagnateur de tout changement de situation.</p>
 
 <h3>Article 4 — Tarifs et modalités de paiement</h3>
-<p>Le prix de l'accompagnement est de <strong>{{prix}}</strong>, payable en ligne par PayPal ou par carte bancaire (Visa, Mastercard) depuis l'espace candidat, après la signature du présent contrat.</p>
+<p>Le prix de l'accompagnement est de <strong>{{prix}}</strong>, payable par <strong>{{paiement}}</strong> (méthode choisie par le candidat). Les informations de paiement sont communiquées au candidat par WhatsApp ; le candidat dépose ensuite le reçu de paiement dans son espace. L'accompagnement débute après validation du reçu par l'accompagnateur.</p>
 
 <h3>Article 5 — Durée et résiliation</h3>
 <p>[À compléter.]</p>
@@ -58,7 +58,7 @@ volontariat et ne sont partagés qu'avec les organismes concernés par le dossie
 
   // ── Contrat 2 : séjour court ─────────────────────────────────
   court: {
-    version: "court-2026-11-v2",
+    version: "court-2026-11-v3",
     nom: "Séjour court",
     sousTitre: "moins de 3 mois",
     description: "Programme de courte durée en Allemagne, de quelques semaines à moins de 3 mois.",
@@ -77,7 +77,7 @@ séjour en Allemagne d'une durée de <strong>{{duree}}</strong>.</p>
 <p>[À compléter.]</p>
 
 <h3>Article 4 — Tarifs et modalités de paiement</h3>
-<p>Le prix de l'accompagnement est de <strong>{{prix}}</strong>, payable en ligne par PayPal ou par carte bancaire (Visa, Mastercard) depuis l'espace candidat, après la signature du présent contrat.</p>
+<p>Le prix de l'accompagnement est de <strong>{{prix}}</strong>, payable par <strong>{{paiement}}</strong> (méthode choisie par le candidat). Les informations de paiement sont communiquées au candidat par WhatsApp ; le candidat dépose ensuite le reçu de paiement dans son espace. L'accompagnement débute après validation du reçu par l'accompagnateur.</p>
 
 <h3>Article 5 — Données personnelles</h3>
 <p>Les informations et documents transmis sont utilisés uniquement pour les démarches du

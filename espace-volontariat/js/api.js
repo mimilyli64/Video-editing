@@ -18,15 +18,6 @@ async function makeSupabaseApi() {
   const must = ({ data, error }) => { if (error) throw error; return data; };
   const uid = async () => (await sb.auth.getUser()).data.user?.id;
   const base = () => location.href.replace(/[^/]*([?#].*)?$/, "");
-  async function payFn(body) {
-    const { data, error } = await sb.functions.invoke("paiement", { body });
-    if (error) {
-      let msg = "Le paiement n'a pas pu être traité.";
-      try { msg = (await error.context.json()).error || msg; } catch {}
-      throw new Error(msg);
-    }
-    return data;
-  }
 
   return {
     onAuth: (cb) => sb.auth.onAuthStateChange((evt, session) => cb(evt, session)),
@@ -71,14 +62,6 @@ async function makeSupabaseApi() {
     },
     async docUrl(doc) {
       return must(await sb.storage.from(BUCKET).createSignedUrl(doc.file_path, 3600)).signedUrl;
-    },
-
-    // ── paiement (fonction serveur supabase/functions/paiement) ──
-    async createPaymentOrder() {
-      return (await payFn({ action: "create" })).id;
-    },
-    async capturePayment(orderID) {
-      return payFn({ action: "capture", orderID });
     },
 
     // ── admin ──
@@ -148,7 +131,7 @@ function makeDemoApi() {
       const row = { ...c, id: rid(), user_id: me(), signed_at: new Date().toISOString() };
       d.contracts.push(row);
       const p = d.profiles.find((x) => x.id === me()); if (p.stage < 1) p.stage = 1;
-      p.contract_type = c.contract_type; p.duration = c.duration;
+      p.contract_type = c.contract_type; p.duration = c.duration; p.payment_method = c.payment_method;
       save(d); return row;
     },
     async listDocuments(userId) {
@@ -168,15 +151,6 @@ function makeDemoApi() {
     async docUrl(doc) {
       if (!doc.file_path) throw new Error("Mode démo : fichier trop gros pour être gardé dans le navigateur.");
       return doc.file_path;
-    },
-
-    async createPaymentOrder() { return "DEMO"; },
-    async capturePayment(orderID, method) {
-      const d = db(); const p = d.profiles.find((x) => x.id === me());
-      const c = d.contracts.find((x) => x.user_id === me());
-      Object.assign(p, { paid_at: new Date().toISOString(), paid_amount: c.contract_type === "court" ? 1200 : 1500,
-        payment_method: method, payment_ref: orderID });
-      save(d); return { ok: true };
     },
 
     async listCandidates() {

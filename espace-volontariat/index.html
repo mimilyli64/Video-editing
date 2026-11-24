@@ -42,7 +42,7 @@
       <h2>Le parcours, étape par étape</h2>
       <p class="sub">Tu sais toujours où tu en es et ce qu'il reste à faire. Chaque étape se débloque quand la précédente est validée par notre équipe.</p>
       <div class="road" style="text-align:left">
-        <div class="step"><div class="n">1</div><h3>Contrat</h3><p>Tu choisis ta formule, signes ton contrat et paies en ligne.</p></div>
+        <div class="step"><div class="n">1</div><h3>Contrat</h3><p>Tu choisis ta formule, signes ton contrat et envoies ton reçu de paiement.</p></div>
         <div class="step"><div class="n">2</div><h3>Dossier</h3><p>Passeport, CV en allemand, lettre de motivation, diplômes.</p></div>
         <div class="step"><div class="n">3</div><h3>Test d'allemand</h3><p>Certificat officiel : Goethe-Institut, ÖSD ou telc.</p></div>
         <div class="step"><div class="n">4</div><h3>Entretiens</h3><p>Entretiens avec les organismes d'accueil du volontariat.</p></div>
@@ -89,7 +89,7 @@
   <section class="block center" id="formules">
     <div class="wrap">
       <h2>Nos formules</h2>
-      <p class="sub">Un prix clair, payé une seule fois en ligne, pour tout l'accompagnement jusqu'au visa.</p>
+      <p class="sub">Un prix clair pour tout l'accompagnement jusqu'au visa. Tu paies par PayPal ou carte Visa avec l'aide de notre équipe sur WhatsApp.</p>
       <div class="plans">
         <div class="card plan featured">
           <span class="badge badge-navy">Volontariat BFD / FSJ</span>
@@ -116,7 +116,7 @@
           <a class="btn btn-ghost btn-block" href="connexion.html?mode=inscription">Choisir moins de 3 mois</a>
         </div>
       </div>
-      <div class="pay-logos">Paiement sécurisé : <span class="pl" style="color:#003087"><i>Pay</i><i style="color:#009cde">Pal</i></span><span class="pl" style="color:#1a1f71">VISA</span><span class="pl">Mastercard</span></div>
+      <div class="pay-logos">Paiement accepté : <span class="pl" style="color:#003087"><i>Pay</i><i style="color:#009cde">Pal</i></span><span class="pl" style="color:#1a1f71">VISA</span> · support sur WhatsApp</div>
     </div>
   </section>
 
@@ -126,6 +126,7 @@
       <details><summary>Comment je commence ?</summary><p>Crée ton espace avec ton email. À ta première connexion, ton contrat s'affiche : tu le lis, tu complètes tes informations et tu signes. Ensuite, la liste des documents à envoyer apparaît.</p></details>
       <details><summary>La signature en ligne a-t-elle de la valeur ?</summary><p>Nous enregistrons la version exacte du contrat acceptée, ta signature, la date et l'heure. Tu peux télécharger ton contrat signé à tout moment depuis ton espace.</p></details>
       <details><summary>Quel niveau d'allemand faut-il ?</summary><p>Cela dépend des organismes d'accueil et du visa : souvent A2 minimum, B1 recommandé. Nous te disons précisément ce qu'il te faut quand ton dossier est étudié. Tu peux te préparer avec <a data-plateforme href="#">nos cours d'allemand sur Lougha Online</a>.</p></details>
+      <details><summary>Comment je paie ?</summary><p>Tu choisis PayPal ou carte Visa au moment de signer ton contrat. Tu nous écris sur WhatsApp, on t'envoie les informations de paiement, puis tu déposes ton reçu dans ton espace. Dès qu'il est validé, ton dossier s'ouvre.</p></details>
       <details><summary>Mes documents sont-ils en sécurité ?</summary><p>Ils sont stockés de façon privée : seuls toi et l'équipe qui suit ton dossier pouvez les ouvrir.</p></details>
       <details><summary>Je n'arrive pas à envoyer un document, je fais comment ?</summary><p>Écris-nous à <a data-email href="#"></a>, on t'aide.</p></details>
     </div>
@@ -149,6 +150,8 @@
 
   <script type="module">
     import { LIEN_PLATEFORME, EMAIL_CONTACT } from "./js/config.js";
+    import { whatsappFab } from "./js/ui.js";
+    whatsappFab();
     document.querySelectorAll("[data-plateforme]").forEach((a) => (a.href = LIEN_PLATEFORME));
     document.querySelectorAll("[data-email]").forEach((a) => { a.href = "mailto:" + EMAIL_CONTACT; if (!a.textContent) a.textContent = EMAIL_CONTACT; });
     document.getElementById("year").textContent = new Date().getFullYear();
