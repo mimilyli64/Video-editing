@@ -1,17 +1,24 @@
-import { TEXTE, TITRE } from "./contrat.js";
+import { CONTRATS } from "./contrat.js";
 import { esc, fmtDate } from "./ui.js";
 
-// Remplit le contrat avec les infos du candidat. `highlight` met en
-// évidence les champs (pendant la saisie).
+export const contratDe = (type) => CONTRATS[type] || CONTRATS.long;
+
+export const euros = (n) =>
+  new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 })
+    .format(n).replace(/ /g, " "); // espace insécable classique (affichée par toutes les polices)
+
+// Remplit le contrat (selon f.contract_type) avec les infos du candidat.
+// `highlight` met en évidence les champs pendant la saisie.
 export function renderContract(f, highlight = false) {
   const vals = {
     prenom: f.first_name, nom: f.last_name,
     date_naissance: f.birth_date ? fmtDate(f.birth_date) : "",
     lieu_naissance: f.birth_place, nationalite: f.nationality, adresse: f.address,
-    telephone: f.phone, passeport: f.passport_number, email: f.email,
+    telephone: f.phone, passeport: f.passport_number, email: f.email, duree: f.duration,
+    prix: f.contract_type ? euros(contratDe(f.contract_type).prix) : "",
     date: fmtDate(f.signed_at || new Date()),
   };
-  return TEXTE.replace(/\{\{(\w+)\}\}/g, (_, k) => {
+  return contratDe(f.contract_type).texte.replace(/\{\{(\w+)\}\}/g, (_, k) => {
     const v = esc(vals[k] || "") || "………";
     return highlight ? `<span class="ph">${v}</span>` : v;
   });
@@ -20,7 +27,7 @@ export function renderContract(f, highlight = false) {
 // Bloc complet "contrat signé" (texte + signature + preuve).
 export function signedContractHtml(c) {
   return `
-    <h2 style="font-size:1.25rem">${esc(TITRE)}</h2>
+    <h2 style="font-size:1.25rem">${esc(contratDe(c.contract_type).titre)}</h2>
     <div class="contract-text">${renderContract(c)}
       <div style="margin-top:24px">
         <p style="margin-bottom:6px"><strong>Signature du candidat :</strong></p>
@@ -30,3 +37,7 @@ export function signedContractHtml(c) {
       </div>
     </div>`;
 }
+
+// Libellé court, ex. "Volontariat long · 1 an"
+export const formuleLabel = (type, duration) =>
+  type ? `${contratDe(type).nom}${duration ? " · " + duration : ""}` : "";

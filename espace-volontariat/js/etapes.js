@@ -2,8 +2,8 @@
 // Tu peux modifier les textes, ajouter ou retirer des documents ici.
 
 export const ETAPES = [
-  { id: 0, court: "Contrat", titre: "Signature du contrat",
-    desc: "Lis ton contrat d'accompagnement, complète tes informations et signe-le en ligne." },
+  { id: 0, court: "Contrat", titre: "Contrat et paiement",
+    desc: "Choisis ta formule, signe ton contrat en ligne et règle ton accompagnement (PayPal ou carte bancaire)." },
   { id: 1, court: "Dossier", titre: "Dossier initial",
     desc: "Envoie-nous tes documents de base. Nous les vérifions et te disons si quelque chose manque." },
   { id: 2, court: "Test d'allemand", titre: "Test officiel d'allemand",

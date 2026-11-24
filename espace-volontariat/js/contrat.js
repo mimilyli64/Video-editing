@@ -1,30 +1,40 @@
 // ─────────────────────────────────────────────────────────────
-//  LE CONTRAT
+//  LES CONTRATS
 // ─────────────────────────────────────────────────────────────
-// ⚠️  Texte PROVISOIRE : remplace-le par ton vrai contrat.
-// Les champs entre {{ }} sont remplis automatiquement avec les infos
-// saisies par le candidat : {{prenom}} {{nom}} {{date_naissance}}
-// {{lieu_naissance}} {{nationalite}} {{adresse}} {{telephone}}
-// {{passeport}} {{email}} {{date}}
+// Deux types de contrat : 1 an (1 500 €) et moins de 3 mois (1 200 €).
+// Le candidat choisit sa formule avant de signer,
+// et le texte correspondant s'affiche.
 //
-// Change VERSION à chaque modification du texte : chaque contrat signé
+// ⚠️  Textes PROVISOIRES : remplace-les par tes vrais contrats.
+// Les champs entre {{ }} sont remplis automatiquement :
+//   {{prenom}} {{nom}} {{date_naissance}} {{lieu_naissance}} {{nationalite}}
+//   {{adresse}} {{telephone}} {{passeport}} {{email}} {{duree}} {{prix}} {{date}}
+//
+// Change "version" à chaque modification d'un texte : chaque contrat signé
 // garde la version et une empreinte (hash) du texte exact accepté.
 
-export const VERSION = "2026-11-v1";
-
-export const TITRE = "Contrat d'accompagnement — Volontariat en Allemagne";
-
-export const TEXTE = `
+const PARTIES = `
 <p><strong>Entre :</strong> Lougha Online, ci-après « l'accompagnateur »,</p>
 <p><strong>Et :</strong> {{prenom}} {{nom}}, né(e) le {{date_naissance}} à {{lieu_naissance}},
 de nationalité {{nationalite}}, demeurant {{adresse}}, téléphone {{telephone}},
-email {{email}}, passeport n° {{passeport}}, ci-après « le candidat ».</p>
+email {{email}}, passeport n° {{passeport}}, ci-après « le candidat ».</p>`;
 
+export const CONTRATS = {
+  // ── Contrat 1 : volontariat long ─────────────────────────────
+  long: {
+    version: "long-2026-11-v2",
+    nom: "Volontariat 1 an",
+    sousTitre: "1 an",
+    description: "Service volontaire (BFD / FSJ) d'un an dans une structure d'accueil en Allemagne.",
+    durees: ["1 an"],
+    prix: 1500,                      // en euros
+    titre: "Contrat d'accompagnement — Volontariat d'un an en Allemagne",
+    texte: `${PARTIES}
 <h3>Article 1 — Objet</h3>
 <p>Le présent contrat a pour objet l'accompagnement du candidat dans ses démarches en vue d'un
-volontariat en Allemagne : constitution du dossier, préparation au test officiel d'allemand,
-mise en relation avec les organismes d'accueil, préparation aux entretiens et accompagnement
-dans les démarches de visa.</p>
+volontariat en Allemagne d'une durée de <strong>{{duree}}</strong> : constitution du dossier,
+préparation au test officiel d'allemand, mise en relation avec les organismes d'accueil,
+préparation aux entretiens et accompagnement dans les démarches de visa.</p>
 
 <h3>Article 2 — Engagements de l'accompagnateur</h3>
 <p>[Texte provisoire — à remplacer par le contrat définitif.]</p>
@@ -34,7 +44,7 @@ dans les démarches de visa.</p>
 communiqués et à informer l'accompagnateur de tout changement de situation.</p>
 
 <h3>Article 4 — Tarifs et modalités de paiement</h3>
-<p>[À compléter.]</p>
+<p>Le prix de l'accompagnement est de <strong>{{prix}}</strong>, payable en ligne par PayPal ou par carte bancaire (Visa, Mastercard) depuis l'espace candidat, après la signature du présent contrat.</p>
 
 <h3>Article 5 — Durée et résiliation</h3>
 <p>[À compléter.]</p>
@@ -43,5 +53,36 @@ communiqués et à informer l'accompagnateur de tout changement de situation.</p
 <p>Les informations et documents transmis sont utilisés uniquement pour les démarches du
 volontariat et ne sont partagés qu'avec les organismes concernés par le dossier du candidat.</p>
 
-<p>Fait le {{date}}, signé électroniquement.</p>
-`;
+<p>Fait le {{date}}, signé électroniquement.</p>`,
+  },
+
+  // ── Contrat 2 : séjour court ─────────────────────────────────
+  court: {
+    version: "court-2026-11-v2",
+    nom: "Séjour court",
+    sousTitre: "moins de 3 mois",
+    description: "Programme de courte durée en Allemagne, de quelques semaines à moins de 3 mois.",
+    durees: ["moins de 3 mois"],
+    prix: 1200,                      // en euros
+    titre: "Contrat d'accompagnement — Séjour court en Allemagne (moins de 3 mois)",
+    texte: `${PARTIES}
+<h3>Article 1 — Objet</h3>
+<p>Le présent contrat a pour objet l'accompagnement du candidat dans ses démarches en vue d'un
+séjour en Allemagne d'une durée de <strong>{{duree}}</strong>.</p>
+
+<h3>Article 2 — Engagements de l'accompagnateur</h3>
+<p>[Texte provisoire — à remplacer par le contrat définitif.]</p>
+
+<h3>Article 3 — Engagements du candidat</h3>
+<p>[À compléter.]</p>
+
+<h3>Article 4 — Tarifs et modalités de paiement</h3>
+<p>Le prix de l'accompagnement est de <strong>{{prix}}</strong>, payable en ligne par PayPal ou par carte bancaire (Visa, Mastercard) depuis l'espace candidat, après la signature du présent contrat.</p>
+
+<h3>Article 5 — Données personnelles</h3>
+<p>Les informations et documents transmis sont utilisés uniquement pour les démarches du
+séjour et ne sont partagés qu'avec les organismes concernés par le dossier du candidat.</p>
+
+<p>Fait le {{date}}, signé électroniquement.</p>`,
+  },
+};

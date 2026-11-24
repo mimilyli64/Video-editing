@@ -1,7 +1,8 @@
 import { api } from "./api.js";
 import { $, $$, esc, toast, errMsg, fmtDate, demoBanner } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC } from "./etapes.js";
-import { signedContractHtml } from "./contrat-view.js";
+import { signedContractHtml, formuleLabel, contratDe, euros } from "./contrat-view.js";
+import { CONTRATS } from "./contrat.js";
 
 demoBanner();
 const app = $("#app");
@@ -15,7 +16,7 @@ if (me?.role !== "admin") {
   throw new Error("not admin");
 }
 
-let candidates = [], selected = null, filter = { q: "", stage: "all", pending: false };
+let candidates = [], selected = null, filter = { q: "", stage: "all", type: "all", pending: false };
 
 async function loadList() {
   candidates = await api.listCandidates();
@@ -27,7 +28,7 @@ function renderShell() {
   app.innerHTML = `
     <div class="stats">
       <div class="stat"><b>${candidates.length}</b><span>candidats</span></div>
-      <div class="stat"><b>${n((c) => (c.stage || 0) === 0)}</b><span>contrat pas encore signé</span></div>
+      <div class="stat"><b>${n((c) => !c.paid_at)}</b><span>pas encore signé ou payé</span></div>
       <div class="stat"><b>${candidates.reduce((s, c) => s + c.docs_pending, 0)}</b><span>documents à vérifier</span></div>
       <div class="stat"><b>${n((c) => c.stage === 5)}</b><span>visas obtenus</span></div>
     </div>
@@ -35,10 +36,12 @@ function renderShell() {
       <div class="card cand-list">
         <div class="search">
           <input id="q" placeholder="Rechercher un nom ou un email" value="${esc(filter.q)}">
-          <div style="display:flex;gap:8px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
             <select id="st"><option value="all">Toutes les étapes</option>
               ${ETAPES.map((e) => `<option value="${e.id}" ${String(e.id) === filter.stage ? "selected" : ""}>${e.id + 1}. ${e.court}</option>`).join("")}</select>
-            <label class="check" style="white-space:nowrap;align-items:center;margin:0"><input type="checkbox" id="pd" ${filter.pending ? "checked" : ""}> À vérifier</label>
+            <select id="ty"><option value="all">Toutes formules</option>
+              ${Object.entries(CONTRATS).map(([k, c]) => `<option value="${k}" ${k === filter.type ? "selected" : ""}>${esc(c.nom)} (${esc(c.sousTitre)})</option>`).join("")}</select>
+            <label class="check" style="white-space:nowrap;align-items:center;margin:0;grid-column:1/-1"><input type="checkbox" id="pd" ${filter.pending ? "checked" : ""}> À vérifier</label>
           </div>
         </div>
         <div id="list"></div>
@@ -48,6 +51,7 @@ function renderShell() {
   $("#q").addEventListener("input", (e) => { filter.q = e.target.value; renderList(); });
   $("#st").addEventListener("change", (e) => { filter.stage = e.target.value; renderList(); });
   $("#pd").addEventListener("change", (e) => { filter.pending = e.target.checked; renderList(); });
+  $("#ty").addEventListener("change", (e) => { filter.type = e.target.value; renderList(); });
   renderList();
   if (selected) openCandidate(selected);
 }
@@ -57,6 +61,7 @@ function renderList() {
   const rows = candidates.filter((c) =>
     (!q || `${c.full_name} ${c.email}`.toLowerCase().includes(q)) &&
     (filter.stage === "all" || String(c.stage || 0) === filter.stage) &&
+    (filter.type === "all" || c.contract_type === filter.type) &&
     (!filter.pending || c.docs_pending > 0));
   $("#list").innerHTML = rows.length ? rows.map((c) => `
     <button class="cand ${c.id === selected ? "on" : ""}" data-id="${c.id}">
@@ -64,6 +69,8 @@ function renderList() {
       <div class="hint">${esc(c.email)}</div>
       <div class="meta">
         <span class="badge badge-navy">${(c.stage || 0) + 1}. ${ETAPES[c.stage || 0].court}</span>
+        ${c.contract_type ? `<span class="badge badge-none">${esc(formuleLabel(c.contract_type, c.duration))}</span>` : ""}
+        ${c.contract_type && !c.paid_at ? `<span class="badge badge-wait">Non payé</span>` : ""}
         ${c.docs_pending ? `<span class="badge badge-wait">${c.docs_pending} à vérifier</span>` : ""}
       </div>
     </button>`).join("") : `<p class="empty">Aucun candidat.</p>`;
@@ -94,6 +101,7 @@ function renderDetail(p, c, docs) {
         ${c ? `<button class="btn btn-ghost btn-sm" id="b-c">📄 Voir le contrat signé</button>` : `<span class="badge badge-wait">Contrat pas encore signé</span>`}
       </div>
       ${c ? `<dl class="kv" style="margin-top:18px">
+        <dt>Formule</dt><dd>${esc(formuleLabel(c.contract_type, c.duration))}</dd>
         <dt>Nom complet</dt><dd>${esc(c.first_name)} ${esc(c.last_name)}</dd>
         <dt>Naissance</dt><dd>${fmtDate(c.birth_date)} à ${esc(c.birth_place)}</dd>
         <dt>Nationalité</dt><dd>${esc(c.nationality)}</dd>
@@ -101,6 +109,11 @@ function renderDetail(p, c, docs) {
         <dt>Téléphone</dt><dd><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a></dd>
         <dt>Adresse</dt><dd>${esc(c.address)}</dd>
         <dt>Contrat signé le</dt><dd>${fmtDate(c.signed_at, true)} (version ${esc(c.contract_version)})</dd>
+        <dt>Paiement</dt><dd>${p.paid_at
+          ? `<span class="badge badge-ok">Payé</span> ${euros(p.paid_amount)} le ${fmtDate(p.paid_at)} · ${esc({ paypal: "PayPal", carte: "carte bancaire", manuel: "enregistré par l'équipe" }[p.payment_method] || p.payment_method || "")}
+             ${p.payment_ref ? `<br><span class="hint">Réf. ${esc(p.payment_ref)}</span>` : ""}`
+          : `<span class="badge badge-wait">En attente · ${euros(contratDe(c.contract_type).prix)}</span>
+             <button class="btn btn-ok btn-sm" id="b-paid" style="margin-left:6px">Marquer comme payé</button>`}</dd>
       </dl>` : ""}
     </div>
 
@@ -146,6 +159,16 @@ function renderDetail(p, c, docs) {
   $("#b-c")?.addEventListener("click", () => {
     $("#modal-body").innerHTML = signedContractHtml({ ...c, email: p.email });
     $("#modal").hidden = false;
+  });
+
+  $("#b-paid")?.addEventListener("click", async () => {
+    const note = prompt(`Paiement de ${euros(contratDe(c.contract_type).prix)} reçu hors ligne.\nNote (ex. « espèces 12/01 », « virement ») :`);
+    if (note === null) return;
+    try {
+      await api.updateProfile(p.id, { paid_at: new Date().toISOString(), paid_amount: contratDe(c.contract_type).prix,
+        payment_method: "manuel", payment_ref: note.trim() || null });
+      toast("Paiement enregistré ✔"); await refresh();
+    } catch (err) { toast(errMsg(err), "err"); }
   });
 
   $("#f-p").addEventListener("submit", async (e) => {

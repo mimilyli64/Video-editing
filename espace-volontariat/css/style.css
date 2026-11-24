@@ -192,6 +192,43 @@ footer.foot .wrap { display: flex; justify-content: space-between; flex-wrap: wr
 .upload-btn input { display: none; }
 .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: #fca5a5; cursor: pointer; text-decoration: underline; font-size: .82rem; }
 
+/* choix de la formule */
+.formules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 8px; }
+.fm-price { font-size: 1.5rem; font-weight: 700; background: var(--grad-soft); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* paiement */
+.pay-sum { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-bottom: 20px; border-bottom: 1px solid var(--line-soft); }
+.pay-amount { font-size: 2.6rem; font-weight: 700; background: var(--grad-soft); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pay-buttons { display: grid; gap: 12px; max-width: 460px; margin: 0 auto; }
+.pay-buttons > div { background: #fff; border-radius: 16px; padding: 10px 10px 2px; }
+.pay-btn { width: 100%; height: 50px; font-size: 1.05rem; }
+.pay-paypal { background: #ffc439; color: #003087; font-weight: 800; font-size: 1.3rem; }
+.pay-paypal i { color: #009cde; font-style: italic; font-weight: 800; }
+.pay-paypal b { font-style: italic; }
+.pay-card { background: #111827; border: 1px solid rgba(255,255,255,.25); }
+.pay-note { text-align: center; color: var(--muted); font-size: .86rem; margin: 18px 0 0; }
+
+/* formules sur la page d'accueil */
+.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 380px)); gap: 20px; justify-content: center; text-align: left; }
+.plan { padding: 30px; }
+.plan .price { font-size: 2.8rem; font-weight: 700; margin: 6px 0 4px; }
+.plan ul { padding-left: 1.1em; color: var(--muted); margin: 16px 0 24px; }
+.plan li { margin-bottom: 6px; }
+.plan.featured { border-color: var(--purple-4); box-shadow: 0 0 0 1px var(--purple-4), 0 25px 50px -12px rgba(147,51,234,.45); }
+.pay-logos { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; color: var(--muted); font-size: .9rem; margin-top: 24px; }
+.pay-logos span.pl { background: #fff; color: #111; font-weight: 800; border-radius: 6px; padding: 4px 10px; font-size: .85rem; }
+@media (max-width: 640px) { .plans { grid-template-columns: 1fr; } }
+.formule { margin: 0; cursor: pointer; font-weight: 400; }
+.formule input { position: absolute; opacity: 0; pointer-events: none; }
+.fm-box { display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 16px; border-radius: 14px; border: 1.5px solid var(--line); background: rgba(255,255,255,.05); transition: border-color .15s, background .15s, box-shadow .15s; }
+.fm-box b { font-size: 1.25rem; }
+.fm-name { font-weight: 600; color: var(--purple-3); font-size: .92rem; }
+.fm-box .hint { font-size: .82rem; }
+.formule:hover .fm-box { border-color: rgba(255,255,255,.4); }
+.formule input:checked + .fm-box { border-color: transparent; background: linear-gradient(to bottom right, rgba(147,51,234,.45), rgba(37,99,235,.45)); box-shadow: 0 0 0 2px var(--purple-4); }
+.formule input:focus-visible + .fm-box { box-shadow: 0 0 0 3px rgba(192,132,252,.6); }
+@media (max-width: 640px) { .formules { grid-template-columns: 1fr; } }
+
 /* contrat : rendu "papier" pour une lecture confortable */
 .contract-text { max-height: 460px; overflow: auto; border-radius: 12px; padding: 24px 28px; background: #fdfcff; color: #111827; font-size: .96rem; }
 .contract-text h3 { font-size: 1.02rem; margin-top: 1.3em; color: #581c87; }

@@ -11,4 +11,8 @@ export const SUPABASE_ANON_KEY = "";   // clé "anon public" (Project Settings �
 export const NOM_ORGANISATION = "Lougha Online";
 export const LIEN_PLATEFORME = "https://loughaonline.com/fr";
 export const EMAIL_CONTACT = "contact@loughaonline.com";   // ← ton email de contact
+// Paiement PayPal + carte bancaire : "Client ID" de ton application PayPal
+// (developer.paypal.com → Apps & Credentials). Voir README.md, étape "PayPal".
+export const PAYPAL_CLIENT_ID = "";
+
 export const WHATSAPP = "";                              // ex. "33612345678" (optionnel)

@@ -1,9 +1,9 @@
 import { api } from "./api.js";
 import { $, $$, esc, toast, errMsg, fmtDate, demoBanner, sha256 } from "./ui.js";
 import { ETAPES, DOCUMENTS, STATUTS_DOC } from "./etapes.js";
-import { TITRE, VERSION } from "./contrat.js";
-import { renderContract, signedContractHtml } from "./contrat-view.js";
-import { LIEN_PLATEFORME, EMAIL_CONTACT } from "./config.js";
+import { CONTRATS } from "./contrat.js";
+import { renderContract, signedContractHtml, contratDe, formuleLabel, euros } from "./contrat-view.js";
+import { LIEN_PLATEFORME, EMAIL_CONTACT, PAYPAL_CLIENT_ID } from "./config.js";
 
 demoBanner();
 $$("[data-plateforme]").forEach((a) => (a.href = LIEN_PLATEFORME));
@@ -22,6 +22,7 @@ async function load() {
     if (!profile) throw new Error("Profil introuvable. Déconnecte-toi puis reconnecte-toi.");
     $("#l-admin").hidden = profile.role !== "admin";
     if (!contract) return renderSign();
+    if (!profile.paid_at) return renderPayment();
     docs = await api.listDocuments();
     renderDashboard();
   } catch (e) {
@@ -43,7 +44,20 @@ function renderSign() {
       </div></div>
 
       <form id="f-sign" class="card" novalidate>
-        <h2 style="font-size:1.15rem">1. Tes informations</h2>
+        <h2 style="font-size:1.15rem">1. Choisis ta formule</h2>
+        <p class="hint">Le contrat affiché plus bas correspond à la formule choisie.</p>
+        <div class="formules">
+          ${Object.entries(CONTRATS).flatMap(([type, c]) => c.durees.map((d) => `
+            <label class="formule">
+              <input type="radio" name="formule" value="${type}|${esc(d)}">
+              <span class="fm-box"><b>${esc(d.charAt(0).toUpperCase() + d.slice(1))}</b>
+                <span class="fm-price">${euros(c.prix)}</span>
+                <span class="fm-name">${esc(c.nom)}</span>
+                <span class="hint">${esc(c.description)}</span></span>
+            </label>`)).join("")}
+        </div>
+
+        <h2 style="font-size:1.15rem;margin-top:22px">2. Tes informations</h2>
         <p class="hint">Exactement comme sur ton passeport.</p>
         <div class="grid-2">
           ${field("first_name", "Prénom", f.first_name, "given-name")}
@@ -56,11 +70,11 @@ function renderSign() {
           ${field("address", "Adresse complète", "", "street-address")}
         </div>
 
-        <h2 style="font-size:1.15rem;margin-top:12px">2. Lis ton contrat</h2>
-        <p style="font-weight:700;margin-bottom:10px">${esc(TITRE)}</p>
+        <h2 style="font-size:1.15rem;margin-top:12px">3. Lis ton contrat</h2>
+        <p style="font-weight:700;margin-bottom:10px" id="c-title"></p>
         <div class="contract-text" id="c-text"></div>
 
-        <h2 style="font-size:1.15rem;margin-top:24px">3. Signe</h2>
+        <h2 style="font-size:1.15rem;margin-top:24px">4. Signe</h2>
         <p class="hint">Dessine ta signature avec ton doigt ou ta souris.</p>
         <div class="sigpad" id="sigpad"><canvas></canvas><div class="ph-text">Signe ici</div></div>
         <p style="text-align:right;margin:8px 0 18px"><button type="button" class="btn btn-ghost btn-sm" id="b-clear">Effacer</button></p>
@@ -73,11 +87,20 @@ function renderSign() {
   const form = $("#f-sign");
   const values = () => {
     const o = { email: user.email };
-    $$("input[name]", form).forEach((i) => (o[i.name] = i.value.trim()));
+    $$("input[name]:not([type=radio])", form).forEach((i) => (o[i.name] = i.value.trim()));
+    const [type, duree] = ($("input[name=formule]:checked", form)?.value || "").split("|");
+    o.contract_type = type || null;
+    o.duration = duree || "";
     return o;
   };
-  const refresh = () => ($("#c-text").innerHTML = renderContract(values(), true));
+  const refresh = () => {
+    const v = values();
+    $("#c-title").textContent = v.contract_type ? contratDe(v.contract_type).titre : "Choisis d'abord ta formule ci-dessus.";
+    $("#c-text").hidden = !v.contract_type;
+    $("#c-text").innerHTML = v.contract_type ? renderContract(v, true) : "";
+  };
   form.addEventListener("input", refresh);
+  form.addEventListener("change", refresh);
   refresh();
 
   const pad = signaturePad($("#sigpad"));
@@ -86,7 +109,11 @@ function renderSign() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const v = values();
-    const missing = $$("input[name]", form).filter((i) => !i.value.trim());
+    if (!v.contract_type) {
+      $(".formules").scrollIntoView({ behavior: "smooth", block: "center" });
+      return toast("Choisis ta formule : 6 mois, 1 an ou moins de 3 mois.", "err");
+    }
+    const missing = $$("input[name]:not([type=radio])", form).filter((i) => !i.value.trim());
     if (missing.length) { missing[0].focus(); return toast("Complète tous les champs.", "err"); }
     if (pad.isEmpty()) return toast("Ajoute ta signature.", "err");
     if (!$("#agree").checked) return toast("Coche la case pour accepter le contrat.", "err");
@@ -97,18 +124,109 @@ function renderSign() {
       const { email, ...fields } = v;
       await api.signContract({
         ...fields,
-        contract_version: VERSION,
+        contract_version: contratDe(v.contract_type).version,
         contract_hash: await sha256(accepted),
         signature_data: pad.toDataURL(),
         user_agent: navigator.userAgent.slice(0, 300),
       });
-      toast("Contrat signé ✔ Tu peux commencer tes démarches.");
+      toast("Contrat signé ✔");
       window.scrollTo(0, 0);
       await load();
     } catch (err) {
       toast(errMsg(err), "err");
       btn.disabled = false; btn.textContent = "Signer mon contrat";
     }
+  });
+}
+
+// ═════════════════════ 1 bis. PAIEMENT ═════════════════════
+function renderPayment() {
+  const c = contratDe(contract.contract_type);
+  app.innerHTML = `
+    <div class="narrow" style="margin:0 auto">
+      <div class="hello"><div>
+        <span class="badge badge-ok">✓ Contrat signé</span>
+        <h1 style="margin-top:10px">Dernière étape : le paiement</h1>
+        <p class="hint" style="margin:6px 0 0">Dès que ton paiement est confirmé, ton espace s'ouvre et tu peux commencer tes démarches.</p>
+      </div></div>
+
+      <div class="card">
+        <div class="pay-sum">
+          <div><p class="hint" style="margin:0">Ta formule</p>
+            <h2 style="margin:4px 0 2px;font-size:1.3rem">${esc(c.nom)}</h2>
+            <p class="hint" style="margin:0">${esc(c.titre)}</p></div>
+          <div class="pay-amount">${euros(c.prix)}</div>
+        </div>
+
+        <h3 style="font-size:1rem;margin:26px 0 12px">Choisis ton moyen de paiement</h3>
+        <div id="pay-buttons" class="pay-buttons"><p class="hint">Chargement du paiement sécurisé…</p></div>
+        <p class="pay-note">🔒 Paiement sécurisé par PayPal. <strong>Pas besoin de compte PayPal</strong> pour payer par carte (Visa, Mastercard).</p>
+      </div>
+
+      <p class="hint" style="text-align:center;margin-top:20px">
+        <a href="#" id="l-contract">Revoir mon contrat signé</a> ·
+        Un problème pour payer ? <a href="mailto:${esc(EMAIL_CONTACT)}">${esc(EMAIL_CONTACT)}</a></p>
+    </div>`;
+  $("#l-contract").addEventListener("click", (e) => { e.preventDefault(); openContract(); });
+  mountPaymentButtons($("#pay-buttons"));
+}
+
+async function paid(method) {
+  toast("Paiement confirmé ✔ Merci ! Ton dossier est ouvert.");
+  window.scrollTo(0, 0);
+  await load();
+}
+
+async function mountPaymentButtons(box) {
+  // Mode démo : boutons simulés (aucun argent n'est prélevé).
+  if (api.DEMO_MODE) {
+    box.innerHTML = `
+      <button class="btn pay-btn pay-paypal" data-m="paypal"><b>Pay</b><i>Pal</i></button>
+      <button class="btn pay-btn pay-card" data-m="carte">💳 Carte bancaire · Visa / Mastercard</button>
+      <p class="hint" style="margin:4px 0 0;text-align:center">Mode démo : le paiement est simulé.</p>`;
+    $$("[data-m]", box).forEach((b) => b.addEventListener("click", async () => {
+      b.disabled = true;
+      try { await api.capturePayment("DEMO-" + Date.now(), b.dataset.m); await paid(); }
+      catch (e) { toast(errMsg(e), "err"); b.disabled = false; }
+    }));
+    return;
+  }
+  if (!PAYPAL_CLIENT_ID) {
+    box.innerHTML = `<p class="msg">Le paiement en ligne sera bientôt disponible. Contacte-nous à
+      <a href="mailto:${esc(EMAIL_CONTACT)}">${esc(EMAIL_CONTACT)}</a> pour régler ton accompagnement.</p>`;
+    return;
+  }
+  try {
+    await loadScript(`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=EUR&intent=capture&components=buttons&locale=fr_FR`);
+  } catch {
+    box.innerHTML = `<p class="msg">Impossible de charger PayPal. Vérifie ta connexion puis recharge la page.</p>`;
+    return;
+  }
+  box.innerHTML = "";
+  const paypal = window.paypal;
+  let rendered = 0;
+  for (const source of [paypal.FUNDING.PAYPAL, paypal.FUNDING.CARD]) {
+    const btn = paypal.Buttons({
+      fundingSource: source,
+      style: { shape: "pill", height: 48, ...(source === paypal.FUNDING.PAYPAL ? { color: "gold" } : {}) },
+      createOrder: () => api.createPaymentOrder(),                 // montant fixé côté serveur
+      onApprove: async (data) => {
+        try { await api.capturePayment(data.orderID); await paid(); }
+        catch (e) { toast(errMsg(e), "err"); }
+      },
+      onError: () => toast("Le paiement n'a pas abouti. Réessaie ou contacte-nous.", "err"),
+    });
+    if (btn.isEligible()) { const d = document.createElement("div"); box.append(d); btn.render(d); rendered++; }
+  }
+  if (!rendered) box.innerHTML = `<p class="msg">Le paiement en ligne n'est pas disponible depuis ton pays. Contacte-nous à <a href="mailto:${esc(EMAIL_CONTACT)}">${esc(EMAIL_CONTACT)}</a>.</p>`;
+}
+
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    if (window.paypal) return res();
+    const s = document.createElement("script");
+    s.src = src; s.onload = res; s.onerror = rej;
+    document.head.append(s);
   });
 }
 
@@ -163,7 +281,7 @@ function renderDashboard() {
 
   app.innerHTML = `
     <div class="hello">
-      <div><p class="hint" style="margin:0">Mon dossier volontariat</p><h1>Hallo ${esc(first)} !</h1></div>
+      <div><p class="hint" style="margin:0">Mon dossier · <span class="badge badge-navy">${esc(formuleLabel(contract.contract_type, contract.duration))}</span></p><h1 style="margin-top:6px">Hallo ${esc(first)} !</h1></div>
       <button class="btn btn-ghost btn-sm" id="b-contract">📄 Mon contrat signé</button>
     </div>
 
