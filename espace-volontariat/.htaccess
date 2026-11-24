@@ -1,0 +1,22 @@
+# Hostinger (Apache) : forcer HTTPS et éviter le listing des dossiers.
+Options -Indexes
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Les fichiers JS/CSS changent à chaque mise à jour : cache court.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(webp|png|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+# Le README et le dossier supabase/ ne doivent pas être servis publiquement.
+<FilesMatch "\.(md|sql|ts)$">
+  Require all denied
+</FilesMatch>
+RedirectMatch 404 /supabase/

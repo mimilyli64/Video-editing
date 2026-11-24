@@ -1,5 +1,7 @@
 # Espace Volontariat en Allemagne — Lougha Online
 
+> 👉 **Pour le développeur qui installe le site sur Hostinger : voir [GUIDE-DEVELOPPEUR.md](GUIDE-DEVELOPPEUR.md).**
+
 Site pour les candidats au volontariat en Allemagne :
 
 | Page | Pour qui | Ce qu'on y fait |
