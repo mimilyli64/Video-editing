@@ -75,7 +75,8 @@ function renderList() {
         ${c.contract_type && !c.paid_at ? `<span class="badge badge-wait">Non payé</span>` : ""}
         ${c.docs_pending ? `<span class="badge badge-wait">${c.docs_pending} à vérifier</span>` : ""}
       </div>
-    </button>`).join("") : `<p class="empty">Aucun candidat.</p>`;
+    </button>`).join("") : `<p class="empty">${candidates.length ? "Aucun candidat ne correspond aux filtres."
+        : `Aucun candidat pour l'instant.${api.DEMO_MODE ? "<br><br>Pour tester : clique sur <strong>Déconnexion</strong>, crée un compte candidat, signe le contrat, puis reviens ici avec le bouton jaune." : ""}`}</p>`;
   $$(".cand").forEach((b) => b.addEventListener("click", () => openCandidate(b.dataset.id)));
 }
 

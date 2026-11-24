@@ -23,6 +23,8 @@ async function load() {
     [profile, contract] = await Promise.all([api.getProfile(), api.getContract()]);
     if (!profile) throw new Error("Profil introuvable. Déconnecte-toi puis reconnecte-toi.");
     $("#l-admin").hidden = profile.role !== "admin";
+    // Un compte équipe n'a pas de contrat à signer : il va directement à l'espace équipe.
+    if (profile.role === "admin" && !contract) return location.replace("admin.html");
     if (!contract) return renderSign();
     if (!profile.paid_at) return await renderPayment();
     docs = await api.listDocuments();

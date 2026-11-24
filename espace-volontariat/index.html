@@ -151,7 +151,8 @@
 
   <script type="module">
     import { LIEN_PLATEFORME, EMAIL_CONTACT } from "./js/config.js";
-    import { whatsappFab } from "./js/ui.js";
+    import { whatsappFab, demoBanner } from "./js/ui.js";
+    demoBanner();
     whatsappFab();
     document.querySelectorAll("[data-plateforme]").forEach((a) => (a.href = LIEN_PLATEFORME));
     document.querySelectorAll("[data-email]").forEach((a) => { a.href = "mailto:" + EMAIL_CONTACT; if (!a.textContent) a.textContent = EMAIL_CONTACT; });

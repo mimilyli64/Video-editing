@@ -136,6 +136,18 @@ function makeDemoApi() {
       d.session = u.id; save(d); return { user: u };
     },
     async signOut() { const d = db(); d.session = null; save(d); },
+    // Démo : se connecter directement avec un compte équipe (créé au besoin).
+    async demoAdmin() {
+      const d = db();
+      let u = d.users.find((x) => x.email === "admin@demo.lougha");
+      if (!u) {
+        u = { id: rid(), email: "admin@demo.lougha", password: "demo" };
+        d.users.push(u);
+        d.profiles.push({ id: u.id, email: u.email, full_name: "Équipe Lougha", role: "admin", stage: 0,
+          admin_message: "", created_at: new Date().toISOString() });
+      }
+      d.session = u.id; save(d);
+    },
     async resetPassword() { throw new Error("Mode démo : la réinitialisation par email n'est pas disponible."); },
     async updatePassword() {},
 

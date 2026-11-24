@@ -41,8 +41,14 @@ export function demoBanner() {
   if (!DEMO) return;
   const b = document.createElement("div");
   b.className = "demo-banner";
-  b.innerHTML = `<strong>Mode démo</strong> — les données restent dans ce navigateur. Astuce : un email qui commence par <code>admin</code> ouvre l'espace équipe.`;
+  b.innerHTML = `<strong>Mode démo</strong> · les données restent dans ce navigateur.
+    <button type="button" class="demo-btn" id="demo-admin">Ouvrir l'espace équipe</button>`;
   document.body.prepend(b);
+  b.querySelector("#demo-admin").addEventListener("click", async () => {
+    const { api } = await import("./api.js");
+    await api.demoAdmin();
+    location.href = "admin.html";
+  });
 }
 
 // Bouton WhatsApp flottant (support). Rien ne s'affiche si aucun numéro n'est configuré.
