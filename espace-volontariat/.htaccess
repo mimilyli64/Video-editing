@@ -1,4 +1,4 @@
-# Hostinger (Apache) : forcer HTTPS et éviter le listing des dossiers.
+# Hostinger : forcer HTTPS et éviter le listing des dossiers.
 Options -Indexes
 
 RewriteEngine On
@@ -15,8 +15,12 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   </FilesMatch>
 </IfModule>
 
-# Le README et le dossier supabase/ ne doivent pas être servis publiquement.
-<FilesMatch "\.(md|sql|ts)$">
+<FilesMatch "\.md$">
   Require all denied
 </FilesMatch>
-RedirectMatch 404 /supabase/
+
+# Envoi de documents jusqu'à 10 Mo et du PDF du contrat (si PHP tourne en module Apache).
+<IfModule mod_php.c>
+  php_value upload_max_filesize 12M
+  php_value post_max_size 40M
+</IfModule>

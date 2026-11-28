@@ -90,10 +90,10 @@
     $("#l-forgot").addEventListener("click", (e) => { e.preventDefault(); $("#f-email").value = $("#email").value; show("v-forgot"); });
     setMode(mode);
 
-    const recovering = params.get("reset") === "1" || location.hash.includes("type=recovery");
-    if (recovering) show("v-reset");
-    api.onAuth((evt) => { if (evt === "PASSWORD_RECOVERY") show("v-reset"); });
-    if (!recovering && await api.getUser()) location.replace("espace.html");
+    // Lien reçu par email "mot de passe oublié" : connexion.html?token=...
+    const resetToken = params.get("token");
+    if (resetToken) show("v-reset");
+    if (!resetToken && await api.getUser().catch(() => null)) location.replace("espace.html");
 
     async function busy(btn, fn) {
       btn.disabled = true;
@@ -109,7 +109,7 @@
       busy($("#b-submit"), async () => {
         if (mode === "inscription") {
           const r = await api.signUp(email, pw, name);
-          if (!r.session) return show("v-sent"); // confirmation par email activée
+          if (r && r.session === false) return show("v-sent");
         } else {
           await api.signIn(email, pw);
         }
@@ -131,7 +131,7 @@
       const pw = $("#n-pw").value;
       if (pw.length < 6) return toast("6 caractères minimum.", "err");
       busy(e.submitter, async () => {
-        await api.updatePassword(pw);
+        await api.updatePassword(pw, resetToken);
         toast("Mot de passe modifié.");
         location.replace("espace.html");
       });

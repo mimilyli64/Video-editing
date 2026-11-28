@@ -1,12 +1,10 @@
 // ─────────────────────────────────────────────────────────────
-//  CONFIGURATION — à remplir une seule fois
+//  CONFIGURATION (côté navigateur)
 // ─────────────────────────────────────────────────────────────
-// Tant que SUPABASE_URL et SUPABASE_ANON_KEY sont vides, le site tourne
-// en MODE DÉMO : tout est stocké dans le navigateur (rien n'est envoyé).
-// Pour passer en vrai : voir README.md (étape "Supabase").
+// La base de données et l'email se configurent dans api/config.php.
 
-export const SUPABASE_URL = "";        // ex. "https://abcdxyz.supabase.co"
-export const SUPABASE_ANON_KEY = "";   // clé "anon public" (Project Settings → API)
+// true = démonstration : tout reste dans le navigateur, rien n'est envoyé au serveur.
+export const MODE_DEMO = false;
 
 export const NOM_ORGANISATION = "Lougha Online";
 export const LIEN_PLATEFORME = "https://loughaonline.com/fr";

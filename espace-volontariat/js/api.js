@@ -1,103 +1,68 @@
 // Couche d'accès aux données.
-// - Mode réel : Supabase (connexion, base de données, stockage des fichiers).
+// - Mode réel : le serveur PHP + MySQL du site (dossier api/), hébergé avec le site.
 // - Mode démo : tout est gardé dans le navigateur (localStorage), pour tester le site.
 
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+import { MODE_DEMO } from "./config.js";
 
-export const DEMO = !SUPABASE_URL || !SUPABASE_ANON_KEY;
-const BUCKET = "documents";
+export const DEMO = !!MODE_DEMO;
+const API = "api/index.php";
 
-function safeName(name) {
-  return name.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
-}
-
-// ═════════════════════════════════ SUPABASE ═════════════════════════════════
-async function makeSupabaseApi() {
-  const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm");
-  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const must = ({ data, error }) => { if (error) throw error; return data; };
-  const uid = async () => (await sb.auth.getUser()).data.user?.id;
-  const base = () => location.href.replace(/[^/]*([?#].*)?$/, "");
+// ═════════════════════════════════ SERVEUR PHP ═════════════════════════════════
+function makePhpApi() {
+  async function call(action, body = {}) {
+    const isForm = body instanceof FormData;
+    if (isForm) body.append("action", action);
+    let r;
+    try {
+      r = await fetch(API, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: isForm ? { "X-Lougha": "1" } : { "X-Lougha": "1", "Content-Type": "application/json" },
+        body: isForm ? body : JSON.stringify({ action, ...body }),
+      });
+    } catch {
+      throw new Error("Connexion impossible. Vérifie ta connexion internet et réessaie.");
+    }
+    let data = null;
+    try { data = await r.json(); } catch {}
+    if (!r.ok || data?.error) throw new Error(data?.error || "Une erreur est survenue. Réessaie dans un instant.");
+    return data;
+  }
 
   return {
-    onAuth: (cb) => sb.auth.onAuthStateChange((evt, session) => cb(evt, session)),
-    async getUser() { return (await sb.auth.getSession()).data.session?.user || null; },
-    async signUp(email, password, full_name) {
-      return must(await sb.auth.signUp({
-        email, password,
-        options: { data: { full_name }, emailRedirectTo: base() + "espace.html" },
-      }));
-    },
-    async signIn(email, password) { return must(await sb.auth.signInWithPassword({ email, password })); },
-    async signOut() { await sb.auth.signOut(); },
-    async resetPassword(email) {
-      return must(await sb.auth.resetPasswordForEmail(email, { redirectTo: base() + "connexion.html?reset=1" }));
-    },
-    async updatePassword(password) { return must(await sb.auth.updateUser({ password })); },
+    onAuth: () => {},
+    async getUser() { return (await call("session")).user; },
+    async signUp(email, password, full_name) { return call("signup", { email, password, full_name }); },
+    async signIn(email, password) { return call("signin", { email, password }); },
+    async signOut() { await call("signout"); },
+    async resetPassword(email) { return call("reset_password", { email }); },
+    async updatePassword(password, token) { return call("update_password", { password, token }); },
 
-    async getProfile(id) {
-      return must(await sb.from("profiles").select("*").eq("id", id || await uid()).single());
-    },
-    async getContract(userId) {
-      return must(await sb.from("contracts").select("*").eq("user_id", userId || await uid()).maybeSingle());
-    },
-    async signContract(c) {
-      return must(await sb.from("contracts").insert({ ...c, user_id: await uid() }).select().single());
-    },
-    async listDocuments(userId) {
-      return must(await sb.from("documents").select("*").eq("user_id", userId || await uid())
-        .order("uploaded_at", { ascending: false }));
-    },
+    async getProfile(id) { return (await call("get_profile", { user_id: id })).profile; },
+    async getContract(userId) { return (await call("get_contract", { user_id: userId })).contract; },
+    async signContract(c) { return (await call("sign_contract", { contract: c })).contract; },
+    async listDocuments(userId) { return (await call("list_documents", { user_id: userId })).documents; },
     async uploadDocument(docType, file) {
-      const id = await uid();
-      const path = `${id}/${docType}/${Date.now()}-${safeName(file.name)}`;
-      must(await sb.storage.from(BUCKET).upload(path, file, { contentType: file.type || undefined }));
-      return must(await sb.from("documents").insert({
-        user_id: id, doc_type: docType, file_path: path, file_name: file.name, file_size: file.size,
-      }).select().single());
+      const fd = new FormData();
+      fd.append("doc_type", docType);
+      fd.append("file", file);
+      return (await call("upload_document", fd)).document;
     },
-    async deleteDocument(doc) {
-      must(await sb.from("documents").delete().eq("id", doc.id));
-      await sb.storage.from(BUCKET).remove([doc.file_path]);
-    },
-    async docUrl(doc) {
-      return must(await sb.storage.from(BUCKET).createSignedUrl(doc.file_path, 3600)).signedUrl;
-    },
+    async deleteDocument(doc) { await call("delete_document", { id: doc.id }); },
+    async docUrl(doc) { return `${API}?action=file&id=${encodeURIComponent(doc.id)}`; },
 
-    // ── admin ──
-    async listCandidates() {
-      const profiles = must(await sb.from("profiles").select("*").eq("role", "candidat")
-        .order("created_at", { ascending: false }));
-      const docs = must(await sb.from("documents").select("user_id,status"));
-      const contracts = must(await sb.from("contracts").select("user_id,provider_signed_at"));
-      return profiles.map((p) => ({
-        ...p,
-        to_sign: contracts.some((c) => c.user_id === p.id && !c.provider_signed_at),
-        docs_total: docs.filter((d) => d.user_id === p.id).length,
-        docs_pending: docs.filter((d) => d.user_id === p.id && d.status === "en_attente").length,
-      }));
-    },
-    async updateProfile(id, patch) {
-      return must(await sb.from("profiles").update(patch).eq("id", id).select().single());
+    // ── équipe ──
+    async listCandidates() { return (await call("list_candidates")).candidates; },
+    async updateProfile(id, patch) { return (await call("update_profile", { user_id: id, patch })).profile; },
+    async reviewDocument(id, status, comment) {
+      return (await call("review_document", { id, status, comment: comment || null })).document;
     },
     async signAsProvider(userId, { provider_signature_data, provider_signer }) {
-      return must(await sb.from("contracts").update({ provider_signature_data, provider_signer })
-        .eq("user_id", userId).select().single());
+      return (await call("sign_provider", { user_id: userId, provider_signature_data, provider_signer })).contract;
     },
-    // Envoie la copie du contrat signé au candidat (fonction serveur supabase/functions/envoyer-contrat).
+    // Envoie au candidat la copie PDF du contrat signé par les deux parties (+ copie à Lougha).
     async sendContractEmail(userId, pdfBase64, filename) {
-      const { data, error } = await sb.functions.invoke("envoyer-contrat", { body: { user_id: userId, pdf: pdfBase64, filename } });
-      if (error) {
-        let msg = "L'email n'a pas pu être envoyé.";
-        try { msg = (await error.context.json()).error || msg; } catch {}
-        throw new Error(msg);
-      }
-      return data;
-    },
-    async reviewDocument(id, status, comment) {
-      return must(await sb.from("documents")
-        .update({ status, comment: comment || null, reviewed_at: new Date().toISOString() })
-        .eq("id", id).select().single());
+      return call("send_contract", { user_id: userId, pdf: pdfBase64, filename });
     },
   };
 }
@@ -233,5 +198,5 @@ function makeDemoApi() {
   };
 }
 
-export const api = DEMO ? makeDemoApi() : await makeSupabaseApi();
+export const api = DEMO ? makeDemoApi() : makePhpApi();
 api.DEMO_MODE = DEMO;

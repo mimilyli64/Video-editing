@@ -1,0 +1,3 @@
+# Les documents des candidats ne sont jamais servis directement :
+# ils passent par api/index.php?action=file (contrôle d'accès).
+Require all denied

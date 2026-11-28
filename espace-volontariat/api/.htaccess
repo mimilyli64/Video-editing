@@ -1,0 +1,5 @@
+# Seul index.php est accessible dans api/.
+<FilesMatch "^(?!index\.php$).+$">
+  Require all denied
+</FilesMatch>
+Options -Indexes
