@@ -1,0 +1,174 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:F;src:url(fonts/fredoka-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:F;src:url(fonts/fredoka-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:F;src:url(fonts/fredoka-latin-700-normal.woff2);font-weight:700}
+:root{--navy:#14365C;--blue:#1FA2E0;--green:#7CC242;--yellow:#FFC93C;--orange:#F7922A;--pink:#FF6FA8;--red:#E8453C;--cream:#FFF8EC}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:F,sans-serif;position:relative}
+.e{position:absolute;opacity:0;transform-origin:50% 50%;white-space:nowrap}
+.big{font-weight:700;color:#fff;text-shadow:0 6px 0 var(--navy),0 0 4px var(--navy),0 12px 28px rgba(10,25,45,.55)}
+.chip{display:flex;align-items:center;gap:14px;padding:0 30px;height:100px;border-radius:999px;font-weight:700;font-size:46px;color:#fff;border:7px solid #fff;box-shadow:0 14px 30px rgba(10,25,45,.38);box-sizing:border-box}
+.chip img{width:68px}
+.tile{width:220px;height:220px;border-radius:40px;border:8px solid #fff;box-shadow:0 18px 36px rgba(10,25,45,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-weight:700;font-size:36px;box-sizing:border-box}
+.tile img{width:100px}
+.xmark{position:absolute;left:-10px;top:40%;width:110%;height:16px;border-radius:8px;background:var(--red);transform-origin:0 50%}
+#fx{position:absolute;left:0;top:0}
+#cap{position:absolute;left:30px;width:1020px;top:1450px;text-align:center}
+#cap .cw{display:inline-block;font:700 78px F;color:#fff;margin:0 14px;-webkit-text-stroke:4px var(--navy);paint-order:stroke fill;text-shadow:0 6px 0 var(--navy)}
+#cap .ce{color:var(--yellow)}
+</style></head><body>
+<canvas id="fx" width="1080" height="1920"></canvas>
+<div id="stage"></div>
+<div id="cap"></div>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const S = (x, w = 12) => x <= 0 ? 0 : 1 - (1 + w * x) * Math.exp(-w * x);
+const B = x => x <= 0 ? 0 : 1 - Math.exp(-6 * x) * Math.cos(11 * x);     // playful bounce
+const C = { navy: '#14365C', blue: '#1FA2E0', green: '#7CC242', yellow: '#FFC93C', orange: '#F7922A', pink: '#FF6FA8', red: '#E8453C', grey: '#8A94A6', purple: '#8E5BE8' };
+// ---- every element: [type, at, until, x(center), y(top), props] (times = take seconds) ----
+const ic = n => `<img src="icons/${n}.png">`;
+const E = [
+  // A hook
+  ['big', 0.2, 3.75, 540, 110, { t: "Beaucoup d'enfants…", s: 76 }],
+  ['chip', 2.0, 3.75, 540, 250, { t: "n'osent pas parler", c: 'red', i: 'speaking-head', x: true, xat: 2.8 }],
+  // B pourquoi
+  ['big', 3.95, 6.9, 540, 80, { t: '?', s: 200, col: C.yellow, spin: 1 }],
+  ['chip', 5.85, 6.9, 300, 380, { t: 'ni envie', c: 'grey', i: 'sleeping-face' }],
+  ['chip', 6.8, 7.6, 760, 380, { t: 'ni confiance', c: 'grey', i: 'thinking-face' }],
+  // C présentation
+  ['card', 7.76, 10.42, 540, 90, {}],
+  ['logo', 9.4, 12.88, 540, 380, {}],
+  ['chip', 11.3, 12.88, 540, 120, { t: 'depuis des années', c: 'blue', i: 'calendar' }],
+  // D aime -> x2
+  ['chip', 13.95, 17.75, 540, 90, { t: "aime l'anglais", c: 'pink', i: 'heart' }],
+  ['big', 15.7, 17.75, 540, 220, { t: '×2 plus vite', s: 110, col: C.yellow }],
+  ['img', 16.3, 17.75, 900, 210, { i: 'rocket', w: 150, fly: 1 }],
+  // E programme + 4 compétences
+  ['big', 19.9, 26.5, 540, 70, { t: 'Programme complet', s: 72 }],
+  ['tile', 22.9, 26.5, 165, 200, { t: 'Speaking', c: 'orange', i: 'speaking-head' }],
+  ['tile', 23.85, 26.5, 415, 200, { t: 'Listening', c: 'blue', i: 'headphone' }],
+  ['tile', 24.85, 26.5, 665, 200, { t: 'Reading', c: 'green', i: 'books' }],
+  ['tile', 25.75, 26.5, 915, 200, { t: 'Writing', c: 'purple', i: 'pencil' }],
+  // F pas que mémoriser
+  ['chip', 27.5, 29.6, 540, 110, { t: 'mémoriser des mots', c: 'grey', i: 'books', x: true, xat: 28.4 }],
+  ['chip', 29.8, 33.77, 300, 90, { t: 'comprend ✓', c: 'blue', i: 'bulb' }],
+  ['chip', 30.9, 33.77, 780, 90, { t: 'parle ✓', c: 'orange', i: 'speaking-head' }],
+  ['chip', 31.7, 33.77, 300, 230, { t: 'lit ✓', c: 'green', i: 'books' }],
+  ['chip', 32.3, 33.77, 780, 230, { t: 'écrit ✓', c: 'purple', i: 'pencil' }],
+  // G pas de PDF
+  ['chip', 33.86, 36.66, 540, 90, { t: 'PDF noir et blanc', c: 'grey', i: 'file', x: true, xat: 34.5 }],
+  ['chip', 35.3, 36.66, 540, 230, { t: 'leçons compliquées', c: 'grey', i: 'thinking-face', x: true, xat: 35.65 }],
+  // H animés visuels interactifs
+  ['big', 36.6, 40.2, 540, 70, { t: 'Nos cours sont…', s: 64 }],
+  ['chip', 37.7, 40.2, 240, 200, { t: 'animés', c: 'orange', i: 'sparkles' }],
+  ['chip', 38.15, 40.2, 560, 200, { t: 'visuels', c: 'blue', i: 'palette' }],
+  ['chip', 38.85, 40.2, 860, 200, { t: 'interactifs', c: 'green', i: 'raising-hands' }],
+  // I jeux supports activités + barre
+  ['tile', 40.65, 45.78, 260, 80, { t: 'Jeux', c: 'pink', i: 'video-game' }],
+  ['tile', 41.05, 45.78, 540, 80, { t: 'Supports', c: 'blue', i: 'palette' }],
+  ['tile', 41.3, 45.78, 820, 80, { t: 'Activités', c: 'green', i: 'puzzle-piece' }],
+  ['bar', 43.55, 45.78, 540, 350, { a: 43.6, b: 45.2 }],
+  // J zoom en direct
+  ['zoom', 46.06, 51.35, 540, 70, {}],
+  ['chip', 48.6, 51.35, 300, 470, { t: 'depuis la maison', c: 'orange', i: 'house' }],
+  ['chip', 49.6, 51.35, 790, 470, { t: 'suivi perso', c: 'green', i: 'check' }],
+  // K corrige encourage adapte
+  ['chip', 51.6, 55.6, 540, 70, { t: 'Je corrige', c: 'blue', i: 'check' }],
+  ['chip', 52.05, 55.6, 540, 200, { t: "J'encourage", c: 'pink', i: 'clapping-hands' }],
+  ['chip', 53.0, 55.6, 540, 330, { t: "J'adapte le rythme", c: 'green', i: 'stopwatch' }],
+  // L 2 séances / 2 mois / parcours
+  ['tile', 56.8, 63.9, 330, 80, { t: '2× / semaine', c: 'orange', i: 'calendar', fs: 30 }],
+  ['tile', 59.05, 63.9, 750, 80, { t: '2 mois', c: 'blue', i: 'stopwatch' }],
+  ['stairs', 60.9, 63.9, 540, 340, {}],
+  // M résultats
+  ['stars', 64.85, 71.7, 540, 60, {}],
+  ['big', 65.2, 71.7, 540, 210, { t: 'Résultats magnifiques', s: 70, col: C.yellow }],
+  ['chip', 66.8, 71.7, 290, 340, { t: 'osent parler', c: 'orange', i: 'speaking-head' }],
+  ['chip', 67.95, 71.7, 790, 340, { t: 'comprennent', c: 'blue', i: 'bulb' }],
+  ['chip', 69.6, 71.7, 540, 470, { t: 'redemandent des cours !', c: 'pink', i: 'repeat' }],
+  // N base solide / envie / inscriptions ouvertes
+  ['bricks', 73.95, 78.0, 540, 140, {}],
+  ['chip', 76.6, 78.0, 540, 470, { t: "envie d'apprendre", c: 'pink', i: 'sparkles' }],
+  ['stamp', 78.05, 79.45, 540, 160, { t: 'INSCRIPTIONS OUVERTES' }],
+  // O CTA
+  ['logo', 79.4, 99, 540, 90, {}],
+  ['chip', 80.3, 99, 540, 400, { t: 'Inscription : lien en bio', c: 'yellow', i: 'link', ink: 1, cta: 1 }],
+  ['img', 80.6, 82.0, 0, 0, { i: 'cursor', w: 110, cur: 1 }],
+  ['big', 81.85, 99, 540, 560, { t: 'Au revoir ! 👋', s: 64 }],
+];
+// ---- build the DOM ----
+const st = $('stage'), EL = [];
+E.forEach(([type, at, until, x, y, p], i) => {
+  const d = document.createElement('div'); d.className = 'e'; let html = '', cls = '';
+  if (type === 'big') { cls = 'big'; html = p.t; d.style.fontSize = (p.s || 80) + 'px'; if (p.col) d.style.color = p.col; }
+  if (type === 'chip') { cls = 'chip'; d.style.background = C[p.c]; if (p.ink) d.style.color = C.navy; html = ic(p.i) + p.t; if (p.cta) { d.style.fontSize = '50px'; d.style.height = '120px'; } }
+  if (type === 'tile') { cls = 'tile'; d.style.background = C[p.c]; html = ic(p.i) + `<span style="font-size:${p.fs || 36}px">${p.t}</span>`; }
+  if (type === 'img') { html = ic(p.i); d.firstChild; }
+  if (type === 'card') html = `<div style="display:flex;align-items:center;gap:22px;background:#fff;border-radius:40px;padding:22px 34px;box-shadow:0 18px 40px rgba(10,25,45,.38)"><div style="width:120px;height:120px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:70px">👩‍🏫</div><div><div style="font:700 66px F;color:var(--navy)">Imen</div><div style="font:600 38px F;color:var(--blue)">Prof d'anglais · KidStudio</div></div></div>`;
+  if (type === 'logo') html = `<div style="display:flex;align-items:center;gap:10px"><img src="icons/robot-a.png" style="width:200px"><div style="background:var(--cream);border:7px solid #fff;border-radius:36px;padding:4px 10px;box-shadow:0 16px 34px rgba(10,25,45,.35)"><img src="icons/wordmark.png" style="width:470px;display:block"></div></div>`;
+  if (type === 'bar') html = `<div style="width:800px"><div style="display:flex;justify-content:space-between;font:700 40px F;color:#fff;text-shadow:0 4px 0 var(--navy)"><span>Début</span><span>Fin</span></div><div style="height:40px;border-radius:20px;background:rgba(255,255,255,.4);border:6px solid #fff;margin-top:8px;overflow:hidden"><div class="fill" style="height:100%;width:0;background:var(--green)"></div></div></div>`;
+  if (type === 'zoom') html = `<div style="width:780px;height:380px;border-radius:34px;background:#1C2433;border:8px solid #fff;box-shadow:0 18px 40px rgba(10,25,45,.45);overflow:hidden;position:relative"><div style="height:70px;background:#2A3548;display:flex;align-items:center;gap:14px;padding-left:22px"><span class="live" style="background:var(--red);color:#fff;font:700 32px F;padding:4px 18px;border-radius:999px">● EN DIRECT</span><span style="color:#fff;font:600 34px F;display:flex;gap:10px;align-items:center"><img src="icons/video-camera.png" width="44">Zoom</span></div><div style="display:flex;gap:14px;padding:16px"><div style="flex:1;height:262px;border-radius:20px;background:#8E5BE8;display:flex;align-items:center;justify-content:center;font-size:120px">👩‍🏫</div><div style="flex:1;height:262px;border-radius:20px;background:#3B6EA8;display:flex;align-items:center;justify-content:center"><img src="icons/raising-hands.png" width="150"></div></div></div>`;
+  if (type === 'stairs') html = `<div style="display:flex;align-items:flex-end;gap:14px">${['A', 'B', 'C', 'D'].map((s, k) => `<div class="st" style="width:150px;height:${70 + k * 50}px;border-radius:20px;background:${[C.green, C.blue, C.orange, C.pink][k]};border:6px solid #fff;box-shadow:0 10px 22px rgba(10,25,45,.35)"></div>`).join('')}<img class="kid" src="icons/chart-increasing.png" style="width:120px;margin-left:10px"></div>`;
+  if (type === 'stars') html = [0, 1, 2, 3, 4].map(k => `<span class="sta" style="display:inline-block;font-size:110px;margin:0 6px">⭐</span>`).join('');
+  if (type === 'bricks') html = `<div style="text-align:center;font:700 64px F;color:#fff;text-shadow:0 5px 0 var(--navy);margin-bottom:12px">une base <span style="color:var(--yellow)">solide</span></div><div style="display:grid;grid-template-columns:repeat(4,170px);gap:10px;width:710px">${Array.from({ length: 8 }, (_, k) => `<div class="br" style="height:70px;border-radius:14px;background:${[C.orange, C.yellow, C.green, C.blue][k % 4]};border:5px solid #fff"></div>`).join('')}</div>`;
+  if (type === 'stamp') html = `<div style="padding:16px 34px;border:10px solid var(--green);border-radius:26px;font:700 70px F;color:var(--green);background:rgba(255,255,255,.95);transform:rotate(-6deg)">${p.t} ✓</div>`;
+  if (p.x) html += `<div class="xmark"></div>`;
+  if (cls) d.classList.add(cls); d.innerHTML = html; st.appendChild(d);
+  if (type === 'img') { d.firstChild.style.width = (p.w || 120) + 'px'; }
+  EL.push(d);
+});
+function place(d, x, y) { d.style.left = (x - d.offsetWidth / 2) + 'px'; d.style.top = y + 'px'; }
+// ---- particles ----
+const fx = $('fx').getContext('2d'), BURSTS = [];
+const COLS = [C.yellow, C.blue, C.green, C.pink, C.orange];
+[[2.85, 540, 300], [9.4, 540, 450], [15.8, 540, 280], [25.8, 540, 300], [32.4, 540, 300], [39.0, 540, 250], [45.2, 540, 420], [53.1, 540, 400], [62.1, 540, 450], [64.9, 540, 120], [69.7, 540, 520], [78.1, 540, 230], [81.1, 540, 460]].forEach(b => BURSTS.push(b));
+function drawFx(t) { fx.clearRect(0, 0, 1080, 1920);
+  for (const [t0, x, y] of BURSTS) { const u = t - t0; if (u < 0 || u > 1.2) continue;
+    for (let i = 0; i < 30; i++) { const a = i / 30 * 6.283, v = 800 * (.45 + ((i * 37) % 11) / 16);
+      const px = x + Math.cos(a) * v * u * Math.exp(-u * 1.7), py = y + Math.sin(a) * v * u * Math.exp(-u * 1.7) + 480 * u * u;
+      fx.globalAlpha = cl((1 - u / 1.2) * 1.4); fx.fillStyle = COLS[i % 5]; fx.save(); fx.translate(px, py); fx.rotate(u * 8 + i);
+      if (i % 2) fx.fillRect(-9, -5, 18, 10); else { fx.beginPath(); fx.arc(0, 0, 7, 0, 7); fx.fill(); } fx.restore(); } }
+  fx.globalAlpha = 1; }
+
+function draw(t) {
+  E.forEach(([type, at, until, x, y, p], i) => {
+    const d = EL[i];
+    if (t < at || t >= until) { d.style.opacity = 0; return; }
+    place(d, x, y);
+    const pb = B(t - at), q = S(t - at, 14), out = cl((until - t) / .15);
+    let s = (.25 + .75 * pb) * (.6 + .4 * out), r = Math.sin(t * 2.2 + i) * 2, ty = Math.sin(t * 1.8 + i) * 6 - 30 * (1 - out), tx = 0;
+    if (p.spin) r += (1 - q) * -200;
+    if (type === 'stamp') { s = t - at < .18 ? 3 - 2 * ((t - at) / .18) : 1; r = 0; }
+    if (p.fly) { tx = (1 - q) * -500; ty += (1 - q) * 200; r = -20; }
+    if (p.cur) { const k = S(t - at, 7); tx = 1000 + (720 - 1000) * k; ty = 1900 + (470 - 1900) * k; d.style.left = '0px'; d.style.top = '0px'; s = t > 81.07 && t < 81.25 ? .85 : 1; r = 0; }
+    if (p.cta) s *= 1 + .04 * Math.sin(t * 6) - (t > 81.07 && t < 81.3 ? .06 : 0);
+    d.style.opacity = cl(q * 2) * out;
+    d.style.transform = `translate(${tx}px,${ty}px) scale(${s}) rotate(${r}deg)`;
+    if (p.x) { const xm = d.querySelector('.xmark'); xm.style.transform = `rotate(-8deg) scaleX(${S(t - p.xat, 12)})`; d.style.filter = t > p.xat ? 'grayscale(.4)' : ''; }
+    if (type === 'bar') d.querySelector('.fill').style.width = (100 * cl((t - p.a) / (p.b - p.a))) + '%';
+    if (type === 'zoom') d.querySelector('.live').style.opacity = Math.floor(t * 2.5) % 2 ? .5 : 1;
+    if (type === 'stairs') { d.querySelectorAll('.st').forEach((e, k) => { const u = B(t - at - k * .25); e.style.transform = `translateY(${(1 - u) * 300}px)`; }); const kd = d.querySelector('.kid'); kd.style.opacity = t > 62.0 ? 1 : 0; kd.style.transform = `scale(${B(t - 62.0)})`; }
+    if (type === 'stars') d.querySelectorAll('.sta').forEach((e, k) => { const u = B(t - at - k * .15); e.style.opacity = cl(S(t - at - k * .15) * 2); e.style.transform = `scale(${.2 + .8 * u}) rotate(${(1 - u) * -180}deg)`; });
+    if (type === 'bricks') d.querySelectorAll('.br').forEach((e, k) => { const u = B(t - at - .3 - k * .1); e.style.opacity = cl(S(t - at - .3 - k * .1) * 2); e.style.transform = `translateY(${(1 - u) * -200}px)`; });
+  });
+  drawFx(t);
+}
+
+const KEEPS = /*KEEPS*/, CAPS = /*CAPS*/;
+const toSrc = ts => { let k = KEEPS[0]; for (const q of KEEPS) if (ts >= q[2]) k = q; return Math.min(k[1], k[0] + (ts - k[2])); };
+const cap = $('cap');
+function caps(t) {
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0][0] - .05) ci = i;
+  if (ci < 0) { cap.innerHTML = ''; cap.dataset.i = ''; return; }
+  const c = CAPS[ci];
+  if (cap.dataset.i != ci) { cap.innerHTML = c.map(w => `<span class="cw ${w[2] ? 'ce' : ''}">${w[1]}</span>`).join(' '); cap.dataset.i = ci; }
+  [...cap.children].forEach((e, j) => { const p = B(t - c[j][0] + .02), q = S(t - c[j][0] + .02, 18);
+    e.style.opacity = cl(q * 2); e.style.transform = `translateY(${(1 - p) * 30}px) scale(${.6 + .4 * p})`; });
+}
+window.setT = ts => { const t = toSrc(ts); draw(t); caps(t); };
+document.fonts.ready.then(() => window.setT(0));
+window.setT(0);
+</script></body></html>
