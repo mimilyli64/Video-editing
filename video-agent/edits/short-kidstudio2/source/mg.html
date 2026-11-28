@@ -32,8 +32,9 @@ const C = { navy: '#14365C', blue: '#1FA2E0', green: '#7CC242', yellow: '#FFC93C
 const ic = n => `<img src="icons/${n}.png">`;
 const E = [
   // A hook
-  ['big', 0.2, 3.75, 540, 110, { t: "Beaucoup d'enfants…", s: 76 }],
-  ['chip', 2.0, 3.75, 540, 250, { t: "n'osent pas parler", c: 'red', i: 'speaking-head', x: true, xat: 2.8 }],
+  ['big', 0.2, 3.75, 540, 60, { t: 'Votre enfant', s: 84 }],
+  ['big', 0.55, 3.75, 540, 165, { t: "n'ose pas parler anglais ?", s: 70, col: C.yellow }],
+  ['img', 1.6, 3.75, 540, 290, { i: 'speaking-head', w: 150 }],
   // B pourquoi
   ['big', 3.95, 6.9, 540, 80, { t: '?', s: 200, col: C.yellow, spin: 1 }],
   ['chip', 5.85, 6.9, 300, 380, { t: 'ni envie', c: 'grey', i: 'sleeping-face' }],
@@ -95,9 +96,9 @@ const E = [
   ['stamp', 78.05, 79.45, 540, 160, { t: 'INSCRIPTIONS OUVERTES' }],
   // O CTA
   ['logo', 79.4, 99, 540, 90, {}],
-  ['chip', 80.3, 99, 540, 400, { t: 'Inscription : lien en bio', c: 'yellow', i: 'link', ink: 1, cta: 1 }],
+  ['big', 80.25, 99, 540, 330, { t: 'Inscriptions ouvertes 🎉', s: 66, col: C.yellow }],
+  ['chip', 80.3, 99, 540, 440, { t: 'Inscription : lien en bio', c: 'yellow', i: 'link', ink: 1, cta: 1 }],
   ['img', 80.6, 82.0, 0, 0, { i: 'cursor', w: 110, cur: 1 }],
-  ['big', 81.85, 99, 540, 560, { t: 'Au revoir ! 👋', s: 64 }],
 ];
 // ---- build the DOM ----
 const st = $('stage'), EL = [];
@@ -124,7 +125,7 @@ function place(d, x, y) { d.style.left = (x - d.offsetWidth / 2) + 'px'; d.style
 // ---- particles ----
 const fx = $('fx').getContext('2d'), BURSTS = [];
 const COLS = [C.yellow, C.blue, C.green, C.pink, C.orange];
-[[2.85, 540, 300], [9.4, 540, 450], [15.8, 540, 280], [25.8, 540, 300], [32.4, 540, 300], [39.0, 540, 250], [45.2, 540, 420], [53.1, 540, 400], [62.1, 540, 450], [64.9, 540, 120], [69.7, 540, 520], [78.1, 540, 230], [81.1, 540, 460]].forEach(b => BURSTS.push(b));
+[[0.6, 540, 220], [2.85, 540, 300], [80.3, 540, 380], [9.4, 540, 450], [15.8, 540, 280], [25.8, 540, 300], [32.4, 540, 300], [39.0, 540, 250], [45.2, 540, 420], [53.1, 540, 400], [62.1, 540, 450], [64.9, 540, 120], [69.7, 540, 520], [78.1, 540, 230], [81.1, 540, 460]].forEach(b => BURSTS.push(b));
 function drawFx(t) { fx.clearRect(0, 0, 1080, 1920);
   for (const [t0, x, y] of BURSTS) { const u = t - t0; if (u < 0 || u > 1.2) continue;
     for (let i = 0; i < 30; i++) { const a = i / 30 * 6.283, v = 800 * (.45 + ((i * 37) % 11) / 16);
@@ -142,6 +143,7 @@ function draw(t) {
     let s = (.25 + .75 * pb) * (.6 + .4 * out), r = Math.sin(t * 2.2 + i) * 2, ty = Math.sin(t * 1.8 + i) * 6 - 30 * (1 - out), tx = 0;
     if (p.spin) r += (1 - q) * -200;
     if (type === 'stamp') { s = t - at < .18 ? 3 - 2 * ((t - at) / .18) : 1; r = 0; }
+    if (p.arrow) ty += Math.abs(Math.sin(t * 5)) * 26;
     if (p.fly) { tx = (1 - q) * -500; ty += (1 - q) * 200; r = -20; }
     if (p.cur) { const k = S(t - at, 7); tx = 1000 + (720 - 1000) * k; ty = 1900 + (470 - 1900) * k; d.style.left = '0px'; d.style.top = '0px'; s = t > 81.07 && t < 81.25 ? .85 : 1; r = 0; }
     if (p.cta) s *= 1 + .04 * Math.sin(t * 6) - (t > 81.07 && t < 81.3 ? .06 : 0);
